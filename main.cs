@@ -17,19 +17,34 @@ namespace anti_cheat
         {
             InitializeComponent();
         }
+        public static class Globals
+        {
+            public static bool status = false; // Global Variable: "status"
+        }
 
         private void main_Load(object sender, EventArgs e)
         {
-            
+        
         }
 
-        private void buttonlist_Click(object sender, EventArgs e)
+        private void Buttonlist_Click(object sender, EventArgs e)
         {
             textbox.Text = string.Empty;
 
             // populate it with a list of all applications along with
             // some information about those application
             textbox.Text = ProcessValidation.ListAllByImageName();
+        }
+
+        private int Check(int a)
+        {
+            Globals.status = true;
+
+            
+
+
+
+            return a;
         }
     }
 }
