@@ -22,7 +22,7 @@ namespace anti_cheat
         {
             public static bool status = false; // Global Variable: "status"
         }
-
+        
         private void main_Resize(object sender, EventArgs e)
         {
             //if the form is minimized  
@@ -35,7 +35,7 @@ namespace anti_cheat
             }
         }
 
-        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void NotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Show();
             this.WindowState = FormWindowState.Normal;
