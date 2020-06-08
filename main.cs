@@ -17,14 +17,34 @@ namespace anti_cheat
         {
             InitializeComponent();
         }
+
         public static class Globals
         {
             public static bool status = false; // Global Variable: "status"
         }
 
+        private void main_Resize(object sender, EventArgs e)
+        {
+            //if the form is minimized  
+            //hide it from the task bar  
+            //and show the system tray icon (represented by the NotifyIcon control)  
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                Hide();
+                notifyIcon.Visible = true;
+            }
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Show();
+            this.WindowState = FormWindowState.Normal;
+            notifyIcon.Visible = false;
+        }
+
         private void main_Load(object sender, EventArgs e)
         {
-        
+            this.ShowInTaskbar = false;
         }
 
         private void Buttonlist_Click(object sender, EventArgs e)
@@ -46,5 +66,7 @@ namespace anti_cheat
 
             return a;
         }
+
+
     }
 }

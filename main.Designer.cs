@@ -28,10 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(main));
             this.textbox = new System.Windows.Forms.TextBox();
             this.buttonlist = new System.Windows.Forms.Button();
             this.lblstatustitle = new System.Windows.Forms.Label();
             this.lblstatus = new System.Windows.Forms.Label();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.SuspendLayout();
             // 
             // textbox
@@ -74,6 +77,13 @@
             this.lblstatus.TabIndex = 3;
             this.lblstatus.Text = "Stopped.";
             // 
+            // notifyIcon
+            // 
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "notifyIcon";
+            this.notifyIcon.Visible = true;
+            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            // 
             // main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -83,6 +93,7 @@
             this.Controls.Add(this.lblstatustitle);
             this.Controls.Add(this.buttonlist);
             this.Controls.Add(this.textbox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "main";
             this.Text = "Anti-Cheat";
             this.Load += new System.EventHandler(this.main_Load);
@@ -97,6 +108,7 @@
         private System.Windows.Forms.Button buttonlist;
         private System.Windows.Forms.Label lblstatustitle;
         private System.Windows.Forms.Label lblstatus;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
     }
 }
 
