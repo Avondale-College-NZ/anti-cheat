@@ -35,13 +35,17 @@
             this.lblstatustitle = new System.Windows.Forms.Label();
             this.lblstatus = new System.Windows.Forms.Label();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.procnametxt = new System.Windows.Forms.TextBox();
+            this.startbtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textbox
             // 
+            this.textbox.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.textbox.Location = new System.Drawing.Point(12, 362);
             this.textbox.Multiline = true;
             this.textbox.Name = "textbox";
+            this.textbox.ReadOnly = true;
             this.textbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textbox.Size = new System.Drawing.Size(570, 108);
             this.textbox.TabIndex = 0;
@@ -84,11 +88,30 @@
             this.notifyIcon.Visible = true;
             this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseDoubleClick);
             // 
+            // procnametxt
+            // 
+            this.procnametxt.Location = new System.Drawing.Point(93, 333);
+            this.procnametxt.Name = "procnametxt";
+            this.procnametxt.Size = new System.Drawing.Size(138, 20);
+            this.procnametxt.TabIndex = 4;
+            // 
+            // startbtn
+            // 
+            this.startbtn.Location = new System.Drawing.Point(12, 333);
+            this.startbtn.Name = "startbtn";
+            this.startbtn.Size = new System.Drawing.Size(75, 23);
+            this.startbtn.TabIndex = 5;
+            this.startbtn.Text = "Start";
+            this.startbtn.UseVisualStyleBackColor = true;
+            this.startbtn.Click += new System.EventHandler(this.startbtn_Click);
+            // 
             // main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(594, 511);
+            this.Controls.Add(this.startbtn);
+            this.Controls.Add(this.procnametxt);
             this.Controls.Add(this.lblstatus);
             this.Controls.Add(this.lblstatustitle);
             this.Controls.Add(this.buttonlist);
@@ -109,6 +132,8 @@
         private System.Windows.Forms.Label lblstatustitle;
         private System.Windows.Forms.Label lblstatus;
         private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.TextBox procnametxt;
+        private System.Windows.Forms.Button startbtn;
     }
 }
 
