@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 using ApplicationCheck;
 
 namespace anti_cheat
@@ -76,14 +77,7 @@ namespace anti_cheat
         private void startbtn_Click(object sender, EventArgs e)
         {
             Globals.status = true;
-            bool status = Globals.status;
-            string procname = procnametxt.Text;
-            while (status == true)
-            {
-                Check(procname);
-
-
-            }
         }
+        
     }
 }
