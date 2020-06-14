@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 
 
-namespace ApplicationCheck
+namespace ProcessCheck
 {
 
 
