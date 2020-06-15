@@ -7,80 +7,66 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using ProcessCheck;
-using System.Runtime.InteropServices;
-using Microsoft.Win32.SafeHandles;
 
 namespace anti_cheat
 {
     static class Program
     {
-        [DllImport("kernel32.dll",
-           EntryPoint = "GetStdHandle",
-           SetLastError = true,
-           CharSet = CharSet.Auto,
-           CallingConvention = CallingConvention.StdCall)]
-        private static extern IntPtr GetStdHandle(int nStdHandle);
-        [DllImport("kernel32.dll",
-            EntryPoint = "AllocConsole",
-            SetLastError = true,
-            CharSet = CharSet.Auto,
-            CallingConvention = CallingConvention.StdCall)]
-        private static extern int AllocConsole();
-        private const int STD_OUTPUT_HANDLE = -11;
-        private const int MY_CODE_PAGE = 437;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-           // Application.EnableVisualStyles();
-           // Application.SetCompatibleTextRenderingDefault(false);
-           // Application.Run(new main());
+            // Application.EnableVisualStyles();
+            // Application.SetCompatibleTextRenderingDefault(false);
+            // Application.Run(new main());
 
-            // The constructor for the Thread class requires a ThreadStart
-            // delegate that represents the method to be executed on the
-            // thread.  C# simplifies the creation of this delegate.
-            Thread guithread = new Thread(new ThreadStart(windowGui));
-            Thread consolethread = new Thread(new ThreadStart(windowConsole));
-            // Start ThreadProc.  Note that on a uniprocessor, the new
-            // thread does not get any processor time until the main thread
-            // is preempted or yields.  Uncomment the Thread.Sleep that
-            // follows t.Start() to see the difference.
+            Thread guithread = new Thread(new ThreadStart(WindowGui));
+            Thread checkthread = new Thread(new ThreadStart(BGProc));
+
+            // Start ThreadProcs
             guithread.Start();
-            consolethread.Start();
-            //Form1 c = new Form1();
-           // c.ShowDialog();
-
-           // var curDir = Directory.GetCurrentDirectory();
-           // var txtFile = curDir + "\\proc.txt";
-            //string[] lines = File.ReadAllLines(txtFile);
-
-            //foreach (string line in lines)
-             //   Console.WriteLine(line);
+            checkthread.Start();
         }
-        public static void windowConsole()
+        public static void BGProc()
         {
-            Console.WriteLine("This text you can see in debug output window.");
+            var curDir = Directory.GetCurrentDirectory();
+            var txtFile = curDir + "\\proc.txt";
+            string[] lines = File.ReadAllLines(txtFile);
 
-            AllocConsole();
-            IntPtr stdHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-            SafeFileHandle safeFileHandle = new SafeFileHandle(stdHandle, true);
-            FileStream fileStream = new FileStream(safeFileHandle, FileAccess.Write);
-            Encoding encoding = System.Text.Encoding.GetEncoding(MY_CODE_PAGE);
-            StreamWriter standardOutput = new StreamWriter(fileStream, encoding);
-            standardOutput.AutoFlush = true;
-            Console.SetOut(standardOutput);
+            // TODO: Write kill if found, alert if found, 
+            while (true){
+                Thread.Sleep(5000);
+                while (main.Globals.status)
+                {
+                    //Thread.Sleep(5000);
+                    foreach (string line in lines)
+                    {
 
-            Console.WriteLine("This text you can see in console window.");
-            Console.ReadKey();
-            MessageBox.Show("Now I'm happy!");
+                        if (Checkproc(line))
+                        {
+                            MessageBox.Show("Process \"" + line + "\" was found.");
+                        }
+
+                        if (Checkapp(line))
+                        {
+                            MessageBox.Show("Application \"" + line + "\" was found.");
+                        }
+                    }
+                }
+            }
         }
-        public static void windowGui()
+        public static void WindowGui()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new main());
+        }
+        public static bool Checkapp(string proc)
+        {
+            bool check = ProcessValidation.CheckForApplicationByName(proc.ToString());
+            return check;
         }
         public static bool Checkproc(string proc)
         {

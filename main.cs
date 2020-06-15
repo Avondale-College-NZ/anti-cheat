@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ProcessCheck;
+using System.Threading;
 
 namespace anti_cheat
 {
@@ -78,7 +79,8 @@ namespace anti_cheat
         private void startbtn_Click(object sender, EventArgs e)
         {
             Globals.status = true;
+
+            
         }
-        
     }
 }
