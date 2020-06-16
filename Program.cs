@@ -37,10 +37,9 @@ namespace anti_cheat
 
             // TODO: Write kill if found, alert if found, 
             while (true){
-                Thread.Sleep(5000);
+                Thread.Sleep(2000);
                 while (main.Globals.status)
                 {
-                    //Thread.Sleep(5000);
                     foreach (string line in lines)
                     {
 

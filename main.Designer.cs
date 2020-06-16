@@ -36,13 +36,13 @@
             this.lblstatus = new System.Windows.Forms.Label();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.procnametxt = new System.Windows.Forms.TextBox();
-            this.startbtn = new System.Windows.Forms.Button();
+            this.Controlbtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textbox
             // 
             this.textbox.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.textbox.Location = new System.Drawing.Point(12, 362);
+            this.textbox.Location = new System.Drawing.Point(12, 134);
             this.textbox.Multiline = true;
             this.textbox.Name = "textbox";
             this.textbox.ReadOnly = true;
@@ -52,7 +52,7 @@
             // 
             // buttonlist
             // 
-            this.buttonlist.Location = new System.Drawing.Point(12, 476);
+            this.buttonlist.Location = new System.Drawing.Point(12, 248);
             this.buttonlist.Name = "buttonlist";
             this.buttonlist.Size = new System.Drawing.Size(75, 23);
             this.buttonlist.TabIndex = 1;
@@ -90,27 +90,27 @@
             // 
             // procnametxt
             // 
-            this.procnametxt.Location = new System.Drawing.Point(93, 333);
+            this.procnametxt.Location = new System.Drawing.Point(93, 105);
             this.procnametxt.Name = "procnametxt";
             this.procnametxt.Size = new System.Drawing.Size(138, 20);
             this.procnametxt.TabIndex = 4;
             // 
-            // startbtn
+            // Controlbtn
             // 
-            this.startbtn.Location = new System.Drawing.Point(12, 331);
-            this.startbtn.Name = "startbtn";
-            this.startbtn.Size = new System.Drawing.Size(75, 23);
-            this.startbtn.TabIndex = 5;
-            this.startbtn.Text = "Start";
-            this.startbtn.UseVisualStyleBackColor = true;
-            this.startbtn.Click += new System.EventHandler(this.startbtn_Click);
+            this.Controlbtn.Location = new System.Drawing.Point(12, 103);
+            this.Controlbtn.Name = "Controlbtn";
+            this.Controlbtn.Size = new System.Drawing.Size(75, 23);
+            this.Controlbtn.TabIndex = 5;
+            this.Controlbtn.Text = "Start";
+            this.Controlbtn.UseVisualStyleBackColor = true;
+            this.Controlbtn.Click += new System.EventHandler(this.Controlbtn_Click);
             // 
             // main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(594, 511);
-            this.Controls.Add(this.startbtn);
+            this.ClientSize = new System.Drawing.Size(595, 280);
+            this.Controls.Add(this.Controlbtn);
             this.Controls.Add(this.procnametxt);
             this.Controls.Add(this.lblstatus);
             this.Controls.Add(this.lblstatustitle);
@@ -133,7 +133,7 @@
         private System.Windows.Forms.Label lblstatus;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.TextBox procnametxt;
-        private System.Windows.Forms.Button startbtn;
+        private System.Windows.Forms.Button Controlbtn;
     }
 }
 

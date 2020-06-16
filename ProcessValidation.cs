@@ -5,8 +5,6 @@ using System.Management;
 using System.ComponentModel;
 using System.Diagnostics;
 
-
-
 namespace ProcessCheck
 {
 
@@ -194,7 +192,5 @@ namespace ProcessCheck
 
             return rtnVal;
         }
-    
-    
     }
 }

@@ -24,6 +24,7 @@ namespace anti_cheat
         public static class Globals
         {
             public static bool status = false; // Global Variable: "status"
+            public static int count = 0;
             public static string cheatproc = "";
         }
         
@@ -61,26 +62,26 @@ namespace anti_cheat
             textbox.Text = ProcessValidation.ListAllByImageName();
         }
 
-        private string Check(string cheatproc)
+
+        private void Controlbtn_Click(object sender, EventArgs e)
         {
-                bool bTest = ProcessValidation.CheckForApplicationByName(cheatproc.ToString());
-
-                switch (bTest)
-                {
-                    case true:
-                        MessageBox.Show(cheatproc + " was found.");
-                        break;
-                    default:
-                        break;
-                }
-            return cheatproc;
-        }
-
-        private void startbtn_Click(object sender, EventArgs e)
-        {
-            Globals.status = true;
-
-            
+            Globals.count++;
+            int count = Globals.count % 2;
+            if (count > 0) 
+            {
+                Globals.status = true;
+                lblstatus.Text = "Running...";
+                lblstatus.ForeColor = Color.Lime;
+                Controlbtn.Text = "Stop";
+            }
+            if (count == 0) 
+            {
+                Globals.status = false;
+                lblstatus.Text = "Stopped.";
+                lblstatus.ForeColor = Color.Red;
+                Controlbtn.Text = "Start";
+            }
+                      
         }
     }
 }
