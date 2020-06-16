@@ -14,9 +14,9 @@ using System.Threading;
 
 namespace anti_cheat
 {
-    public partial class main : Form
+    public partial class Main : Form
     {
-        public main()
+        public Main()
         {
             InitializeComponent();
         }
@@ -24,11 +24,11 @@ namespace anti_cheat
         public static class Globals
         {
             public static bool status = false; // Global Variable: "status"
-            public static int count = 0;
+            public static int count = 0; // Global Variable: "count"
             public static string cheatproc = "";
         }
         
-        private void main_Resize(object sender, EventArgs e)
+        private void Main_Resize(object sender, EventArgs e)
         {
             //if the form is minimized  
             //hide it from the task bar  
@@ -47,21 +47,11 @@ namespace anti_cheat
             notifyIcon.Visible = false;
         }
 
-        private void main_Load(object sender, EventArgs e)
+        private void Main_Load(object sender, EventArgs e)
         {
             this.ShowInTaskbar = true;
 
         }
-
-        private void Buttonlist_Click(object sender, EventArgs e)
-        {
-            textbox.Text = string.Empty;
-
-            // populate it with a list of all applications along with
-            // some information about those application
-            textbox.Text = ProcessValidation.ListAllByImageName();
-        }
-
 
         private void Controlbtn_Click(object sender, EventArgs e)
         {

@@ -1,6 +1,6 @@
 ﻿namespace anti_cheat
 {
-    partial class main
+    partial class Main
     {
         /// <summary>
         /// Required designer variable.
@@ -29,55 +29,41 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(main));
-            this.textbox = new System.Windows.Forms.TextBox();
-            this.buttonlist = new System.Windows.Forms.Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.lblstatustitle = new System.Windows.Forms.Label();
             this.lblstatus = new System.Windows.Forms.Label();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.procnametxt = new System.Windows.Forms.TextBox();
             this.Controlbtn = new System.Windows.Forms.Button();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.ToolBar = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.Toolbarbtnset = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.Toolbarbtnlog = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.ToolBarbtncld = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.ToolBar.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // textbox
-            // 
-            this.textbox.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.textbox.Location = new System.Drawing.Point(12, 134);
-            this.textbox.Multiline = true;
-            this.textbox.Name = "textbox";
-            this.textbox.ReadOnly = true;
-            this.textbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textbox.Size = new System.Drawing.Size(570, 108);
-            this.textbox.TabIndex = 0;
-            // 
-            // buttonlist
-            // 
-            this.buttonlist.Location = new System.Drawing.Point(12, 248);
-            this.buttonlist.Name = "buttonlist";
-            this.buttonlist.Size = new System.Drawing.Size(75, 23);
-            this.buttonlist.TabIndex = 1;
-            this.buttonlist.Text = "list";
-            this.buttonlist.UseVisualStyleBackColor = true;
-            this.buttonlist.Click += new System.EventHandler(this.Buttonlist_Click);
             // 
             // lblstatustitle
             // 
             this.lblstatustitle.AutoSize = true;
-            this.lblstatustitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblstatustitle.Location = new System.Drawing.Point(12, 37);
+            this.lblstatustitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblstatustitle.Location = new System.Drawing.Point(12, 42);
             this.lblstatustitle.Name = "lblstatustitle";
-            this.lblstatustitle.Size = new System.Drawing.Size(60, 20);
+            this.lblstatustitle.Size = new System.Drawing.Size(85, 29);
             this.lblstatustitle.TabIndex = 2;
             this.lblstatustitle.Text = "Status:";
             // 
             // lblstatus
             // 
             this.lblstatus.AutoSize = true;
-            this.lblstatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblstatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblstatus.ForeColor = System.Drawing.Color.Red;
-            this.lblstatus.Location = new System.Drawing.Point(66, 33);
+            this.lblstatus.Location = new System.Drawing.Point(90, 38);
             this.lblstatus.Name = "lblstatus";
-            this.lblstatus.Size = new System.Drawing.Size(106, 25);
+            this.lblstatus.Size = new System.Drawing.Size(131, 31);
             this.lblstatus.TabIndex = 3;
             this.lblstatus.Text = "Stopped.";
             // 
@@ -88,16 +74,9 @@
             this.notifyIcon.Visible = true;
             this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseDoubleClick);
             // 
-            // procnametxt
-            // 
-            this.procnametxt.Location = new System.Drawing.Point(93, 105);
-            this.procnametxt.Name = "procnametxt";
-            this.procnametxt.Size = new System.Drawing.Size(138, 20);
-            this.procnametxt.TabIndex = 4;
-            // 
             // Controlbtn
             // 
-            this.Controlbtn.Location = new System.Drawing.Point(12, 103);
+            this.Controlbtn.Location = new System.Drawing.Point(17, 94);
             this.Controlbtn.Name = "Controlbtn";
             this.Controlbtn.Size = new System.Drawing.Size(75, 23);
             this.Controlbtn.TabIndex = 5;
@@ -105,35 +84,113 @@
             this.Controlbtn.UseVisualStyleBackColor = true;
             this.Controlbtn.Click += new System.EventHandler(this.Controlbtn_Click);
             // 
-            // main
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "openFileDialog";
+            // 
+            // ToolBar
+            // 
+            this.ToolBar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.ToolBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSeparator1,
+            this.Toolbarbtnset,
+            this.toolStripSeparator2,
+            this.Toolbarbtnlog,
+            this.toolStripSeparator3,
+            this.ToolBarbtncld,
+            this.toolStripSeparator4});
+            this.ToolBar.Location = new System.Drawing.Point(0, 0);
+            this.ToolBar.Name = "ToolBar";
+            this.ToolBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.ToolBar.Size = new System.Drawing.Size(430, 25);
+            this.ToolBar.TabIndex = 6;
+            this.ToolBar.Text = "ToolBar";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // Toolbarbtnset
+            // 
+            this.Toolbarbtnset.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Toolbarbtnset.Image = ((System.Drawing.Image)(resources.GetObject("Toolbarbtnset.Image")));
+            this.Toolbarbtnset.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Toolbarbtnset.Name = "Toolbarbtnset";
+            this.Toolbarbtnset.Size = new System.Drawing.Size(23, 22);
+            this.Toolbarbtnset.Text = "Settings";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // Toolbarbtnlog
+            // 
+            this.Toolbarbtnlog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Toolbarbtnlog.Image = ((System.Drawing.Image)(resources.GetObject("Toolbarbtnlog.Image")));
+            this.Toolbarbtnlog.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Toolbarbtnlog.Name = "Toolbarbtnlog";
+            this.Toolbarbtnlog.Size = new System.Drawing.Size(23, 22);
+            this.Toolbarbtnlog.Text = "Logs";
+            this.Toolbarbtnlog.ToolTipText = "Logs";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // ToolBarbtncld
+            // 
+            this.ToolBarbtncld.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.ToolBarbtncld.Image = ((System.Drawing.Image)(resources.GetObject("ToolBarbtncld.Image")));
+            this.ToolBarbtncld.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ToolBarbtncld.Name = "ToolBarbtncld";
+            this.ToolBarbtncld.Size = new System.Drawing.Size(23, 22);
+            this.ToolBarbtncld.Text = "Cloud Integration";
+            this.ToolBarbtncld.ToolTipText = "Cloud Integration";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(595, 280);
+            this.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.ClientSize = new System.Drawing.Size(430, 267);
+            this.Controls.Add(this.ToolBar);
             this.Controls.Add(this.Controlbtn);
-            this.Controls.Add(this.procnametxt);
             this.Controls.Add(this.lblstatus);
             this.Controls.Add(this.lblstatustitle);
-            this.Controls.Add(this.buttonlist);
-            this.Controls.Add(this.textbox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "main";
+            this.Name = "Main";
             this.Text = "Anti-Cheat";
-            this.Load += new System.EventHandler(this.main_Load);
+            this.Load += new System.EventHandler(this.Main_Load);
+            this.ToolBar.ResumeLayout(false);
+            this.ToolBar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox textbox;
-        private System.Windows.Forms.Button buttonlist;
         private System.Windows.Forms.Label lblstatustitle;
         private System.Windows.Forms.Label lblstatus;
         private System.Windows.Forms.NotifyIcon notifyIcon;
-        private System.Windows.Forms.TextBox procnametxt;
         private System.Windows.Forms.Button Controlbtn;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.ToolStrip ToolBar;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton Toolbarbtnset;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton Toolbarbtnlog;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton ToolBarbtncld;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 

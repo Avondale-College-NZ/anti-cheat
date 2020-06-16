@@ -18,10 +18,6 @@ namespace anti_cheat
         [STAThread]
         static void Main()
         {
-            // Application.EnableVisualStyles();
-            // Application.SetCompatibleTextRenderingDefault(false);
-            // Application.Run(new main());
-
             Thread guithread = new Thread(new ThreadStart(WindowGui));
             Thread checkthread = new Thread(new ThreadStart(BGProc));
 
@@ -29,6 +25,14 @@ namespace anti_cheat
             guithread.Start();
             checkthread.Start();
         }
+
+        public static void WindowGui()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Main());
+        }
+
         public static void BGProc()
         {
             var curDir = Directory.GetCurrentDirectory();
@@ -36,32 +40,29 @@ namespace anti_cheat
             string[] lines = File.ReadAllLines(txtFile);
 
             // TODO: Write kill if found, alert if found, 
-            while (true){
-                Thread.Sleep(2000);
-                while (main.Globals.status)
-                {
-                    foreach (string line in lines)
+            try {
+                while (true) {
+                    Thread.Sleep(2000);
+                    while (anti_cheat.Main.Globals.status)
                     {
-
-                        if (Checkproc(line))
+                        foreach (string line in lines)
                         {
-                            MessageBox.Show("Process \"" + line + "\" was found.");
-                        }
 
-                        if (Checkapp(line))
-                        {
-                            MessageBox.Show("Application \"" + line + "\" was found.");
+                            if (Checkproc(line))
+                            {
+                                MessageBox.Show("Process \"" + line + "\" was found.");
+                            }
+
+                            if (Checkapp(line))
+                            {
+                                MessageBox.Show("Application \"" + line + "\" was found.");
+                            }
                         }
                     }
                 }
-            }
+            } catch { }
         }
-        public static void WindowGui()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new main());
-        }
+
         public static bool Checkapp(string proc)
         {
             bool check = ProcessValidation.CheckForApplicationByName(proc.ToString());

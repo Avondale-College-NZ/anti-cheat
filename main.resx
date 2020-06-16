@@ -478,6 +478,46 @@
         GPW8z+95k3Y9AfV2ViYl3E8xYxhBskDz2EwnZzhOBX+nnIv6wv4Xeb89DF3IrIYAAAAASUVORK5CYII=
 </value>
   </data>
+  <metadata name="openFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>123, 17</value>
+  </metadata>
+  <metadata name="ToolBar.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>263, 17</value>
+  </metadata>
+  <data name="Toolbarbtnset.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADRSURBVDhPrdMxCwFxGMfxMymKMlAkBqPBC/AGvAyDwaDs
+        JpvZbtINSrEopZRIBpm8Aq/E93nur467/9GdX33qebp7nvvf1Tn/yByLmGRWiyaKhtS/RmaTL3iYIg6Z
+        1cKWb6fRWduCKXa4aBce64I87khBrrcRlsgTjCFP36CFLD4TuUBSh4sDVhjCn9AFA5zRhXzEJeRVylgj
+        h1cCCxrYo4YTephBkoGcpKqdl8CCNG4Y4Wj6K+SeLSbwJ7BAUkEfJe28dFDwyrfobOKfKUEc5wnqKEU6
+        xszf4QAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="Toolbarbtnlog.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEQSURBVDhPY6AiYPZmYGBcB8QbgHg2UEAWIk4Y8ACxIQMD
+        010gbQbEukB2LBCfg4gzaKBhRSBGBkxXgDZuBrrAFyoABczBQPGNQLwNFTNdBOIkqCIQYLoHZRAJmMKB
+        BrVDOSAAN4AFyM4BSvYQwFuA6k5C2EwRQH0wA5jqgYJzgU4PJBIHAfW8hBnACKRvAGlBkFFEAgugNmDY
+        QQywAnKAAUYKYJwI1BsFZIAMYJwMpIGBQzRgBqq/A6S5gZjpERCD0gAXSIY4wOwKtHQZlMP0H8hZAuUQ
+        CRjnAQ2BpRuQAaBkTDTggLqYDcJlYPoCJIyBWI84zFQNdME0IBsGmEqBAqAMRCyeBNQkANFLMWBgAADR
+        xDncyr1pVAAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="ToolBarbtncld.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADlSURBVDhPzdG7agJBAIXhEcQbgo2VForkIVIYQbC1EFL4
+        FAqJPoOkt4qNBlS8dBZaKATsxLfIi+Q/O7vgbZe10gPfcnbYnZ3ZMU+dHD4xcqlrLFTamOANSZe6xloI
+        jB7o2HozXfhOoiVObQ2MVnK2nQw08x5lDbgp4R2/aCAGRdvRP3GSxwY1xDVwEr00wCsOSENJ4MdWY4Yo
+        2nqVLbwV9fBhq5MdXlSWuvikjiO+8Aedhpcs5ipBE0SRgo71cnvKQhdtoaByZyJYqegnrlGFvhgmWn4f
+        TeeOeMc4xiyEb1Tw8BjzDxBqJLvfxAwzAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAUAEBAAAAEAIABoBAAAVgAAABgYAAABACAAiAkAAL4EAAAgIAAAAQAgAKgQAABGDgAAMDAAAAEA
