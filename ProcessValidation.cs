@@ -62,8 +62,6 @@ namespace ProcessCheck
             return sb.ToString();
         }
 
-
-
         /// <summary>
         /// List all processes by image name
         /// </summary>
@@ -91,8 +89,6 @@ namespace ProcessCheck
 
             return sb.ToString();
         }
-
-
 
         /// <summary>
         /// Determine if a process is running by name

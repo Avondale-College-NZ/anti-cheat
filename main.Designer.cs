@@ -119,6 +119,7 @@
             this.Toolbarbtnset.Name = "Toolbarbtnset";
             this.Toolbarbtnset.Size = new System.Drawing.Size(23, 22);
             this.Toolbarbtnset.Text = "Settings";
+            this.Toolbarbtnset.Click += new System.EventHandler(this.Toolbarbtnset_Click);
             // 
             // toolStripSeparator2
             // 
