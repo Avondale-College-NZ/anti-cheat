@@ -29,119 +29,28 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Settings));
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.Chkautokill = new System.Windows.Forms.CheckBox();
             this.lbllogfiledir = new System.Windows.Forms.Label();
             this.lblautokill = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.Btnfiledir = new System.Windows.Forms.Button();
+            this.TxtLogfiledir = new System.Windows.Forms.TextBox();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
+            // Chkautokill
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(31, 305);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(31, 328);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "label2";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(31, 351);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "label3";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(31, 374);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "label4";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(31, 397);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 13);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "label5";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(89, 304);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(80, 17);
-            this.checkBox1.TabIndex = 5;
-            this.checkBox1.Text = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(89, 327);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(80, 17);
-            this.checkBox2.TabIndex = 6;
-            this.checkBox2.Text = "checkBox2";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(89, 350);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(80, 17);
-            this.checkBox3.TabIndex = 7;
-            this.checkBox3.Text = "checkBox3";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(89, 373);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(80, 17);
-            this.checkBox4.TabIndex = 8;
-            this.checkBox4.Text = "checkBox4";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
-            // checkBox5
-            // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(89, 396);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(80, 17);
-            this.checkBox5.TabIndex = 9;
-            this.checkBox5.Text = "checkBox5";
-            this.checkBox5.UseVisualStyleBackColor = true;
+            this.Chkautokill.AutoSize = true;
+            this.Chkautokill.Location = new System.Drawing.Point(106, 29);
+            this.Chkautokill.Name = "Chkautokill";
+            this.Chkautokill.Size = new System.Drawing.Size(15, 14);
+            this.Chkautokill.TabIndex = 6;
+            this.Chkautokill.UseVisualStyleBackColor = true;
             // 
             // lbllogfiledir
             // 
             this.lbllogfiledir.AutoSize = true;
-            this.lbllogfiledir.Location = new System.Drawing.Point(166, 38);
+            this.lbllogfiledir.Location = new System.Drawing.Point(9, 8);
             this.lbllogfiledir.Name = "lbllogfiledir";
             this.lbllogfiledir.Size = new System.Drawing.Size(95, 13);
             this.lbllogfiledir.TabIndex = 10;
@@ -150,51 +59,64 @@
             // lblautokill
             // 
             this.lblautokill.AutoSize = true;
-            this.lblautokill.Location = new System.Drawing.Point(166, 68);
+            this.lblautokill.Location = new System.Drawing.Point(56, 30);
             this.lblautokill.Name = "lblautokill";
             this.lblautokill.Size = new System.Drawing.Size(44, 13);
             this.lblautokill.TabIndex = 11;
             this.lblautokill.Text = "Autokill:";
+            this.lblautokill.Click += new System.EventHandler(this.lblautokill_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.Btnfiledir);
+            this.panel1.Controls.Add(this.TxtLogfiledir);
+            this.panel1.Controls.Add(this.lblautokill);
+            this.panel1.Controls.Add(this.lbllogfiledir);
+            this.panel1.Controls.Add(this.Chkautokill);
+            this.panel1.Location = new System.Drawing.Point(195, 12);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(401, 363);
+            this.panel1.TabIndex = 12;
+            // 
+            // Btnfiledir
+            // 
+            this.Btnfiledir.Location = new System.Drawing.Point(323, 3);
+            this.Btnfiledir.Name = "Btnfiledir";
+            this.Btnfiledir.Size = new System.Drawing.Size(75, 23);
+            this.Btnfiledir.TabIndex = 13;
+            this.Btnfiledir.Text = "Browse";
+            this.Btnfiledir.UseVisualStyleBackColor = true;
+            this.Btnfiledir.Click += new System.EventHandler(this.Btnfiledir_Click);
+            // 
+            // TxtLogfiledir
+            // 
+            this.TxtLogfiledir.Location = new System.Drawing.Point(106, 5);
+            this.TxtLogfiledir.Name = "TxtLogfiledir";
+            this.TxtLogfiledir.Size = new System.Drawing.Size(211, 20);
+            this.TxtLogfiledir.TabIndex = 12;
             // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(608, 540);
-            this.Controls.Add(this.lblautokill);
-            this.Controls.Add(this.lbllogfiledir);
-            this.Controls.Add(this.checkBox5);
-            this.Controls.Add(this.checkBox4);
-            this.Controls.Add(this.checkBox3);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Settings";
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.Settings_Load);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.CheckBox Chkautokill;
         private System.Windows.Forms.Label lbllogfiledir;
         private System.Windows.Forms.Label lblautokill;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button Btnfiledir;
+        private System.Windows.Forms.TextBox TxtLogfiledir;
     }
 }
