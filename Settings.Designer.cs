@@ -64,7 +64,6 @@
             this.lblautokill.Size = new System.Drawing.Size(44, 13);
             this.lblautokill.TabIndex = 11;
             this.lblautokill.Text = "Autokill:";
-            this.lblautokill.Click += new System.EventHandler(this.lblautokill_Click);
             // 
             // panel1
             // 

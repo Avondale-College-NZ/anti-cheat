@@ -25,8 +25,8 @@ namespace anti_cheat
         {
             public static bool status = false; // Global Variable: "status"
             public static int count = 0; // Global Variable: "count"
-            public static string cheatproc = "";
             public static string logdir = Directory.GetCurrentDirectory();
+            public static bool autokill = false;
         }
         
         private void Main_Resize(object sender, EventArgs e)

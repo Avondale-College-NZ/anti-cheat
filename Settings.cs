@@ -24,11 +24,6 @@ namespace anti_cheat
             TxtLogfiledir.Text = Main.Globals.logdir;
         }
 
-        private void lblautokill_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void Btnfiledir_Click(object sender, EventArgs e)
         {
             try
