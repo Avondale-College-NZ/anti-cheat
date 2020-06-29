@@ -21,7 +21,7 @@ namespace anti_cheat
 
         private void Settings_Load(object sender, EventArgs e)
         {
-            TxtLogfiledir.Text = Main.Globals.logdir;
+            TxtLogfiledir.Text = Program.Globals.logdir;
         }
 
         private void Btnfiledir_Click(object sender, EventArgs e)
@@ -34,7 +34,7 @@ namespace anti_cheat
                 {
                     DirectoryInfo info = dlg.info;
                     TxtLogfiledir.Text = dlg.fullPath;
-                    Main.Globals.logdir = dlg.fullPath;
+                    Program.Globals.logdir = dlg.fullPath;
 
                     // extract the directory info.
                     string[] strArray = new string[4];

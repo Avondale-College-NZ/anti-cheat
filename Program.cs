@@ -25,7 +25,13 @@ namespace anti_cheat
             guithread.Start();
             checkthread.Start();
         }
-
+        public static class Globals
+        {
+            public static bool status = false; // Global Variable: "status"
+            public static int count = 0; // Global Variable: "count"
+            public static string logdir = Directory.GetCurrentDirectory();
+            public static bool autokill = false;
+        }
         public static void WindowGui()
         {
             Application.EnableVisualStyles();
@@ -43,7 +49,7 @@ namespace anti_cheat
             try {
                 while (true) {
                     Thread.Sleep(2000);
-                    while (anti_cheat.Main.Globals.status)
+                    while (Globals.status)
                     {
                         foreach (string line in lines)
                         {
@@ -51,12 +57,21 @@ namespace anti_cheat
                             if (Checkproc(line))
                             {
                                 MessageBox.Show("Process \"" + line + "\" was found.");
+                                if (true)
+                                {
+
+                                }
                             }
 
                             if (Checkapp(line))
                             {
                                 MessageBox.Show("Application \"" + line + "\" was found.");
+                                if (true)
+                                {
+
+                                }
                             }
+
                         }
                     }
                 }

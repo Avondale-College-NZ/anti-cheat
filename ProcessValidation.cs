@@ -139,6 +139,25 @@ namespace ProcessCheck
             return rtnVal;
         }
 
+        /// <summary>
+        /// Kill process from supplied name
+        /// </summary>
+        /// <param name="ProcList"></param>
+        /// <returns></returns>
+        public static bool ProcKill(string[] ProcList)
+        {
+            foreach (string Process_name in ProcList)
+            {
+                foreach (var process in Process.GetProcessesByName(Process_name))
+                {
+                    process.Kill();
+                }
+            }
+
+            return true;
+        }
+
+
 
         /// <summary>
         /// Determine if an application is running by name
