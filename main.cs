@@ -20,13 +20,6 @@ namespace anti_cheat
         {
             InitializeComponent();
         }
-
-        public static class Globals
-        {
-            public static bool status = false; // Global Variable: "status"
-            public static int count = 0; // Global Variable: "count"
-            public static string cheatproc = "";
-        }
         
         private void Main_Resize(object sender, EventArgs e)
         {
@@ -55,18 +48,16 @@ namespace anti_cheat
 
         private void Controlbtn_Click(object sender, EventArgs e)
         {
-            Globals.count++;
-            int count = Globals.count % 2;
-            if (count > 0) 
+            Program.Globals.count++;
+            int count = Program.Globals.count % 2;
+            if (count != 0) 
             {
-                Globals.status = true;
+                Program.Globals.status = true;
                 lblstatus.Text = "Running...";
                 lblstatus.ForeColor = Color.Lime;
                 Controlbtn.Text = "Stop";
-            }
-            if (count == 0) 
-            {
-                Globals.status = false;
+            } else {
+                Program.Globals.status = false;
                 lblstatus.Text = "Stopped.";
                 lblstatus.ForeColor = Color.Red;
                 Controlbtn.Text = "Start";

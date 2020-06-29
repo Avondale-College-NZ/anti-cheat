@@ -34,7 +34,6 @@
             this.lblstatus = new System.Windows.Forms.Label();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.Controlbtn = new System.Windows.Forms.Button();
-            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.ToolBar = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Toolbarbtnset = new System.Windows.Forms.ToolStripButton();
@@ -83,10 +82,6 @@
             this.Controlbtn.Text = "Start";
             this.Controlbtn.UseVisualStyleBackColor = true;
             this.Controlbtn.Click += new System.EventHandler(this.Controlbtn_Click);
-            // 
-            // openFileDialog
-            // 
-            this.openFileDialog.FileName = "openFileDialog";
             // 
             // ToolBar
             // 
@@ -183,7 +178,6 @@
         private System.Windows.Forms.Label lblstatus;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.Button Controlbtn;
-        private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.ToolStrip ToolBar;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton Toolbarbtnset;
