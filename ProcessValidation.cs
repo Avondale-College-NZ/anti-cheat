@@ -142,19 +142,18 @@ namespace ProcessCheck
         /// <summary>
         /// Kill process from supplied name
         /// </summary>
-        /// <param name="ProcList"></param>
+        /// <param name="ProcName"></param>
         /// <returns></returns>
-        public static bool ProcKill(string[] ProcList)
+        public static string ProcKill(string ProcName)
         {
-            foreach (string Process_name in ProcList)
+            ProcName = ProcName.Replace(".exe", "");
+
+            foreach (Process process in Process.GetProcessesByName(ProcName))
             {
-                foreach (var process in Process.GetProcessesByName(Process_name))
-                {
-                    process.Kill();
-                }
+                process.Kill();
             }
 
-            return true;
+            return ProcName;
         }
 
 
@@ -182,9 +181,6 @@ namespace ProcessCheck
 
             return bRtn;
         }
-
-
-
 
         /// <summary>
         /// Check for the existence of a process by ID; if the ID

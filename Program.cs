@@ -30,7 +30,7 @@ namespace anti_cheat
             public static bool status = false; // Global Variable: "status"
             public static int count = 0; // Global Variable: "count"
             public static string logdir = Directory.GetCurrentDirectory();
-            public static bool autokill = false;
+            public static bool autokill = true;
         }
         public static void WindowGui()
         {
@@ -57,18 +57,20 @@ namespace anti_cheat
                             if (Checkproc(line))
                             {
                                 MessageBox.Show("Process \"" + line + "\" was found.");
-                                if (true)
+                                if (Globals.autokill == true)
                                 {
-
+                                    string a = ProcessValidation.ProcKill(line);
+                                    MessageBox.Show("Process \"" + line + "\" " + "\"" + a + "\""  + "  was killed.");
                                 }
                             }
 
                             if (Checkapp(line))
                             {
                                 MessageBox.Show("Application \"" + line + "\" was found.");
-                                if (true)
+                                if (Globals.autokill == true)
                                 {
-
+                                    string a = ProcessValidation.ProcKill(line);
+                                    MessageBox.Show("Process \"" + line + "\" " + "\"" + a + "\"" + "  was killed.");
                                 }
                             }
 
