@@ -29,8 +29,8 @@ namespace anti_cheat
         {
             public static bool status = false; // Global Variable: "status"
             public static int count = 0; // Global Variable: "count"
-            public static string logdir = Directory.GetCurrentDirectory();
-            public static bool autokill = true;
+            public static string logdir = Directory.GetCurrentDirectory(); // Global Variable: "logdirectory"
+            public static bool autokill = true; // Global Variable: "autokill"
         }
         public static void WindowGui()
         {
@@ -44,8 +44,7 @@ namespace anti_cheat
             var curDir = Directory.GetCurrentDirectory();
             var txtFile = curDir + "\\proc.txt";
             string[] lines = File.ReadAllLines(txtFile);
-
-            // TODO: Write kill if found, alert if found, 
+            
             try {
                 while (true) {
                     Thread.Sleep(2000);
@@ -53,21 +52,19 @@ namespace anti_cheat
                     {
                         foreach (string line in lines)
                         {
-
                             if (Checkproc(line))
                             {
                                 MessageBox.Show("Process \"" + line + "\" was found.");
-                                if (Globals.autokill == true)
+                                if (Globals.autokill && Globals.status == true)
                                 {
                                     string a = ProcessValidation.ProcKill(line);
                                     MessageBox.Show("Process \"" + line + "\" " + "\"" + a + "\""  + "  was killed.");
                                 }
                             }
-
                             if (Checkapp(line))
                             {
                                 MessageBox.Show("Application \"" + line + "\" was found.");
-                                if (Globals.autokill == true)
+                                if (Globals.autokill && Globals.status == true)
                                 {
                                     string a = ProcessValidation.ProcKill(line);
                                     MessageBox.Show("Process \"" + line + "\" " + "\"" + a + "\"" + "  was killed.");
