@@ -8,7 +8,6 @@ using System.Diagnostics;
 namespace ProcessCheck
 {
 
-
     public static class ProcessValidation
     {
 
@@ -32,8 +31,6 @@ namespace ProcessCheck
 
             return sb.ToString();
         }
-
-
 
         /// <summary>
         /// Returns a string containing information on running processes
@@ -112,7 +109,6 @@ namespace ProcessCheck
             return rtnVal;
         }
 
-
         /// <summary>
         /// Determine if a process is running by image name
         /// </summary>
@@ -155,8 +151,6 @@ namespace ProcessCheck
 
             return ProcName;
         }
-
-
 
         /// <summary>
         /// Determine if an application is running by name
@@ -203,5 +197,7 @@ namespace ProcessCheck
 
             return rtnVal;
         }
+
+
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using ProcessCheck;
+using System.Diagnostics;
 
 namespace anti_cheat
 {
@@ -39,19 +40,38 @@ namespace anti_cheat
             Application.Run(new Main());
         }
 
+        static string[] Baseline()
+        {
+            Process[] processlistinitial = Process.GetProcesses();
+
+            foreach (Process process in processlistinitial)
+            {
+                Console.WriteLine("Process: {0} ID: {1}", process.ProcessName, process.Id);
+            }
+
+
+            int procdiffnum = 0;
+            string[] procs = new string[procdiffnum];
+
+
+            // string array elements
+            procs[0] = "a";
+
+                return procs;
+            }
+
         public static void BGProc()
         {
+
             var curDir = Directory.GetCurrentDirectory();
             var txtFile = curDir + "\\proc.txt";
             string[] lines = File.ReadAllLines(txtFile);
             
-            try {
-                while (true) {
+            try{
+                while (true){
                     Thread.Sleep(2000);
-                    while (Globals.status)
-                    {
-                        foreach (string line in lines)
-                        {
+                    while (Globals.status){
+                        foreach (string line in lines){
                             if (Checkproc(line))
                             {
                                 MessageBox.Show("Process \"" + line + "\" was found.");
