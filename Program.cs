@@ -11,6 +11,14 @@ using System.Diagnostics;
 
 namespace anti_cheat
 {
+
+    /// <summary>
+    /// Notes:
+    /// p.StartTime (Shows the time the process started)
+    /// p.TotalProcessorTime(Shows the amount of CPU time the process has taken)
+    /// p.Threads(gives access to the collection of threads in the process)
+    /// </summary>
+    /// 
     static class Program
     {
         /// <summary>
@@ -55,12 +63,28 @@ namespace anti_cheat
                 return currentprocs;
         }
 
-        private static string[] CompareBaseline(Process[] baseline, Process[] current)
+        private static Process[] CompareBaseline(Process[] baseline, Process[] current)
         {
-            
+
             // Implement compare between process lists.
-            
-            string[] diffprocs = {"a","b"};
+            // Using LINQ
+
+            //T[] array1 = getOneArray();
+            //T[] array2 = getAnotherArray();
+            Process[] diffprocs = new Process[baseline.Length + current.Length];
+            Array.Copy(baseline, diffprocs, baseline.Length);
+            Array.Copy(current, 0, diffprocs, baseline.Length, current.Length);
+
+
+
+
+            foreach (Process p in diffprocs)
+            {
+                String[] uniqueprocs = ;
+                MessageBox.Show("Process: { 0} ID: { 1}", p.ProcessName + p.Id);
+            }
+
+            //String[] strdiffprocs = diffprocs.Distinct().ToArray();
             return diffprocs;
         }
 
@@ -68,11 +92,8 @@ namespace anti_cheat
         public static void BGProc()
         {
             Process[] baseline = TakeBaseline();
-            Process[] current = TakeCurrent();
             
-            string[] diffprocs = CompareBaseline(baseline,current);
-
-
+            
             var curDir = Directory.GetCurrentDirectory();
             var txtFile = curDir + "\\proc.txt";
             string[] lines = File.ReadAllLines(txtFile);
@@ -81,6 +102,17 @@ namespace anti_cheat
                 while (true){
                     Thread.Sleep(2000);
                     while (Globals.status){
+                        Process[] current = TakeCurrent();
+                        Process[] diffprocs = CompareBaseline(baseline, current);
+
+
+                        foreach (Process theprocess in diffprocs)
+                        {
+                            MessageBox.Show("Process: { 0} ID: { 1}", theprocess.ProcessName + theprocess.Id);
+                        }
+
+
+
                         foreach (string line in lines){
 
                             if (Checkproc(line))
