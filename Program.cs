@@ -40,28 +40,37 @@ namespace anti_cheat
             Application.Run(new Main());
         }
 
-        static string[] Baseline()
+        private static Process[] TakeBaseline()
         {
-            Process[] processlistinitial = Process.GetProcesses();
+            Process[] baseline = Process.GetProcesses();
 
-            foreach (Process process in processlistinitial)
-            {
-                Console.WriteLine("Process: {0} ID: {1}", process.ProcessName, process.Id);
-            }
+                return baseline;
+        }
 
+        private static Process[] TakeCurrent()
+        {
 
-            int procdiffnum = 0;
-            string[] procs = new string[procdiffnum];
+            Process[] currentprocs = Process.GetProcesses();
 
+                return currentprocs;
+        }
 
-            // string array elements
-            procs[0] = "a";
+        private static string[] CompareBaseline(Process[] baseline, Process[] current)
+        {
+            string[] diffprocsS;
+            diffprocss[0] = "a";
 
-                return procs;
-            }
+            return diffprocsS;
+        }
+
 
         public static void BGProc()
         {
+            Process[] baseline = TakeBaseline();
+            Process[] current = TakeCurrent();
+            
+            string[] diffprocs = CompareBaseline(baseline,current);
+
 
             var curDir = Directory.GetCurrentDirectory();
             var txtFile = curDir + "\\proc.txt";
@@ -72,6 +81,7 @@ namespace anti_cheat
                     Thread.Sleep(2000);
                     while (Globals.status){
                         foreach (string line in lines){
+
                             if (Checkproc(line))
                             {
                                 MessageBox.Show("Process \"" + line + "\" was found.");
@@ -81,6 +91,7 @@ namespace anti_cheat
                                     MessageBox.Show("Process \"" + line + "\" " + "\"" + a + "\""  + "  was killed.");
                                 }
                             }
+
                             if (Checkapp(line))
                             {
                                 MessageBox.Show("Application \"" + line + "\" was found.");
