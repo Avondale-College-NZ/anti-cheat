@@ -57,10 +57,11 @@ namespace anti_cheat
 
         private static string[] CompareBaseline(Process[] baseline, Process[] current)
         {
-            string[] diffprocsS;
-            diffprocss[0] = "a";
-
-            return diffprocsS;
+            
+            // Implement compare between process lists.
+            
+            string[] diffprocs = {"a","b"};
+            return diffprocs;
         }
 
 
