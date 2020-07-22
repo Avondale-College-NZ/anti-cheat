@@ -63,7 +63,7 @@ namespace anti_cheat
                 return currentprocs;
         }
 
-        private static Process[] CompareBaseline(Process[] baseline, Process[] current)
+        private static List<Process> CompareBaseline(Process[] baseline, Process[] current)
         {
 
             // Implement compare between process lists.
@@ -71,21 +71,27 @@ namespace anti_cheat
 
             //T[] array1 = getOneArray();
             //T[] array2 = getAnotherArray();
-            Process[] diffprocs = new Process[baseline.Length + current.Length];
-            Array.Copy(baseline, diffprocs, baseline.Length);
-            Array.Copy(current, 0, diffprocs, baseline.Length, current.Length);
+            //Process[] diffprocs = new Process[baseline.Length + current.Length];
+            //Array.Copy(baseline, diffprocs, baseline.Length);
+            //Array.Copy(current, 0, diffprocs, baseline.Length, current.Length);
 
 
-
-
-            foreach (Process p in diffprocs)
+            //bool hasunique = false;
+            List<Process> differentProcesses = new List<Process>();
+            foreach (Process pb in baseline)
             {
-                String[] uniqueprocs = ;
-                MessageBox.Show("Process: { 0} ID: { 1}", p.ProcessName + p.Id);
+                foreach (Process pc in current)
+                {
+                    if (pb != pc)
+                    {
+                        //hasunique = true;
+                        differentProcesses.Add(pc);
+                    }
+                }
             }
 
             //String[] strdiffprocs = diffprocs.Distinct().ToArray();
-            return diffprocs;
+            return differentProcesses;
         }
 
 
@@ -102,17 +108,24 @@ namespace anti_cheat
                 while (true){
                     Thread.Sleep(2000);
                     while (Globals.status){
+
                         Process[] current = TakeCurrent();
-                        Process[] diffprocs = CompareBaseline(baseline, current);
+                        List<Process> differentProcesses = CompareBaseline(baseline, current);
 
 
-                        foreach (Process theprocess in diffprocs)
+
+                        if (differentProcesses != null)
                         {
-                            MessageBox.Show("Process: { 0} ID: { 1}", theprocess.ProcessName + theprocess.Id);
+
+                            using (TextWriter tw = new StreamWriter(curDir + "\\SavedList.txt"))
+                            {
+                                foreach (Process s in differentProcesses)
+                                {
+                                    tw.WriteLine(s);
+                                }
+                                tw.Close();
+                            }
                         }
-
-
-
                         foreach (string line in lines){
 
                             if (Checkproc(line))
