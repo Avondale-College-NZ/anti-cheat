@@ -75,7 +75,6 @@ namespace anti_cheat
             //Array.Copy(baseline, diffprocs, baseline.Length);
             //Array.Copy(current, 0, diffprocs, baseline.Length, current.Length);
 
-
             //bool hasunique = false;
             List<Process> differentProcesses = new List<Process>();
             foreach (Process pb in baseline)
@@ -110,7 +109,12 @@ namespace anti_cheat
                     while (Globals.status){
 
                         Process[] current = TakeCurrent();
+
+
                         List<Process> differentProcesses = CompareBaseline(baseline, current);
+
+                        //var diffprc = differentProcesses;
+                        
 
 
 
