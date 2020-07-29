@@ -3,10 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Pipes;
 using System.Threading;
 using System.Windows.Forms;
-using System.Management;
 
 namespace anti_cheat
 {
@@ -47,30 +45,14 @@ namespace anti_cheat
             Application.Run(new Main());
         }
 
-        private static List<string> TakeBaseline()
-        {
-            Process[] baseline = Process.GetProcesses();
-            List<string> baseprocsids = new List<string>();
-
-
-
-            foreach (Process p in baseline)
-            {
-                string a = p.ToString();
-                baseprocsids.Add(a);
-            }
-
-            return baseprocsids;
-        }
-
         private static List<string> TakeCurrent()
         {
 
-            Process[] currentprocs = Process.GetProcesses();
-           // List<string> currentprocsids = new List<string>();
+            //Process[] currentprocs = Process.GetProcesses();
+            // List<string> currentprocsids = new List<string>();
             List<string> currentprocsids = ProcessValidation.ListAllProcessIds();
-            
-            foreach (Process p  in currentprocs)
+
+            foreach (string p in currentprocsids)
             {
                 string a = p.ToString();
                 currentprocsids.Add(a);
@@ -79,7 +61,7 @@ namespace anti_cheat
             return currentprocsids;
         }
 
-        private static List<string> CompareBaseline(List<string> baseline, List<string> current)
+        private static List<string> Compareprocesses(List<string> baseline, List<string> current)
         {
 
             List<string> differentProcesses = new List<string>();
@@ -104,7 +86,7 @@ namespace anti_cheat
 
         public static void BGProc()
         {
-            List<string> baseline = TakeBaseline();
+            List<string> baseline = TakeCurrent();
 
 
             var curDir = Directory.GetCurrentDirectory();
@@ -122,7 +104,7 @@ namespace anti_cheat
                         List<string> current = TakeCurrent();
 
 
-                        List<string> differentProcesses = CompareBaseline(baseline, current);
+                        List<string> differentProcesses = Compareprocesses(baseline, current);
 
                         //var diffprc = differentProcesses;
 

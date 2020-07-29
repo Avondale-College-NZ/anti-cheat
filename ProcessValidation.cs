@@ -212,15 +212,12 @@ namespace ProcessCheck
 
             foreach (ManagementObject mo in MgmtClass.GetInstances())
             {
-                sb.Append(mo["ProcessId"]);
+                sb.Append(mo["ProcessId"] + Environment.NewLine);
                 string a = sb.ToString();
                 ProcessIds.Add(a);
-
             }
 
             return ProcessIds;
         }
-
-
     }
 }

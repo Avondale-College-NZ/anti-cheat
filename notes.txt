@@ -5,3 +5,5 @@ before:
 call processcheck > store in list > compare lists > write to diffprocs
 now:
 call ListAllProcessIds() > compare > uniquelist > lookup unique ids > alert
+after:
+List by application instead of process
