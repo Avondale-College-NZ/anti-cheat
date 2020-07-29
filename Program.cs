@@ -1,13 +1,12 @@
-﻿using System;
-using System.IO;
-using System.Text;
+﻿using ProcessCheck;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Threading;
-using ProcessCheck;
 using System.Diagnostics;
+using System.IO;
+using System.IO.Pipes;
+using System.Threading;
+using System.Windows.Forms;
+using System.Management;
 
 namespace anti_cheat
 {
@@ -48,89 +47,100 @@ namespace anti_cheat
             Application.Run(new Main());
         }
 
-        private static Process[] TakeBaseline()
+        private static List<string> TakeBaseline()
         {
             Process[] baseline = Process.GetProcesses();
+            List<string> baseprocsids = new List<string>();
 
-                return baseline;
+
+
+            foreach (Process p in baseline)
+            {
+                string a = p.ToString();
+                baseprocsids.Add(a);
+            }
+
+            return baseprocsids;
         }
 
-        private static Process[] TakeCurrent()
+        private static List<string> TakeCurrent()
         {
 
             Process[] currentprocs = Process.GetProcesses();
+           // List<string> currentprocsids = new List<string>();
+            List<string> currentprocsids = ProcessValidation.ListAllProcessIds();
+            
+            foreach (Process p  in currentprocs)
+            {
+                string a = p.ToString();
+                currentprocsids.Add(a);
+            }
 
-                return currentprocs;
+            return currentprocsids;
         }
 
-        private static List<Process> CompareBaseline(Process[] baseline, Process[] current)
+        private static List<string> CompareBaseline(List<string> baseline, List<string> current)
         {
 
-            // Implement compare between process lists.
-            // Using LINQ
+            List<string> differentProcesses = new List<string>();
 
-            //T[] array1 = getOneArray();
-            //T[] array2 = getAnotherArray();
-            //Process[] diffprocs = new Process[baseline.Length + current.Length];
-            //Array.Copy(baseline, diffprocs, baseline.Length);
-            //Array.Copy(current, 0, diffprocs, baseline.Length, current.Length);
-
-            //bool hasunique = false;
-            List<Process> differentProcesses = new List<Process>();
-            foreach (Process pb in baseline)
+            foreach (string pb in baseline)
             {
-                foreach (Process pc in current)
+                foreach (string pc in current)
                 {
                     if (pb != pc)
                     {
+
                         //hasunique = true;
-                        differentProcesses.Add(pc);
+                        string pstr = pc.ToString();
+                        differentProcesses.Add(pstr);
                     }
                 }
             }
 
-            //String[] strdiffprocs = diffprocs.Distinct().ToArray();
             return differentProcesses;
         }
 
 
         public static void BGProc()
         {
-            Process[] baseline = TakeBaseline();
-            
-            
+            List<string> baseline = TakeBaseline();
+
+
             var curDir = Directory.GetCurrentDirectory();
             var txtFile = curDir + "\\proc.txt";
             string[] lines = File.ReadAllLines(txtFile);
-            
-            try{
-                while (true){
+
+            try
+            {
+                while (true)
+                {
                     Thread.Sleep(2000);
-                    while (Globals.status){
+                    while (Globals.status)
+                    {
 
-                        Process[] current = TakeCurrent();
+                        List<string> current = TakeCurrent();
 
 
-                        List<Process> differentProcesses = CompareBaseline(baseline, current);
+                        List<string> differentProcesses = CompareBaseline(baseline, current);
 
                         //var diffprc = differentProcesses;
-                        
-
-
 
                         if (differentProcesses != null)
                         {
 
                             using (TextWriter tw = new StreamWriter(curDir + "\\SavedList.txt"))
                             {
-                                foreach (Process s in differentProcesses)
+                                foreach (string s in differentProcesses)
                                 {
                                     tw.WriteLine(s);
                                 }
                                 tw.Close();
                             }
                         }
-                        foreach (string line in lines){
+
+                        foreach (string line in lines)
+                        {
 
                             if (Checkproc(line))
                             {
@@ -138,7 +148,7 @@ namespace anti_cheat
                                 if (Globals.autokill && Globals.status == true)
                                 {
                                     string a = ProcessValidation.ProcKill(line);
-                                    MessageBox.Show("Process \"" + line + "\" " + "\"" + a + "\""  + "  was killed.");
+                                    MessageBox.Show("Process \"" + line + "\" " + "\"" + a + "\"" + "  was killed.");
                                 }
                             }
 
@@ -155,7 +165,8 @@ namespace anti_cheat
                         }
                     }
                 }
-            } catch { }
+            }
+            catch { }
         }
 
         public static bool Checkapp(string proc)
@@ -165,7 +176,7 @@ namespace anti_cheat
         }
         public static bool Checkproc(string proc)
         {
-            bool check = ProcessValidation.CheckForProcessByName(proc.ToString()); 
+            bool check = ProcessValidation.CheckForProcessByName(proc.ToString());
             return check;
         }
     }
