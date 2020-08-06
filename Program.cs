@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Security;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -48,7 +49,7 @@ namespace anti_cheat
         private static List<string> TakeCurrent()
         {
 
-            //Process[] currentprocs = Process.GetProcesses();
+            // Process[] currentprocs = Process.GetProcesses();
             // List<string> currentprocsids = new List<string>();
             List<string> currentprocsids = ProcessValidation.ListAllProcessIds();
 
