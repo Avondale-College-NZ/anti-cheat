@@ -1,16 +1,22 @@
-﻿using System;
-using System.IO;
-using System.Text;
+﻿using ProcessCheck;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Threading;
-using ProcessCheck;
 using System.Diagnostics;
+using System.IO;
+using System.Security;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace anti_cheat
 {
+
+    /// <summary>
+    /// Notes:
+    /// p.StartTime (Shows the time the process started)
+    /// p.TotalProcessorTime(Shows the amount of CPU time the process has taken)
+    /// p.Threads(gives access to the collection of threads in the process)
+    /// </summary>
+    /// 
     static class Program
     {
         /// <summary>
@@ -40,47 +46,95 @@ namespace anti_cheat
             Application.Run(new Main());
         }
 
-        static string[] Baseline()
+        private static List<string> TakeCurrent()
         {
-            Process[] processlistinitial = Process.GetProcesses();
 
-            foreach (Process process in processlistinitial)
+            // Process[] currentprocs = Process.GetProcesses();
+            // List<string> currentprocsids = new List<string>();
+            List<string> currentprocsids = ProcessValidation.ListAllProcessIds();
+
+            foreach (string p in currentprocsids)
             {
-                Console.WriteLine("Process: {0} ID: {1}", process.ProcessName, process.Id);
+                string a = p.ToString();
+                currentprocsids.Add(a);
             }
 
+            return currentprocsids;
+        }
 
-            int procdiffnum = 0;
-            string[] procs = new string[procdiffnum];
+        private static List<string> Compareprocesses(List<string> baseline, List<string> current)
+        {
 
+            List<string> differentProcesses = new List<string>();
 
-            // string array elements
-            procs[0] = "a";
+            foreach (string pb in baseline)
+            {
+                foreach (string pc in current)
+                {
+                    if (pb != pc)
+                    {
 
-                return procs;
+                        //hasunique = true;
+                        string pstr = pc.ToString();
+                        differentProcesses.Add(pstr);
+                    }
+                }
             }
+
+            return differentProcesses;
+        }
+
 
         public static void BGProc()
         {
+            List<string> baseline = TakeCurrent();
+
 
             var curDir = Directory.GetCurrentDirectory();
             var txtFile = curDir + "\\proc.txt";
             string[] lines = File.ReadAllLines(txtFile);
-            
-            try{
-                while (true){
+
+            try
+            {
+                while (true)
+                {
                     Thread.Sleep(2000);
-                    while (Globals.status){
-                        foreach (string line in lines){
+                    while (Globals.status)
+                    {
+
+                        List<string> current = TakeCurrent();
+
+
+                        List<string> differentProcesses = Compareprocesses(baseline, current);
+
+                        //var diffprc = differentProcesses;
+
+                        if (differentProcesses != null)
+                        {
+
+                            using (TextWriter tw = new StreamWriter(curDir + "\\SavedList.txt"))
+                            {
+                                foreach (string s in differentProcesses)
+                                {
+                                    tw.WriteLine(s);
+                                }
+                                tw.Close();
+                            }
+                        }
+
+                        foreach (string line in lines)
+                        {
+
                             if (Checkproc(line))
                             {
                                 MessageBox.Show("Process \"" + line + "\" was found.");
                                 if (Globals.autokill && Globals.status == true)
                                 {
                                     string a = ProcessValidation.ProcKill(line);
-                                    MessageBox.Show("Process \"" + line + "\" " + "\"" + a + "\""  + "  was killed.");
+                                    MessageBox.Show("Process \"" + line + "\" " + "\"" + a + "\"" + "  was killed.");
                                 }
                             }
+
                             if (Checkapp(line))
                             {
                                 MessageBox.Show("Application \"" + line + "\" was found.");
@@ -94,7 +148,8 @@ namespace anti_cheat
                         }
                     }
                 }
-            } catch { }
+            }
+            catch { }
         }
 
         public static bool Checkapp(string proc)
@@ -104,7 +159,7 @@ namespace anti_cheat
         }
         public static bool Checkproc(string proc)
         {
-            bool check = ProcessValidation.CheckForProcessByName(proc.ToString()); 
+            bool check = ProcessValidation.CheckForProcessByName(proc.ToString());
             return check;
         }
     }

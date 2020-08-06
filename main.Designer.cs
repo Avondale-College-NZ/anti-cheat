@@ -130,6 +130,7 @@
             this.Toolbarbtnlog.Size = new System.Drawing.Size(23, 22);
             this.Toolbarbtnlog.Text = "Logs";
             this.Toolbarbtnlog.ToolTipText = "Logs";
+            this.Toolbarbtnlog.Click += new System.EventHandler(this.Toolbarbtnlog_Click);
             // 
             // toolStripSeparator3
             // 
@@ -145,6 +146,7 @@
             this.ToolBarbtncld.Size = new System.Drawing.Size(23, 22);
             this.ToolBarbtncld.Text = "Cloud Integration";
             this.ToolBarbtncld.ToolTipText = "Cloud Integration";
+            this.ToolBarbtncld.Click += new System.EventHandler(this.ToolBarbtncld_Click);
             // 
             // toolStripSeparator4
             // 

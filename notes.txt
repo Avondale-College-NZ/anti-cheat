@@ -1,0 +1,9 @@
+>>
+beforebefore:
+write system.process.id to array > clear duplicates > processlookup > process array
+before:
+call processcheck > store in list > compare lists > write to diffprocs
+now:
+call ListAllProcessIds() > compare > uniquelist > lookup unique ids > alert
+after:
+List by application instead of process

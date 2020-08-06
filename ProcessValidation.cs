@@ -14,7 +14,7 @@ namespace ProcessCheck
         /// <summary>
         /// Returns a string containing information on running processes
         /// </summary>
-        /// <param name="tb"></param>
+        /// <returns></returns>
         public static string ListAllProcesses()
         {
             StringBuilder sb = new StringBuilder();
@@ -112,7 +112,7 @@ namespace ProcessCheck
         /// <summary>
         /// Determine if a process is running by image name
         /// </summary>
-        /// <param name="processName"></param>
+        /// <param name="processImageName"></param>
         /// <returns></returns>
         public static bool CheckForProcessByImageName(string processImageName)
         {
@@ -197,7 +197,27 @@ namespace ProcessCheck
 
             return rtnVal;
         }
+        /// <summary>
+        /// Returns a string containing all running process IDs
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> ListAllProcessIds()
+        {
 
+            List<string> ProcessIds = new List<string>();
+            StringBuilder sb = new StringBuilder();
 
+            // list out all processes and write them into a stringbuilder
+            ManagementClass MgmtClass = new ManagementClass("Win32_Process");
+
+            foreach (ManagementObject mo in MgmtClass.GetInstances())
+            {
+                sb.Append(mo["ProcessId"] + Environment.NewLine);
+                string a = sb.ToString();
+                ProcessIds.Add(a);
+            }
+
+            return ProcessIds;
+        }
     }
 }

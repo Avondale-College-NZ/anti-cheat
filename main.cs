@@ -70,5 +70,15 @@ namespace anti_cheat
             Settings set = new Settings();
            set.Show(); 
         }
+
+        private void Toolbarbtnlog_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ToolBarbtncld_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
