@@ -73,12 +73,14 @@ namespace anti_cheat
 
         private void Toolbarbtnlog_Click(object sender, EventArgs e)
         {
-
+            Logs log = new Logs();
+           log.Show();
         }
 
         private void ToolBarbtncld_Click(object sender, EventArgs e)
         {
-
+            Cloud cld = new Cloud();
+           cld.Show();
         }
     }
 }

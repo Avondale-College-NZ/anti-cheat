@@ -48,16 +48,16 @@ namespace anti_cheat
 
         private static List<string> TakeCurrent()
         {
-
             // Process[] currentprocs = Process.GetProcesses();
             // List<string> currentprocsids = new List<string>();
-            List<string> currentprocsids = ProcessValidation.ListAllProcessIds();
 
-            foreach (string p in currentprocsids)
-            {
-                string a = p.ToString();
-                currentprocsids.Add(a);
-            }
+            List<string> currentprocsids = ProcessValidation.ListAllApplications();
+
+            // foreach (string p in currentprocsids)
+            // {
+            //     string a = p.ToString();
+            //     currentprocsids.Add(a);
+            // }
 
             return currentprocsids;
         }
@@ -71,7 +71,7 @@ namespace anti_cheat
             {
                 foreach (string pc in current)
                 {
-                    if (pb != pc)
+                    if (pb == pc)
                     {
 
                         //hasunique = true;
@@ -80,7 +80,6 @@ namespace anti_cheat
                     }
                 }
             }
-
             return differentProcesses;
         }
 

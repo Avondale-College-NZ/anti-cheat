@@ -51,6 +51,12 @@
     <Compile Include="FolderSelect.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Cloud.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cloud.Designer.cs">
+      <DependentUpon>Cloud.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logs.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,6 +80,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FolderSelect.resx">
       <DependentUpon>FolderSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cloud.resx">
+      <DependentUpon>Cloud.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Logs.resx">
       <DependentUpon>Logs.cs</DependentUpon>
