@@ -47,12 +47,12 @@ namespace anti_cheat
             Application.Run(new Main());
         }
 
-        private static List<string> TakeCurrent()
+        private static int[] TakeCurrent()
         {
             // Process[] currentprocs = Process.GetProcesses();
             // List<string> currentprocsids = new List<string>();
 
-            List<string> currentprocsids = ProcessValidation.ListAllProcessIds();
+            int[] pids = ProcessValidation.ListAllProcessIds();
 
             // foreach (string p in currentprocsids)
             // {
@@ -60,47 +60,49 @@ namespace anti_cheat
             //     currentprocsids.Add(a);
             // }
 
-            return currentprocsids;
+            return pids;
         }
 
-        private static List<string> Compareprocesses(List<string> baseline, List<string> current)
+        private static string[] Compareprocesses(int[] baseline, int[] current)
         {
 
             int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 };
             int[] numbersB = { 1, 3, 5, 7, 8 };
 
-            IEnumerable<int> aOnlyNumbers = numbersA.Except(numbersB);
+            IEnumerable<int> differentProcesses = current.Except(baseline);
 
-            Console.WriteLine("Numbers in first array but not second array:");
-            foreach (var n in aOnlyNumbers)
-            {
-                Console.WriteLine(n);
-            }
+            //Console.WriteLine("Numbers in first array but not second array:");
+            //foreach (int n in aOnlyNumbers)
+            //{
+            //    Console.WriteLine(n);
+            //}
 
 
 
-            List<string> differentProcesses = new List<string>();
+            //List<string> differentProcesses = new List<string>();
 
-            foreach (string pb in baseline)
-            {
-                foreach (string pc in current)
-                {
-                    if (pb == pc)
-                    {
+            //foreach (string pb in baseline)
+            //{
+            //    foreach (string pc in current)
+            //    {
+            //        if (pb == pc)
+            //        {
 
-                        //hasunique = true;
-                        string pstr = pc.ToString();
-                        differentProcesses.Add(pstr);
-                    }
-                }
-            }
-            return differentProcesses;
+            //            //hasunique = true;
+            //            string pstr = pc.ToString();
+            //            differentProcesses.Add(pstr);
+            //        }
+            //    }
+            //}
+            string[] adifferentProcesses = differentProcesses.Select(x => x.ToString()).ToArray();
+
+            return adifferentProcesses;
         }
 
 
         public static void BGProc()
         {
-            List<string> baseline = TakeCurrent();
+            int[] baseline = TakeCurrent();
 
 
             var curDir = Directory.GetCurrentDirectory();
@@ -115,24 +117,26 @@ namespace anti_cheat
                     while (Globals.status)
                     {
 
-                        List<string> current = TakeCurrent();
+                        int[] current = TakeCurrent();
 
 
-                        List<string> differentProcesses = Compareprocesses(baseline, current);
+                        string[] differentProcesses = Compareprocesses(baseline, current);
 
                         //var diffprc = differentProcesses;
 
-                        if (differentProcesses != null)
+                        if (differentProcesses.Length > 0)
                         {
-
-                            using (TextWriter tw = new StreamWriter(curDir + "\\SavedList.txt"))
+                            try
                             {
-                                foreach (string s in differentProcesses)
+                                using (TextWriter tw = new StreamWriter(curDir + "\\SavedList.txt"))
                                 {
-                                    tw.WriteLine(s);
+                                    foreach (string s in differentProcesses)
+                                    {
+                                        tw.WriteLine(s);
+                                    }
+                                    tw.Close();
                                 }
-                                tw.Close();
-                            }
+                            } catch { }
                         }
 
                         foreach (string line in lines)

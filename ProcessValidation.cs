@@ -201,23 +201,28 @@ namespace ProcessCheck
         /// Returns a string containing all running process IDs
         /// </summary>
         /// <returns></returns>
-        public static List<string> ListAllProcessIds()
+        public static int[] ListAllProcessIds()
         {
 
             List<string> ProcessIds = new List<string>();
             StringBuilder sb = new StringBuilder();
+            int[] pids = { };
+
 
             // list out all processes and write them into a stringbuilder
             ManagementClass MgmtClass = new ManagementClass("Win32_Process");
 
             foreach (ManagementObject mo in MgmtClass.GetInstances())
             {
-                sb.Append(mo["ProcessId"] + Environment.NewLine);
-                string a = sb.ToString();
-                ProcessIds.Add(a);
+                //sb.Append(mo["ProcessId"] + Environment.NewLine);
+                //string a = sb.ToString();
+                //ProcessIds.Add(a);
+
+                Array.Resize(ref pids, pids.Length + 1);
+                pids[pids.GetUpperBound(0)] = Convert.ToInt32(mo["ProcessId"]);
             }
 
-            return ProcessIds;
+            return pids;
         }
         /// <summary>
         /// Returns a string containing all running process Apps
