@@ -6,6 +6,7 @@ using System.IO;
 using System.Security;
 using System.Threading;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace anti_cheat
 {
@@ -51,7 +52,7 @@ namespace anti_cheat
             // Process[] currentprocs = Process.GetProcesses();
             // List<string> currentprocsids = new List<string>();
 
-            List<string> currentprocsids = ProcessValidation.ListAllApplications();
+            List<string> currentprocsids = ProcessValidation.ListAllProcessIds();
 
             // foreach (string p in currentprocsids)
             // {
@@ -64,6 +65,19 @@ namespace anti_cheat
 
         private static List<string> Compareprocesses(List<string> baseline, List<string> current)
         {
+
+            int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 };
+            int[] numbersB = { 1, 3, 5, 7, 8 };
+
+            IEnumerable<int> aOnlyNumbers = numbersA.Except(numbersB);
+
+            Console.WriteLine("Numbers in first array but not second array:");
+            foreach (var n in aOnlyNumbers)
+            {
+                Console.WriteLine(n);
+            }
+
+
 
             List<string> differentProcesses = new List<string>();
 
