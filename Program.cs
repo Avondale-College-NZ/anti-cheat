@@ -49,16 +49,7 @@ namespace anti_cheat
 
         private static int[] TakeCurrent()
         {
-            // Process[] currentprocs = Process.GetProcesses();
-            // List<string> currentprocsids = new List<string>();
-
             int[] pids = ProcessValidation.ListAllProcessIds();
-
-            // foreach (string p in currentprocsids)
-            // {
-            //     string a = p.ToString();
-            //     currentprocsids.Add(a);
-            // }
 
             return pids;
         }
@@ -66,34 +57,8 @@ namespace anti_cheat
         private static string[] Compareprocesses(int[] baseline, int[] current)
         {
 
-            int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 };
-            int[] numbersB = { 1, 3, 5, 7, 8 };
-
             IEnumerable<int> differentProcesses = current.Except(baseline);
 
-            //Console.WriteLine("Numbers in first array but not second array:");
-            //foreach (int n in aOnlyNumbers)
-            //{
-            //    Console.WriteLine(n);
-            //}
-
-
-
-            //List<string> differentProcesses = new List<string>();
-
-            //foreach (string pb in baseline)
-            //{
-            //    foreach (string pc in current)
-            //    {
-            //        if (pb == pc)
-            //        {
-
-            //            //hasunique = true;
-            //            string pstr = pc.ToString();
-            //            differentProcesses.Add(pstr);
-            //        }
-            //    }
-            //}
             string[] adifferentProcesses = differentProcesses.Select(x => x.ToString()).ToArray();
 
             return adifferentProcesses;
@@ -122,7 +87,6 @@ namespace anti_cheat
 
                         string[] differentProcesses = Compareprocesses(baseline, current);
 
-                        //var diffprc = differentProcesses;
 
                         if (differentProcesses.Length > 0)
                         {
