@@ -1,4 +1,4 @@
-# anti-cheat
+# Anti-Cheat
 <h2>Repository for Anticheat project 91906 & Scholarship</h2>
 
 <h3>About:</h3>
