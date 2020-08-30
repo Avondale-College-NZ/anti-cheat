@@ -1,12 +1,10 @@
 ﻿using ProcessCheck;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Security;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using System.Linq;
 
 namespace anti_cheat
 {
@@ -29,7 +27,7 @@ namespace anti_cheat
             Thread guithread = new Thread(new ThreadStart(WindowGui));
             Thread checkthread = new Thread(new ThreadStart(BGProc));
 
-            // Start ThreadProcs
+            // Start thread processes that handle Main.cs GUI and the background handler
             guithread.Start();
             checkthread.Start();
         }
@@ -55,10 +53,10 @@ namespace anti_cheat
         }
 
         private static string[] Compareprocesses(int[] baseline, int[] current)
+            // Runs comparison on "baseline" vs "current" array arguments
         {
 
             IEnumerable<int> differentProcesses = current.Except(baseline);
-
             string[] adifferentProcesses = differentProcesses.Select(x => x.ToString()).ToArray();
 
             return adifferentProcesses;
@@ -68,7 +66,6 @@ namespace anti_cheat
         public static void BGProc()
         {
             int[] baseline = TakeCurrent();
-
 
             var curDir = Directory.GetCurrentDirectory();
             var txtFile = curDir + "\\proc.txt";
@@ -83,10 +80,7 @@ namespace anti_cheat
                     {
 
                         int[] current = TakeCurrent();
-
-
                         string[] differentProcesses = Compareprocesses(baseline, current);
-
 
                         if (differentProcesses.Length > 0)
                         {
@@ -100,7 +94,8 @@ namespace anti_cheat
                                     }
                                     tw.Close();
                                 }
-                            } catch { }
+                            }
+                            catch { }
                         }
 
                         foreach (string line in lines)

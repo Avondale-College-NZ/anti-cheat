@@ -1,16 +1,6 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
-using ProcessCheck;
-using System.Threading;
 
 namespace anti_cheat
 {
@@ -20,7 +10,7 @@ namespace anti_cheat
         {
             InitializeComponent();
         }
-        
+
         private void Main_Resize(object sender, EventArgs e)
         {
             //if the form is minimized  
@@ -50,37 +40,39 @@ namespace anti_cheat
         {
             Program.Globals.count++;
             int count = Program.Globals.count % 2;
-            if (count != 0) 
+            if (count != 0)
             {
                 Program.Globals.status = true;
                 lblstatus.Text = "Running...";
                 lblstatus.ForeColor = Color.Lime;
                 Controlbtn.Text = "Stop";
-            } else {
+            }
+            else
+            {
                 Program.Globals.status = false;
                 lblstatus.Text = "Stopped.";
                 lblstatus.ForeColor = Color.Red;
                 Controlbtn.Text = "Start";
             }
-                      
+
         }
 
         private void Toolbarbtnset_Click(object sender, EventArgs e)
         {
             Settings set = new Settings();
-           set.Show(); 
+            set.Show();
         }
 
         private void Toolbarbtnlog_Click(object sender, EventArgs e)
         {
             Logs log = new Logs();
-           log.Show();
+            log.Show();
         }
 
         private void ToolBarbtncld_Click(object sender, EventArgs e)
         {
             Cloud cld = new Cloud();
-           cld.Show();
+            cld.Show();
         }
     }
 }

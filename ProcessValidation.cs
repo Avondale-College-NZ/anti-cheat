@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Management;
-using System.ComponentModel;
 using System.Diagnostics;
+using System.Management;
+using System.Text;
 
 namespace ProcessCheck
 {
@@ -21,7 +20,7 @@ namespace ProcessCheck
 
             // list out all processes and write them into a stringbuilder
             ManagementClass MgmtClass = new ManagementClass("Win32_Process");
-            
+
             foreach (ManagementObject mo in MgmtClass.GetInstances())
             {
                 sb.Append("Name:\t" + mo["Name"] + Environment.NewLine);
@@ -197,6 +196,7 @@ namespace ProcessCheck
 
             return rtnVal;
         }
+
         /// <summary>
         /// Returns a string containing all running process IDs
         /// </summary>
@@ -224,6 +224,7 @@ namespace ProcessCheck
 
             return pids;
         }
+
         /// <summary>
         /// Returns a string containing all running process Apps
         /// </summary>
