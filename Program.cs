@@ -1,12 +1,10 @@
 ﻿using ProcessCheck;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Security;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using System.Linq;
 
 namespace anti_cheat
 {
@@ -100,7 +98,8 @@ namespace anti_cheat
                                     }
                                     tw.Close();
                                 }
-                            } catch { }
+                            }
+                            catch { }
                         }
 
                         foreach (string line in lines)
