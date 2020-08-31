@@ -196,6 +196,7 @@ namespace ProcessCheck
 
             return rtnVal;
         }
+
         /// <summary>
         /// Returns a string containing all running process IDs
         /// </summary>
@@ -223,6 +224,7 @@ namespace ProcessCheck
 
             return pids;
         }
+
         /// <summary>
         /// Returns a string containing all running process Apps
         /// </summary>
