@@ -204,8 +204,8 @@ namespace ProcessCheck
         public static int[] ListAllProcessIds()
         {
 
-            List<string> ProcessIds = new List<string>();
-            StringBuilder sb = new StringBuilder();
+            //List<string> ProcessIds = new List<string>();
+            //StringBuilder sb = new StringBuilder();
             int[] pids = { };
 
 
@@ -223,6 +223,28 @@ namespace ProcessCheck
             }
 
             return pids;
+        }
+        /// <summary>
+        /// Lookups supplied process ID; 
+        /// if the ID is found, the method will return the process name and ID
+        /// </summary>
+        /// <param name="processidlookup"></param>
+        /// <returns></returns>
+        public static string Processlookup(string processidlookup)
+        {
+            StringBuilder sb = new StringBuilder();
+            ManagementClass MgmtClass = new ManagementClass("Win32_Process");
+
+            foreach (ManagementObject mo in MgmtClass.GetInstances())
+            {
+                if (mo["ProcessId"].ToString() == processidlookup.ToString())
+                {
+                    sb.Append(mo["ProcessName"].ToString() + " ") ;
+                    sb.Append(mo["ProcessId"].ToString() + Environment.NewLine);
+                }
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>
