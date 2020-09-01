@@ -1,13 +1,13 @@
 ﻿using ProcessCheck;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using System.Data;
-using System.Diagnostics;
-
+using System.Data.SqlClient;
 namespace anti_cheat
 {
 
@@ -34,31 +34,44 @@ namespace anti_cheat
             IEnumerable<int> differentProcesses = current.Except(baseline);
             string[] adifferentProcesses = differentProcesses.Select(x => x.ToString()).ToArray();
 
+            Debug.WriteLine("Compareprocesses:");                                   // Debug Message
+            foreach (string s in adifferentProcesses) { Debug.Write(s + "\n"); }    // Debug Message
+
             return adifferentProcesses;
         }
 
-        public static List<String> PIDlookup(string[] PIDarray)
+        public static string[] PIDlookup(string[] PIDarray)
         {
             List<string> PIDlist = new List<string>();
-
-            for (int i = 0; i < PIDlist.Count; i++)
+            //foreach (string s in PIDarray) 
+            for (int c = 0; c < PIDarray.Length;)
             {
-                string a = ProcessValidation.Processlookup(PIDarray[i]);
+
+                //string a = ProcessValidation.Processlookup(PIDarray[c]);
+                int id = Int16.Parse(PIDarray[c]);
+                string a = (Process.GetProcessById(id).ProcessName + id);    // INDEX OUT OF RANGE ERROR
                 PIDlist.Add(a);
+                c++;
             }
 
-            return PIDlist;
+            Debug.WriteLine("PIDLookup:"); // Debug Messages
+
+            PIDlist.ForEach(s => Debug.Write(s + "\n"));
+
+            return PIDlist.ToArray();
         }
+
 
     }
     static class Program
     {
         public static class Globals
         {
-            public static bool status = false; // Global Variable: "status"
-            public static int count = 0; // Global Variable: "count"
-            public static string logdir = Directory.GetCurrentDirectory(); // Global Variable: "logdirectory"
-            public static bool autokill = true; // Global Variable: "autokill"
+            public static bool status = false;                              // Global Variable: "status"
+            public static int count = 0;                                    // Global Variable: "count"
+            public static string logdir = Directory.GetCurrentDirectory();  // Global Variable: "logdirectory"
+            public static bool autokill = true;                             // Global Variable: "autokill"
+            public static string database = "";                             // Global Variable: "database"
         }
 
         /// <summary>
@@ -97,7 +110,7 @@ namespace anti_cheat
 
             var curDir = Directory.GetCurrentDirectory();
             var txtFile = curDir + "\\proc.txt";
-            string[] lines = File.ReadAllLines(txtFile);
+            string[] proclines = File.ReadAllLines(txtFile);
 
             try
             {
@@ -108,36 +121,30 @@ namespace anti_cheat
                     {
 
                         int[] current = Background.TakeCurrent();
-                        string[] differentProcesses = Background.Compareprocesses(baseline, current);
-                        List<string> differentProcessesID = Background.PIDlookup(differentProcesses);
 
-                        Debug.WriteLine("Exiting Main"); // Debug Messages
-                        Debug.Indent();
-                        Debug.Write(differentProcessesID);
-                        Debug.Unindent();
+                        string[] differentProcesses = Background.Compareprocesses(baseline, current); // Finds IDs of processes that started after anticheat
+                        string[] differentProcessesID = Background.PIDlookup(differentProcesses);     // <---- need to use string array instead of lists
 
+                        Debug.WriteLine("Write to file:");                                            // Debug Message
 
-                        if (differentProcessesID.Count > 0)
+                        foreach (string s in differentProcessesID) { Debug.Write(s + "\n"); }         // Debug Message
+
+                        if (differentProcessesID.Length > 0)
                         {
                             try
                             {
                                 using (TextWriter tw = new StreamWriter(curDir + "\\SavedList.txt"))
                                 {
-
-                                    tw.Write(differentProcessesID);
-                                    
-                                    
-                                    //foreach (string s in differentProcessesID)
-                                    //{
-                                    //    tw.WriteLine(s);
-                                    //}
+                                    foreach (string s in differentProcessesID) { tw.Write(s + "\n"); }
                                     tw.Close();
+
                                 }
                             }
                             catch { }
                         }
 
-                        foreach (string line in lines)
+
+                        foreach (string line in proclines)
                         {
 
                             if (Checkproc(line))

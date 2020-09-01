@@ -232,16 +232,23 @@ namespace ProcessCheck
         /// <returns></returns>
         public static string Processlookup(string processidlookup)
         {
-            StringBuilder sb = new StringBuilder();
-            ManagementClass MgmtClass = new ManagementClass("Win32_Process");
+              StringBuilder sb = new StringBuilder();
+            //ManagementClass MgmtClass = new ManagementClass("Win32_Process");
 
-            foreach (ManagementObject mo in MgmtClass.GetInstances())
-            {
-                if (mo["ProcessId"].ToString() == processidlookup.ToString())
-                {
-                    sb.Append(mo["ProcessName"].ToString() + " ") ;
-                    sb.Append(mo["ProcessId"].ToString() + Environment.NewLine);
-                }
+            //foreach (ManagementObject mo in MgmtClass.GetInstances())
+            //{
+            //    if (mo["ProcessId"].ToString() == processidlookup.ToString())
+            //    {
+
+            //        sb.Append(mo["ProcessName"].ToString() + " ");
+            //        //sb.Append(mo["ProcessId"].ToString() + Environment.NewLine);
+            //    }
+            //}
+
+            foreach ( char s in processidlookup) {
+                int i = Int16.Parse(s.ToString());
+                string a = Process.GetProcessById(i).ProcessName;
+                sb.Append(i + " " + a + Environment.NewLine);
             }
 
             return sb.ToString();
