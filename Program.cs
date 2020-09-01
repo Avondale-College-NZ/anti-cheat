@@ -61,6 +61,26 @@ namespace anti_cheat
             return PIDlist.ToArray();
         }
 
+        public static string LogtoDB()
+        {
+            string a = "";
+            //for windows auth.
+            //@"Data Source=(MachineName)\(InstanceName);Initial Catalog=(DBName);Integrated Security=True;"
+            //for Sql Server auth.
+            //@"Data Source=(MachineName)\(InstanceName);Initial Catalog=(DBName);User ID=(UserName);Password=(Password);"
+
+            SqlConnection sqlCon = new SqlConnection(@"Data Source=(local)\sqle2012;Initial Catalog=;Integrated Security=True");
+            SqlDataAdapter sqlda = new SqlDataAdapter("", sqlCon); // Query 
+            DataTable dtbl = new DataTable();
+            sqlda.Fill(dtbl);
+            foreach (DataRow row in dtbl.Rows)
+            {
+                Console.WriteLine(row["ProductName"]);
+            }
+            Console.ReadKey();
+
+            return a;
+        }
 
     }
     static class Program
