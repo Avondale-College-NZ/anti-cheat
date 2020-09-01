@@ -28,24 +28,74 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listView1 = new System.Windows.Forms.ListView();
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("a");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("b");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("c");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("d");
+            this.logsList = new System.Windows.Forms.ListView();
+            this.databaseID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.processName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.processID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.processHandle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.dateFound = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
-            // listView1
+            // logsList
             // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(250, 199);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(252, 182);
-            this.listView1.TabIndex = 1;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.logsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.databaseID,
+            this.processName,
+            this.processID,
+            this.processHandle,
+            this.dateFound});
+            this.logsList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.logsList.HideSelection = false;
+            this.logsList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
+            this.logsList.Location = new System.Drawing.Point(0, 0);
+            this.logsList.Name = "logsList";
+            this.logsList.Size = new System.Drawing.Size(800, 450);
+            this.logsList.TabIndex = 1;
+            this.logsList.UseCompatibleStateImageBehavior = false;
+            this.logsList.View = System.Windows.Forms.View.Details;
+            // 
+            // databaseID
+            // 
+            this.databaseID.Text = "Database ID";
+            this.databaseID.Width = 79;
+            // 
+            // processName
+            // 
+            this.processName.Text = "Process Name";
+            this.processName.Width = 157;
+            // 
+            // processID
+            // 
+            this.processID.DisplayIndex = 4;
+            this.processID.Text = "Process ID";
+            this.processID.Width = 116;
+            // 
+            // processHandle
+            // 
+            this.processHandle.DisplayIndex = 2;
+            this.processHandle.Text = "Process Handle";
+            this.processHandle.Width = 146;
+            // 
+            // dateFound
+            // 
+            this.dateFound.DisplayIndex = 3;
+            this.dateFound.Text = "Date Found";
+            this.dateFound.Width = 85;
             // 
             // Logs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.logsList);
             this.Name = "Logs";
             this.Text = "Log File";
             this.ResumeLayout(false);
@@ -54,6 +104,11 @@
 
         #endregion
 
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView logsList;
+        private System.Windows.Forms.ColumnHeader databaseID;
+        private System.Windows.Forms.ColumnHeader processName;
+        private System.Windows.Forms.ColumnHeader processHandle;
+        private System.Windows.Forms.ColumnHeader processID;
+        private System.Windows.Forms.ColumnHeader dateFound;
     }
 }
