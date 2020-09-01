@@ -61,28 +61,48 @@ namespace anti_cheat
             return PIDlist.ToArray();
         }
 
-        public static string LogtoDB()
+        public static bool LogtoDB(string procName, string procID, string procHandle, string logdate)
         {
-            string a = "";
             //for windows auth.
             //@"Data Source=(MachineName)\(InstanceName);Initial Catalog=(DBName);Integrated Security=True;"
             //for Sql Server auth.
             //@"Data Source=(MachineName)\(InstanceName);Initial Catalog=(DBName);User ID=(UserName);Password=(Password);"
+            string connectionString = @"Data Source = " + Program.Globals.database + "; Initial Catalog = "+ Program.Globals.databaseTbl +"; Integrated Security = True;";
+            Debug.Write(connectionString);
+            SqlConnection sqlCon = new SqlConnection(connectionString);
+            using (SqlConnection sqlCone = new SqlConnection())
+            {
+                sqlCon.Open();
+                SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCone);
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@ProcessName", procName);
+                sqlCmd.Parameters.AddWithValue("@ProcessID", procID);
+                sqlCmd.Parameters.AddWithValue("@ProcessHandle", procHandle);
+                sqlCmd.Parameters.AddWithValue("@DateLogged", logdate);
 
+                sqlCmd.ExecuteNonQuery();
+
+            }
+       
+            return true;
+        }
+
+        public static bool GetfromDB()
+        {
             SqlConnection sqlCon = new SqlConnection(@"Data Source=(local)\sqle2012;Initial Catalog=;Integrated Security=True");
             SqlDataAdapter sqlda = new SqlDataAdapter("", sqlCon); // Query 
             DataTable dtbl = new DataTable();
             sqlda.Fill(dtbl);
             foreach (DataRow row in dtbl.Rows)
             {
-                Console.WriteLine(row["ProductName"]);
+
             }
-            Console.ReadKey();
-
-            return a;
+            return true;
         }
-
     }
+
+
+
     static class Program
     {
         public static class Globals
@@ -91,7 +111,9 @@ namespace anti_cheat
             public static int count = 0;                                    // Global Variable: "count"
             public static string logdir = Directory.GetCurrentDirectory();  // Global Variable: "logdirectory"
             public static bool autokill = true;                             // Global Variable: "autokill"
-            public static string database = "";                             // Global Variable: "database"
+            public static string database = "tpisql01.avcol.school.nz";     // Global Variable: "database"
+            public static string databaseTbl = "Anticheat";                 // Global Variable: "databaseTbl"
+
         }
 
         /// <summary>
@@ -107,8 +129,9 @@ namespace anti_cheat
             Thread checkthread = new Thread(new ThreadStart(BGProc));
 
             // Start thread processes that handle Main.cs GUI and the background handler
-            guithread.Start();
-            checkthread.Start();
+            Background.LogtoDB("a","1","2","12");
+            //guithread.Start();
+            //checkthread.Start();
         }
 
         public static void WindowGui()
@@ -155,7 +178,7 @@ namespace anti_cheat
                             {
                                 using (TextWriter tw = new StreamWriter(curDir + "\\SavedList.txt"))
                                 {
-                                    foreach (string s in differentProcessesID) { tw.Write(s + "\n"); }
+                                    foreach (string s in differentProcessesID) { tw.Write(s + " " + "\n"); }
                                     tw.Close();
 
                                 }
