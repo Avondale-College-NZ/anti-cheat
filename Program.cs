@@ -46,6 +46,10 @@ namespace anti_cheat
             //foreach (string s in PIDarray) 
             for (int c = 0; c < PIDarray.Length;)
             {
+                System.Diagnostics.Process[] p = new System.Diagnostics.Process[3];
+
+
+
 
                 //string a = ProcessValidation.Processlookup(PIDarray[c]);
                 int id = Int16.Parse(PIDarray[c]);
@@ -129,9 +133,9 @@ namespace anti_cheat
             Thread checkthread = new Thread(new ThreadStart(BGProc));
 
             // Start thread processes that handle Main.cs GUI and the background handler
-            Background.LogtoDB("a","1","2","12");
-            //guithread.Start();
-            //checkthread.Start();
+            //Background.LogtoDB("a","1","2","12");
+            guithread.Start();
+            checkthread.Start();
         }
 
         public static void WindowGui()
