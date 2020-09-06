@@ -45,19 +45,10 @@ namespace anti_cheat
 
         public static string[] PIDlookup(string[] PIDarray)
         {
-            // System.Diagnostics.Process[] p = new System.Diagnostics.Process[2];
-            // p[0] = new System.Diagnostics.Process();
-
-
             List<string> PIDlist = new List<string>();
             ManagementClass MgmtClass = new ManagementClass("Win32_Process");
             for (int c = 0; c < PIDarray.Length;)
             {
-                System.Diagnostics.Process[] p = new System.Diagnostics.Process[3];
-
-
-
-
                 foreach (ManagementObject mo in MgmtClass.GetInstances())
                 {
                     if (mo["ProcessId"].ToString() == PIDarray[c])
@@ -67,11 +58,6 @@ namespace anti_cheat
                         bool status = LogtoDB(mo["ProcessName"].ToString(), mo["ProcessId"].ToString(), mo["ProcessHandle"].ToString(), result);
                     }
                 }
-
-                //string a = ProcessValidation.Processlookup(PIDarray[c]);
-                //int id = Int16.Parse(PIDarray[c]);
-                //string a = (Process.GetProcessById(id).ProcessName + id);    // INDEX OUT OF RANGE ERROR
-                //PIDlist.Add(a);
                 c++;
             }
 
@@ -84,13 +70,9 @@ namespace anti_cheat
 
         public static bool LogtoDB(string procName, string procID, string procHandle, string logdate)
         {
-            //for windows auth.
-            //@"Data Source=(MachineName)\(InstanceName);Initial Catalog=(DBName);Integrated Security=True;"
-            //for Sql Server auth.
-            //@"Data Source=(MachineName)\(InstanceName);Initial Catalog=(DBName);User ID=(UserName);Password=(Password);"
-            string connectionString = @"Data Source = " + Program.Globals.database + "; Initial Catalog = "+ Program.Globals.databaseTbl +"; Integrated Security = True;";
-            Debug.Write(connectionString);
-            SqlConnection sqlCon = new SqlConnection(connectionString);
+
+            Debug.Write(Program.Globals.connectionStringWinAuth);
+            SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringWinAuth);
             using (SqlConnection sqlCone = new SqlConnection())
             {
                 sqlCon.Open();
@@ -102,7 +84,6 @@ namespace anti_cheat
                 sqlCmd.Parameters.AddWithValue("@DateLogged", logdate);
 
                 sqlCmd.ExecuteNonQuery();
-
             }
        
             return true;
@@ -122,8 +103,6 @@ namespace anti_cheat
         }
     }
 
-
-
     static class Program
     {
         public static class Globals
@@ -134,7 +113,12 @@ namespace anti_cheat
             public static bool autokill = true;                             // Global Variable: "autokill"
             public static string database = "tpisql01.avcol.school.nz";     // Global Variable: "database"
             public static string databaseTbl = "Anticheat";                 // Global Variable: "databaseTbl"
-
+            public static string sqluser = "";                              // Global Variable: "sqluser"
+            public static string sqlpass = "";                              // Global Variable: "sqlpass"
+            public static string connectionStringWinAuth = @"Data Source = " + database + "; Initial Catalog = " + databaseTbl +
+    "; Integrated Security = True;";                                        // Global Variable: "connectionStringWinAuth"
+            public static string connectionStringSQLAuth = @"Data Source = " + database + "; Initial Catalog = " + databaseTbl +
+    "; User ID=(" + sqluser + "); Password=(" + sqlpass + ");";             // Global Variable: "connectionStringSQLAuth"
         }
 
         /// <summary>
@@ -163,8 +147,6 @@ namespace anti_cheat
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Main());
         }
-
-
 
         public static void BGProc()
         {
@@ -206,7 +188,6 @@ namespace anti_cheat
                             }
                             catch { }
                         }
-
 
                         foreach (string line in proclines)
                         {
