@@ -141,7 +141,7 @@ namespace ProcessCheck
         /// <returns></returns>
         public static string ProcKill(string ProcName)
         {
-            ProcName = ProcName.Replace(".exe", "");
+            ProcName = ProcName.Replace(".exe", "").ToLower();
 
             foreach (Process process in Process.GetProcessesByName(ProcName))
             {

@@ -8,6 +8,9 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Management;
+using System.Globalization;
+
 namespace anti_cheat
 {
 
@@ -42,15 +45,29 @@ namespace anti_cheat
 
         public static string[] PIDlookup(string[] PIDarray)
         {
+            // System.Diagnostics.Process[] p = new System.Diagnostics.Process[2];
+            // p[0] = new System.Diagnostics.Process();
+
+
             List<string> PIDlist = new List<string>();
-            //foreach (string s in PIDarray) 
+            ManagementClass MgmtClass = new ManagementClass("Win32_Process");
             for (int c = 0; c < PIDarray.Length;)
             {
 
+                foreach (ManagementObject mo in MgmtClass.GetInstances())
+                {
+                    if (mo["ProcessId"].ToString() == PIDarray[c])
+                    {
+                        var myDTFI = CultureInfo.CurrentCulture.DateTimeFormat;
+                        var result = myDTFI.FullDateTimePattern;
+                        bool status = LogtoDB(mo["ProcessName"].ToString(), mo["ProcessId"].ToString(), mo["ProcessHandle"].ToString(), result);
+                    }
+                }
+
                 //string a = ProcessValidation.Processlookup(PIDarray[c]);
-                int id = Int16.Parse(PIDarray[c]);
-                string a = (Process.GetProcessById(id).ProcessName + id);    // INDEX OUT OF RANGE ERROR
-                PIDlist.Add(a);
+                //int id = Int16.Parse(PIDarray[c]);
+                //string a = (Process.GetProcessById(id).ProcessName + id);    // INDEX OUT OF RANGE ERROR
+                //PIDlist.Add(a);
                 c++;
             }
 
@@ -129,9 +146,9 @@ namespace anti_cheat
             Thread checkthread = new Thread(new ThreadStart(BGProc));
 
             // Start thread processes that handle Main.cs GUI and the background handler
-            Background.LogtoDB("a","1","2","12");
-            //guithread.Start();
-            //checkthread.Start();
+            //Background.LogtoDB("a","1","2","12");
+            guithread.Start();
+            checkthread.Start();
         }
 
         public static void WindowGui()
