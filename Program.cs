@@ -107,17 +107,18 @@ namespace anti_cheat
     {
         public static class Globals
         {
-            public static bool status = false;                              // Global Variable: "status"
+            public static bool status = false;                              // Global Variable: "status" 
             public static int count = 0;                                    // Global Variable: "count"
             public static string logdir = Directory.GetCurrentDirectory();  // Global Variable: "logdirectory"
             public static bool autokill = true;                             // Global Variable: "autokill"
-            public static string database = "tpisql01.avcol.school.nz";     // Global Variable: "database"
-            public static string databaseTbl = "Anticheat";                 // Global Variable: "databaseTbl"
+            public static string databaseSvr = "tpisql01.avcol.school.nz";  // Global Variable: "databaseSvr"
+            public static string database = "Anticheat";                    // Global Variable: "database"
+            public static string databaseTbl = "tblProcesses";              // Global Variable: "databaseTbl"
             public static string sqluser = "";                              // Global Variable: "sqluser"
             public static string sqlpass = "";                              // Global Variable: "sqlpass"
-            public static string connectionStringWinAuth = @"Data Source = " + database + "; Initial Catalog = " + databaseTbl +
+            public static string connectionStringWinAuth = @"Data Source = " + databaseSvr + "\\" + database + "; Initial Catalog = " + databaseTbl +
     "; Integrated Security = True;";                                        // Global Variable: "connectionStringWinAuth"
-            public static string connectionStringSQLAuth = @"Data Source = " + database + "; Initial Catalog = " + databaseTbl +
+            public static string connectionStringSQLAuth = @"Data Source = " + databaseSvr + "\\" + database + "; Initial Catalog = " + databaseTbl +
     "; User ID=(" + sqluser + "); Password=(" + sqlpass + ");";             // Global Variable: "connectionStringSQLAuth"
         }
 

@@ -19,9 +19,18 @@ namespace anti_cheat
             InitializeComponent();
         }
 
+        private void cmbsqlauth_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            lblsqluser.Visible = true;
+            lblsqlpass.Visible = true;
+            txtsqluser.Visible = true;
+            txtsqlpass.Visible = true;
+        }
         private void Settings_Load(object sender, EventArgs e)
         {
             TxtLogfiledir.Text = Program.Globals.logdir;
+            cmbsqlauth.SelectedIndex = 0;
+
         }
 
         private void Btnfiledir_Click(object sender, EventArgs e)
@@ -38,12 +47,13 @@ namespace anti_cheat
 
                     // extract the directory info.
                     string[] strArray = new string[4];
-
-                    strArray[0] = "Creation Time : " + info.CreationTime.ToString();
-                    strArray[1] = "Full Name     : " + info.FullName;
-                    strArray[2] = "Last Access Time : " + info.LastAccessTime.ToString();
-                    strArray[3] = "Last Write Time  : " + info.LastWriteTime.ToString();
-
+                    try
+                    {
+                        strArray[0] = "Creation Time : " + info.CreationTime.ToString();
+                        strArray[1] = "Full Name     : " + info.FullName;
+                        strArray[2] = "Last Access Time : " + info.LastAccessTime.ToString();
+                        strArray[3] = "Last Write Time  : " + info.LastWriteTime.ToString();
+                    } catch { }
                     //textBox3.Lines = strArray;
                 }
             }

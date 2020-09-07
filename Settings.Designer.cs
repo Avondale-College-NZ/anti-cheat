@@ -32,12 +32,22 @@
             this.Chkautokill = new System.Windows.Forms.CheckBox();
             this.lbllogfiledir = new System.Windows.Forms.Label();
             this.lblautokill = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlsettings = new System.Windows.Forms.Panel();
             this.Btnfiledir = new System.Windows.Forms.Button();
             this.TxtLogfiledir = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel1.SuspendLayout();
+            this.lblauthoption = new System.Windows.Forms.Label();
+            this.lblsqlpass = new System.Windows.Forms.Label();
+            this.lblsqluser = new System.Windows.Forms.Label();
+            this.txtsqluser = new System.Windows.Forms.TextBox();
+            this.txtsqlpass = new System.Windows.Forms.TextBox();
+            this.cmbsqlauth = new System.Windows.Forms.ComboBox();
+            this.pnlsql = new System.Windows.Forms.Panel();
+            this.lblsqldatabase = new System.Windows.Forms.Label();
+            this.lblsqlserver = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.pnlsettings.SuspendLayout();
+            this.pnlsql.SuspendLayout();
             this.SuspendLayout();
             // 
             // Chkautokill
@@ -67,19 +77,17 @@
             this.lblautokill.TabIndex = 11;
             this.lblautokill.Text = "Autokill:";
             // 
-            // panel1
+            // pnlsettings
             // 
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.checkBox1);
-            this.panel1.Controls.Add(this.Btnfiledir);
-            this.panel1.Controls.Add(this.TxtLogfiledir);
-            this.panel1.Controls.Add(this.lblautokill);
-            this.panel1.Controls.Add(this.lbllogfiledir);
-            this.panel1.Controls.Add(this.Chkautokill);
-            this.panel1.Location = new System.Drawing.Point(195, 12);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(401, 363);
-            this.panel1.TabIndex = 12;
+            this.pnlsettings.Controls.Add(this.Btnfiledir);
+            this.pnlsettings.Controls.Add(this.TxtLogfiledir);
+            this.pnlsettings.Controls.Add(this.lblautokill);
+            this.pnlsettings.Controls.Add(this.lbllogfiledir);
+            this.pnlsettings.Controls.Add(this.Chkautokill);
+            this.pnlsettings.Location = new System.Drawing.Point(166, 54);
+            this.pnlsettings.Name = "pnlsettings";
+            this.pnlsettings.Size = new System.Drawing.Size(430, 53);
+            this.pnlsettings.TabIndex = 12;
             // 
             // Btnfiledir
             // 
@@ -98,37 +106,128 @@
             this.TxtLogfiledir.Size = new System.Drawing.Size(211, 20);
             this.TxtLogfiledir.TabIndex = 12;
             // 
-            // checkBox1
+            // lblauthoption
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(106, 50);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(80, 17);
-            this.checkBox1.TabIndex = 14;
-            this.checkBox1.Text = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.lblauthoption.AutoSize = true;
+            this.lblauthoption.Location = new System.Drawing.Point(44, 71);
+            this.lblauthoption.Name = "lblauthoption";
+            this.lblauthoption.Size = new System.Drawing.Size(56, 13);
+            this.lblauthoption.TabIndex = 15;
+            this.lblauthoption.Text = "SQL Auth:";
             // 
-            // label1
+            // lblsqlpass
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(40, 50);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 15;
-            this.label1.Text = "label1";
+            this.lblsqlpass.AutoSize = true;
+            this.lblsqlpass.Location = new System.Drawing.Point(20, 124);
+            this.lblsqlpass.Name = "lblsqlpass";
+            this.lblsqlpass.Size = new System.Drawing.Size(80, 13);
+            this.lblsqlpass.TabIndex = 16;
+            this.lblsqlpass.Text = "SQL Password:";
+            this.lblsqlpass.Visible = false;
+            // 
+            // lblsqluser
+            // 
+            this.lblsqluser.AutoSize = true;
+            this.lblsqluser.Location = new System.Drawing.Point(18, 98);
+            this.lblsqluser.Name = "lblsqluser";
+            this.lblsqluser.Size = new System.Drawing.Size(82, 13);
+            this.lblsqluser.TabIndex = 17;
+            this.lblsqluser.Text = "SQL Username:";
+            this.lblsqluser.Visible = false;
+            // 
+            // txtsqluser
+            // 
+            this.txtsqluser.Location = new System.Drawing.Point(106, 95);
+            this.txtsqluser.Name = "txtsqluser";
+            this.txtsqluser.Size = new System.Drawing.Size(211, 20);
+            this.txtsqluser.TabIndex = 18;
+            this.txtsqluser.Visible = false;
+            // 
+            // txtsqlpass
+            // 
+            this.txtsqlpass.Location = new System.Drawing.Point(106, 121);
+            this.txtsqlpass.Name = "txtsqlpass";
+            this.txtsqlpass.Size = new System.Drawing.Size(211, 20);
+            this.txtsqlpass.TabIndex = 19;
+            this.txtsqlpass.UseSystemPasswordChar = true;
+            this.txtsqlpass.Visible = false;
+            // 
+            // cmbsqlauth
+            // 
+            this.cmbsqlauth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbsqlauth.FormattingEnabled = true;
+            this.cmbsqlauth.Items.AddRange(new object[] {
+            "Windows Authentication",
+            "SQL Authentication"});
+            this.cmbsqlauth.Location = new System.Drawing.Point(106, 68);
+            this.cmbsqlauth.Name = "cmbsqlauth";
+            this.cmbsqlauth.Size = new System.Drawing.Size(211, 21);
+            this.cmbsqlauth.TabIndex = 20;
+            // 
+            // pnlsql
+            // 
+            this.pnlsql.Controls.Add(this.textBox4);
+            this.pnlsql.Controls.Add(this.textBox3);
+            this.pnlsql.Controls.Add(this.lblsqldatabase);
+            this.pnlsql.Controls.Add(this.lblsqlserver);
+            this.pnlsql.Controls.Add(this.lblsqluser);
+            this.pnlsql.Controls.Add(this.cmbsqlauth);
+            this.pnlsql.Controls.Add(this.lblauthoption);
+            this.pnlsql.Controls.Add(this.txtsqluser);
+            this.pnlsql.Controls.Add(this.txtsqlpass);
+            this.pnlsql.Controls.Add(this.lblsqlpass);
+            this.pnlsql.Location = new System.Drawing.Point(166, 129);
+            this.pnlsql.Name = "pnlsql";
+            this.pnlsql.Size = new System.Drawing.Size(430, 166);
+            this.pnlsql.TabIndex = 21;
+            // 
+            // lblsqldatabase
+            // 
+            this.lblsqldatabase.AutoSize = true;
+            this.lblsqldatabase.Location = new System.Drawing.Point(23, 38);
+            this.lblsqldatabase.Name = "lblsqldatabase";
+            this.lblsqldatabase.Size = new System.Drawing.Size(80, 13);
+            this.lblsqldatabase.TabIndex = 22;
+            this.lblsqldatabase.Text = "SQL Database:";
+            // 
+            // lblsqlserver
+            // 
+            this.lblsqlserver.AutoSize = true;
+            this.lblsqlserver.Location = new System.Drawing.Point(35, 12);
+            this.lblsqlserver.Name = "lblsqlserver";
+            this.lblsqlserver.Size = new System.Drawing.Size(65, 13);
+            this.lblsqlserver.TabIndex = 21;
+            this.lblsqlserver.Text = "SQL Server:";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(106, 9);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(211, 20);
+            this.textBox3.TabIndex = 23;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(106, 35);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(211, 20);
+            this.textBox4.TabIndex = 24;
             // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(608, 540);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnlsql);
+            this.Controls.Add(this.pnlsettings);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Settings";
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.Settings_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnlsettings.ResumeLayout(false);
+            this.pnlsettings.PerformLayout();
+            this.pnlsql.ResumeLayout(false);
+            this.pnlsql.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -137,10 +236,19 @@
         private System.Windows.Forms.CheckBox Chkautokill;
         private System.Windows.Forms.Label lbllogfiledir;
         private System.Windows.Forms.Label lblautokill;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnlsettings;
         private System.Windows.Forms.Button Btnfiledir;
         private System.Windows.Forms.TextBox TxtLogfiledir;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label lblauthoption;
+        private System.Windows.Forms.ComboBox cmbsqlauth;
+        private System.Windows.Forms.TextBox txtsqlpass;
+        private System.Windows.Forms.TextBox txtsqluser;
+        private System.Windows.Forms.Label lblsqluser;
+        private System.Windows.Forms.Label lblsqlpass;
+        private System.Windows.Forms.Panel pnlsql;
+        private System.Windows.Forms.Label lblsqldatabase;
+        private System.Windows.Forms.Label lblsqlserver;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBox3;
     }
 }
