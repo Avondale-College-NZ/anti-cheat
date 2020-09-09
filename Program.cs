@@ -72,11 +72,15 @@ namespace anti_cheat
         {
 
             Debug.Write(Program.Globals.connectionStringWinAuth);
-            SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringWinAuth);
-            using (SqlConnection sqlCone = new SqlConnection())
-            {
+            if (Program.Globals.authmethod == 1) {
+                SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringSQLAuth);
                 sqlCon.Open();
-                SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCone);
+            } else {
+                SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringWinAuth);
+                sqlCon.Open();
+            }
+
+                SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
                 sqlCmd.CommandType = CommandType.StoredProcedure;
                 sqlCmd.Parameters.AddWithValue("@ProcessName", procName);
                 sqlCmd.Parameters.AddWithValue("@ProcessID", procID);
@@ -84,7 +88,7 @@ namespace anti_cheat
                 sqlCmd.Parameters.AddWithValue("@DateLogged", logdate);
 
                 sqlCmd.ExecuteNonQuery();
-            }
+            
        
             return true;
         }
@@ -116,6 +120,7 @@ namespace anti_cheat
             public static string databaseTbl = "tblProcesses";              // Global Variable: "databaseTbl"
             public static string sqluser = "";                              // Global Variable: "sqluser"
             public static string sqlpass = "";                              // Global Variable: "sqlpass"
+            public static int authmethod = 0;                               // Global Variable: "authmethod" - 0 = Windows Authentication, 2 = SQL Authentication
             public static string connectionStringWinAuth = @"Data Source = " + databaseSvr + "\\" + database + "; Initial Catalog = " + databaseTbl +
     "; Integrated Security = True;";                                        // Global Variable: "connectionStringWinAuth"
             public static string connectionStringSQLAuth = @"Data Source = " + databaseSvr + "\\" + database + "; Initial Catalog = " + databaseTbl +

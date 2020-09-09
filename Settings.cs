@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using folderSelect;
+using System.Diagnostics;
 
 namespace anti_cheat
 {
@@ -19,17 +20,14 @@ namespace anti_cheat
             InitializeComponent();
         }
 
-        private void cmbsqlauth_SelectedIndexChanged(object sender, System.EventArgs e)
-        {
-            lblsqluser.Visible = true;
-            lblsqlpass.Visible = true;
-            txtsqluser.Visible = true;
-            txtsqlpass.Visible = true;
-        }
         private void Settings_Load(object sender, EventArgs e)
         {
             TxtLogfiledir.Text = Program.Globals.logdir;
-            cmbsqlauth.SelectedIndex = 0;
+            Cmbsqlauth.SelectedIndex = 0;
+            txtsqlserver.Text = Program.Globals.databaseSvr;
+            txtsqldatabase.Text = Program.Globals.database;
+            txtsqluser.Text = Program.Globals.sqluser;
+            txtsqlpass.Text = Program.Globals.sqlpass;
 
         }
 
@@ -59,7 +57,23 @@ namespace anti_cheat
             }
             catch (Exception err)
             {
-                Console.WriteLine(err.Message);
+                Debug.WriteLine(err.Message);
+            }
+        }
+
+        private void Cmbsqlauth_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.Globals.authmethod = Cmbsqlauth.SelectedIndex;
+            if (Cmbsqlauth.Text == "SQL Authentication") {
+                lblsqluser.Visible = true;
+                lblsqlpass.Visible = true;
+                txtsqluser.Visible = true;
+                txtsqlpass.Visible = true;
+            } else {
+                lblsqluser.Visible = false;
+                lblsqlpass.Visible = false;
+                txtsqluser.Visible = false;
+                txtsqlpass.Visible = false;
             }
         }
     }

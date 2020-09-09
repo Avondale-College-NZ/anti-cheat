@@ -40,12 +40,12 @@
             this.lblsqluser = new System.Windows.Forms.Label();
             this.txtsqluser = new System.Windows.Forms.TextBox();
             this.txtsqlpass = new System.Windows.Forms.TextBox();
-            this.cmbsqlauth = new System.Windows.Forms.ComboBox();
+            this.Cmbsqlauth = new System.Windows.Forms.ComboBox();
             this.pnlsql = new System.Windows.Forms.Panel();
+            this.txtsqldatabase = new System.Windows.Forms.TextBox();
+            this.txtsqlserver = new System.Windows.Forms.TextBox();
             this.lblsqldatabase = new System.Windows.Forms.Label();
             this.lblsqlserver = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
             this.pnlsettings.SuspendLayout();
             this.pnlsql.SuspendLayout();
             this.SuspendLayout();
@@ -152,26 +152,27 @@
             this.txtsqlpass.UseSystemPasswordChar = true;
             this.txtsqlpass.Visible = false;
             // 
-            // cmbsqlauth
+            // Cmbsqlauth
             // 
-            this.cmbsqlauth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbsqlauth.FormattingEnabled = true;
-            this.cmbsqlauth.Items.AddRange(new object[] {
+            this.Cmbsqlauth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Cmbsqlauth.FormattingEnabled = true;
+            this.Cmbsqlauth.Items.AddRange(new object[] {
             "Windows Authentication",
             "SQL Authentication"});
-            this.cmbsqlauth.Location = new System.Drawing.Point(106, 68);
-            this.cmbsqlauth.Name = "cmbsqlauth";
-            this.cmbsqlauth.Size = new System.Drawing.Size(211, 21);
-            this.cmbsqlauth.TabIndex = 20;
+            this.Cmbsqlauth.Location = new System.Drawing.Point(106, 68);
+            this.Cmbsqlauth.Name = "Cmbsqlauth";
+            this.Cmbsqlauth.Size = new System.Drawing.Size(211, 21);
+            this.Cmbsqlauth.TabIndex = 20;
+            this.Cmbsqlauth.SelectedIndexChanged += new System.EventHandler(this.Cmbsqlauth_SelectedIndexChanged);
             // 
             // pnlsql
             // 
-            this.pnlsql.Controls.Add(this.textBox4);
-            this.pnlsql.Controls.Add(this.textBox3);
+            this.pnlsql.Controls.Add(this.txtsqldatabase);
+            this.pnlsql.Controls.Add(this.txtsqlserver);
             this.pnlsql.Controls.Add(this.lblsqldatabase);
             this.pnlsql.Controls.Add(this.lblsqlserver);
             this.pnlsql.Controls.Add(this.lblsqluser);
-            this.pnlsql.Controls.Add(this.cmbsqlauth);
+            this.pnlsql.Controls.Add(this.Cmbsqlauth);
             this.pnlsql.Controls.Add(this.lblauthoption);
             this.pnlsql.Controls.Add(this.txtsqluser);
             this.pnlsql.Controls.Add(this.txtsqlpass);
@@ -180,6 +181,20 @@
             this.pnlsql.Name = "pnlsql";
             this.pnlsql.Size = new System.Drawing.Size(430, 166);
             this.pnlsql.TabIndex = 21;
+            // 
+            // txtsqldatabase
+            // 
+            this.txtsqldatabase.Location = new System.Drawing.Point(106, 35);
+            this.txtsqldatabase.Name = "txtsqldatabase";
+            this.txtsqldatabase.Size = new System.Drawing.Size(211, 20);
+            this.txtsqldatabase.TabIndex = 24;
+            // 
+            // txtsqlserver
+            // 
+            this.txtsqlserver.Location = new System.Drawing.Point(106, 9);
+            this.txtsqlserver.Name = "txtsqlserver";
+            this.txtsqlserver.Size = new System.Drawing.Size(211, 20);
+            this.txtsqlserver.TabIndex = 23;
             // 
             // lblsqldatabase
             // 
@@ -198,20 +213,6 @@
             this.lblsqlserver.Size = new System.Drawing.Size(65, 13);
             this.lblsqlserver.TabIndex = 21;
             this.lblsqlserver.Text = "SQL Server:";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(106, 9);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(211, 20);
-            this.textBox3.TabIndex = 23;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(106, 35);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(211, 20);
-            this.textBox4.TabIndex = 24;
             // 
             // Settings
             // 
@@ -240,7 +241,7 @@
         private System.Windows.Forms.Button Btnfiledir;
         private System.Windows.Forms.TextBox TxtLogfiledir;
         private System.Windows.Forms.Label lblauthoption;
-        private System.Windows.Forms.ComboBox cmbsqlauth;
+        private System.Windows.Forms.ComboBox Cmbsqlauth;
         private System.Windows.Forms.TextBox txtsqlpass;
         private System.Windows.Forms.TextBox txtsqluser;
         private System.Windows.Forms.Label lblsqluser;
@@ -248,7 +249,7 @@
         private System.Windows.Forms.Panel pnlsql;
         private System.Windows.Forms.Label lblsqldatabase;
         private System.Windows.Forms.Label lblsqlserver;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txtsqldatabase;
+        private System.Windows.Forms.TextBox txtsqlserver;
     }
 }
