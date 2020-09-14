@@ -1,15 +1,15 @@
 ﻿using ProcessCheck;
+using SimpleLogger;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Threading;
 using System.Windows.Forms;
-using System.Data.SqlClient;
-using System.Management;
-using System.Globalization;
 
 
 namespace anti_cheat
@@ -48,7 +48,7 @@ namespace anti_cheat
         {
             List<string> PIDlist = new List<string>();
             ManagementClass MgmtClass = new ManagementClass("Win32_Process");
-            for (int c = 0; c < PIDarray.Length -1;)
+            for (int c = 0; c < PIDarray.Length - 1;)
             {
                 foreach (ManagementObject mo in MgmtClass.GetInstances())
                 {
@@ -74,7 +74,8 @@ namespace anti_cheat
         {
 
             Debug.Write(Program.Globals.connectionStringWinAuth);
-            if (Program.Globals.authmethod == 1) {
+            if (Program.Globals.authmethod == 1)
+            {
                 try
                 {
                     SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringSQLAuth);
@@ -86,8 +87,11 @@ namespace anti_cheat
                     sqlCmd.Parameters.AddWithValue("@ProcessID", procID);
                     sqlCmd.Parameters.AddWithValue("@ProcessHandle", procHandle);
                     sqlCmd.ExecuteNonQuery();
-                } catch { }
-            } else {
+                }
+                catch { }
+            }
+            else
+            {
                 try
                 {
                     SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringWinAuth);
@@ -99,9 +103,12 @@ namespace anti_cheat
                     sqlCmd.Parameters.AddWithValue("@ProcessID", procID);
                     sqlCmd.Parameters.AddWithValue("@ProcessHandle", procHandle);
                     sqlCmd.ExecuteNonQuery();
-                } catch(Exception ex) 
+                }
+                catch (Exception ex)
                 {
-                    
+
+                    SimpleLog.Log(ex); // Write exception with all inner exceptions to log
+
                 }
             }
 
@@ -155,14 +162,33 @@ namespace anti_cheat
             Thread checkthread = new Thread(new ThreadStart(BGProc));
 
             // Start thread processes that handle Main.cs GUI and the background handler
-            //Background.LogtoDB("a","1","2","12");
-            guithread.Start();
-            checkthread.Start();
+            SimpleLog.Info("Starting threads: 'guithread' and 'checkthread'."); // Writes 'info' level message to log
+            bool exception = false;
+            try
+            {
+                guithread.Start();
+                checkthread.Start();
+
+            }
+            catch (Exception ex)
+            {
+
+                exception = true;
+                SimpleLog.Log(ex); // Write exception with all inner exceptions to log
+
+            }
+            if (!exception)
+            {
+                SimpleLog.Info("Succsessfully started threads: 'guithread' and 'checkthread'.");
+            }
+
+
         }
 
         public static void WindowGui()
         {
             Debug.WriteLine("Entering WindowGui"); // Debug Message
+            SimpleLog.Info("Entered 'Main graphical interface thread (WindowGui)'."); // Writes 'info' level message to log
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -172,6 +198,7 @@ namespace anti_cheat
         public static void BGProc()
         {
             Debug.WriteLine("Entering BGProc"); // Debug Message 
+            SimpleLog.Info("Entered 'Background thread (BGProc)'."); // Writes 'info' level message to log
 
             int[] baseline = Background.TakeCurrent();
 
