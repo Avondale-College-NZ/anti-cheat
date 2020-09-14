@@ -47,15 +47,15 @@ namespace anti_cheat
         {
             List<string> PIDlist = new List<string>();
             ManagementClass MgmtClass = new ManagementClass("Win32_Process");
-            for (int c = 0; c < PIDarray.Length;)
+            for (int c = 0; c < PIDarray.Length -1;)
             {
                 foreach (ManagementObject mo in MgmtClass.GetInstances())
                 {
                     if (mo["ProcessId"].ToString() == PIDarray[c])
                     {
-                        var myDTFI = CultureInfo.CurrentCulture.DateTimeFormat;
-                        var result = myDTFI.FullDateTimePattern;
-                        bool status = LogtoDB(mo["ProcessName"].ToString(), mo["ProcessId"].ToString(), mo["ProcessHandle"].ToString(), result);
+                        Debug.WriteLine("TEST:");
+                        Debug.WriteLine(mo["Name"].ToString(), mo["ProcessId"].ToString(), mo["Handle"].ToString());
+                        bool status = LogtoDB(mo["Name"].ToString(), mo["ProcessId"].ToString(), mo["Handle"].ToString());
                     }
                 }
                 c++;
@@ -68,28 +68,34 @@ namespace anti_cheat
             return PIDlist.ToArray();
         }
 
-        public static bool LogtoDB(string procName, string procID, string procHandle, string logdate)
+        public static bool LogtoDB(string procName, string procID, string procHandle)
         {
 
             Debug.Write(Program.Globals.connectionStringWinAuth);
             if (Program.Globals.authmethod == 1) {
-                SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringSQLAuth);
-                sqlCon.Open();
-            } else {
-                SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringWinAuth);
-                sqlCon.Open();
-            }
 
+                SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringSQLAuth);
+
+                sqlCon.Open();
                 SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
                 sqlCmd.CommandType = CommandType.StoredProcedure;
                 sqlCmd.Parameters.AddWithValue("@ProcessName", procName);
                 sqlCmd.Parameters.AddWithValue("@ProcessID", procID);
                 sqlCmd.Parameters.AddWithValue("@ProcessHandle", procHandle);
-                sqlCmd.Parameters.AddWithValue("@DateLogged", logdate);
-
                 sqlCmd.ExecuteNonQuery();
-            
-       
+            } else {
+
+                SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringWinAuth);
+
+                sqlCon.Open();
+                SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@ProcessName", procName);
+                sqlCmd.Parameters.AddWithValue("@ProcessID", procID);
+                sqlCmd.Parameters.AddWithValue("@ProcessHandle", procHandle);
+                sqlCmd.ExecuteNonQuery();
+            }
+
             return true;
         }
 
