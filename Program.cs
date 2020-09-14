@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using System.Management;
 using System.Globalization;
 
+
 namespace anti_cheat
 {
 
@@ -54,8 +55,9 @@ namespace anti_cheat
                     if (mo["ProcessId"].ToString() == PIDarray[c])
                     {
                         Debug.WriteLine("TEST:");
-                        Debug.WriteLine(mo["Name"].ToString(), mo["ProcessId"].ToString(), mo["Handle"].ToString());
-                        bool status = LogtoDB(mo["Name"].ToString(), mo["ProcessId"].ToString(), mo["Handle"].ToString());
+                        Debug.WriteLine(mo["Name"].ToString().Replace(".exe", ""), mo["ProcessId"].ToString(), mo["Handle"].ToString());
+                        bool status = LogtoDB(mo["Name"].ToString().Replace(".exe", ""), mo["ProcessId"].ToString(), mo["Handle"].ToString());
+                        PIDlist.Add(mo["Name"].ToString().Replace(".exe", "") + " " + mo["ProcessId"].ToString());
                     }
                 }
                 c++;
@@ -73,27 +75,34 @@ namespace anti_cheat
 
             Debug.Write(Program.Globals.connectionStringWinAuth);
             if (Program.Globals.authmethod == 1) {
+                try
+                {
+                    SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringSQLAuth);
 
-                SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringSQLAuth);
-
-                sqlCon.Open();
-                SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
-                sqlCmd.CommandType = CommandType.StoredProcedure;
-                sqlCmd.Parameters.AddWithValue("@ProcessName", procName);
-                sqlCmd.Parameters.AddWithValue("@ProcessID", procID);
-                sqlCmd.Parameters.AddWithValue("@ProcessHandle", procHandle);
-                sqlCmd.ExecuteNonQuery();
+                    sqlCon.Open();
+                    SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
+                    sqlCmd.CommandType = CommandType.StoredProcedure;
+                    sqlCmd.Parameters.AddWithValue("@ProcessName", procName);
+                    sqlCmd.Parameters.AddWithValue("@ProcessID", procID);
+                    sqlCmd.Parameters.AddWithValue("@ProcessHandle", procHandle);
+                    sqlCmd.ExecuteNonQuery();
+                } catch { }
             } else {
+                try
+                {
+                    SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringWinAuth);
 
-                SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringWinAuth);
-
-                sqlCon.Open();
-                SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
-                sqlCmd.CommandType = CommandType.StoredProcedure;
-                sqlCmd.Parameters.AddWithValue("@ProcessName", procName);
-                sqlCmd.Parameters.AddWithValue("@ProcessID", procID);
-                sqlCmd.Parameters.AddWithValue("@ProcessHandle", procHandle);
-                sqlCmd.ExecuteNonQuery();
+                    sqlCon.Open();
+                    SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
+                    sqlCmd.CommandType = CommandType.StoredProcedure;
+                    sqlCmd.Parameters.AddWithValue("@ProcessName", procName);
+                    sqlCmd.Parameters.AddWithValue("@ProcessID", procID);
+                    sqlCmd.Parameters.AddWithValue("@ProcessHandle", procHandle);
+                    sqlCmd.ExecuteNonQuery();
+                } catch(Exception ex) 
+                {
+                    
+                }
             }
 
             return true;
