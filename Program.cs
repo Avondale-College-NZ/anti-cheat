@@ -64,6 +64,7 @@ namespace anti_cheat
             List<string> PIDlist = new List<string>();
             try
             {
+                
                 ManagementClass MgmtClass = new ManagementClass("Win32_Process");
                 for (int c = 0; c < PIDarray.Length - 1;)
                 {
