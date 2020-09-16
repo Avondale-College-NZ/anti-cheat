@@ -1,6 +1,5 @@
-using System;
 using SimpleLogger;
-using System.Collections.Generic;
+using System;
 using System.Diagnostics;
 using System.Management;
 using System.Text;
@@ -205,22 +204,24 @@ namespace ProcessCheck
         public static int[] ListAllProcessIds()
         {
 
-            //List<string> ProcessIds = new List<string>();
-            //StringBuilder sb = new StringBuilder();
             int[] pids = { };
 
 
             // list out all processes and write them into a stringbuilder
-            ManagementClass MgmtClass = new ManagementClass("Win32_Process");
-
-            foreach (ManagementObject mo in MgmtClass.GetInstances())
+            try
             {
-                //sb.Append(mo["ProcessId"] + Environment.NewLine);
-                //string a = sb.ToString();
-                //ProcessIds.Add(a);
+                ManagementClass MgmtClass = new ManagementClass("Win32_Process");
 
-                Array.Resize(ref pids, pids.Length + 1);
-                pids[pids.GetUpperBound(0)] = Convert.ToInt32(mo["ProcessId"]);
+                foreach (ManagementObject mo in MgmtClass.GetInstances())
+                {
+
+                    Array.Resize(ref pids, pids.Length + 1);
+                    pids[pids.GetUpperBound(0)] = Convert.ToInt32(mo["ProcessId"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                SimpleLog.Log(ex);
             }
 
             return pids;
@@ -233,7 +234,7 @@ namespace ProcessCheck
         /// <returns></returns>
         public static string Processlookup(string processidlookup)
         {
-              StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             //ManagementClass MgmtClass = new ManagementClass("Win32_Process");
 
             //foreach (ManagementObject mo in MgmtClass.GetInstances())
@@ -246,7 +247,8 @@ namespace ProcessCheck
             //    }
             //}
 
-            foreach ( char s in processidlookup) {
+            foreach (char s in processidlookup)
+            {
                 int i = Int16.Parse(s.ToString());
                 string a = Process.GetProcessById(i).ProcessName;
                 sb.Append(i + " " + a + Environment.NewLine);

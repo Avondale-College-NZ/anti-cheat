@@ -26,7 +26,15 @@ namespace anti_cheat
     {
         public static int[] TakeCurrent()
         {
-            int[] pids = ProcessValidation.ListAllProcessIds();
+            int[] pids = { };
+            try
+            {
+                pids = ProcessValidation.ListAllProcessIds();
+            }
+            catch (Exception ex)
+            {
+                SimpleLog.Log(ex);
+            }
 
             return pids;
         }
@@ -34,12 +42,19 @@ namespace anti_cheat
         public static string[] Compareprocesses(int[] baseline, int[] current)
         // Runs comparison on "baseline" vs "current" array arguments
         {
+            string[] adifferentProcesses = { };
+            try
+            {
+                IEnumerable<int> differentProcesses = current.Except(baseline);
+                adifferentProcesses = differentProcesses.Select(x => x.ToString()).ToArray();
 
-            IEnumerable<int> differentProcesses = current.Except(baseline);
-            string[] adifferentProcesses = differentProcesses.Select(x => x.ToString()).ToArray();
-
-            Debug.WriteLine("Compareprocesses:");                                   // Debug Message
-            foreach (string s in adifferentProcesses) { Debug.Write(s + "\n"); }    // Debug Message
+                Debug.WriteLine("Compareprocesses:");                                   // Debug Message
+                foreach (string s in adifferentProcesses) { Debug.Write(s + "\n"); }    // Debug Message
+            }
+            catch (Exception ex)
+            {
+                SimpleLog.Log(ex);
+            }
 
             return adifferentProcesses;
         }
@@ -47,20 +62,27 @@ namespace anti_cheat
         public static string[] PIDlookup(string[] PIDarray)
         {
             List<string> PIDlist = new List<string>();
-            ManagementClass MgmtClass = new ManagementClass("Win32_Process");
-            for (int c = 0; c < PIDarray.Length - 1;)
+            try
             {
-                foreach (ManagementObject mo in MgmtClass.GetInstances())
+                ManagementClass MgmtClass = new ManagementClass("Win32_Process");
+                for (int c = 0; c < PIDarray.Length - 1;)
                 {
-                    if (mo["ProcessId"].ToString() == PIDarray[c])
+                    foreach (ManagementObject mo in MgmtClass.GetInstances())
                     {
-                        Debug.WriteLine("TEST:");
-                        Debug.WriteLine(mo["Name"].ToString().Replace(".exe", ""), mo["ProcessId"].ToString(), mo["Handle"].ToString());
-                        bool status = LogtoDB(mo["Name"].ToString().Replace(".exe", ""), mo["ProcessId"].ToString(), mo["Handle"].ToString());
-                        PIDlist.Add(mo["Name"].ToString().Replace(".exe", "") + " " + mo["ProcessId"].ToString());
+                        if (mo["ProcessId"].ToString() == PIDarray[c])
+                        {
+                            Debug.WriteLine("TEST:");
+                            Debug.WriteLine(mo["Name"].ToString().Replace(".exe", ""), mo["ProcessId"].ToString(), mo["Handle"].ToString());
+                            bool status = LogtoDB(mo["Name"].ToString().Replace(".exe", ""), mo["ProcessId"].ToString(), mo["Handle"].ToString());
+                            PIDlist.Add(mo["Name"].ToString().Replace(".exe", "") + " " + mo["ProcessId"].ToString());
+                        }
                     }
+                    c++;
                 }
-                c++;
+            }
+            catch(Exception ex)
+            {
+                SimpleLog.Log(ex);
             }
 
             Debug.WriteLine("PIDLookup:"); // Debug Messages
@@ -68,215 +90,216 @@ namespace anti_cheat
             PIDlist.ForEach(s => Debug.Write(s + "\n"));
 
             return PIDlist.ToArray();
+            }
+
+            public static bool LogtoDB(string procName, string procID, string procHandle)
+            {
+
+                Debug.Write(Program.Globals.connectionStringWinAuth);
+                if (Program.Globals.authmethod == 1)
+                {
+                    try
+                    {
+                        SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringSQLAuth);
+
+                        sqlCon.Open();
+                        SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
+                        sqlCmd.CommandType = CommandType.StoredProcedure;
+                        sqlCmd.Parameters.AddWithValue("@ProcessName", procName);
+                        sqlCmd.Parameters.AddWithValue("@ProcessID", procID);
+                        sqlCmd.Parameters.AddWithValue("@ProcessHandle", procHandle);
+                        sqlCmd.ExecuteNonQuery();
+                    }
+                    catch { }
+                }
+                else
+                {
+                    try
+                    {
+                        SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringWinAuth);
+
+                        sqlCon.Open();
+                        SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
+                        sqlCmd.CommandType = CommandType.StoredProcedure;
+                        sqlCmd.Parameters.AddWithValue("@ProcessName", procName);
+                        sqlCmd.Parameters.AddWithValue("@ProcessID", procID);
+                        sqlCmd.Parameters.AddWithValue("@ProcessHandle", procHandle);
+                        sqlCmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        SimpleLog.Log(ex); // Write exception with all inner exceptions to log
+
+                    }
+                }
+
+                return true;
+            }
+
+            public static bool GetfromDB()
+            {
+                SqlConnection sqlCon = new SqlConnection(@"Data Source=(local)\sqle2012;Initial Catalog=;Integrated Security=True");
+                SqlDataAdapter sqlda = new SqlDataAdapter("", sqlCon); // Query 
+                DataTable dtbl = new DataTable();
+                sqlda.Fill(dtbl);
+                foreach (DataRow row in dtbl.Rows)
+                {
+
+                }
+                return true;
+            }
         }
 
-        public static bool LogtoDB(string procName, string procID, string procHandle)
+        static class Program
         {
-
-            Debug.Write(Program.Globals.connectionStringWinAuth);
-            if (Program.Globals.authmethod == 1)
+            public static class Globals
             {
-                try
-                {
-                    SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringSQLAuth);
-
-                    sqlCon.Open();
-                    SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
-                    sqlCmd.CommandType = CommandType.StoredProcedure;
-                    sqlCmd.Parameters.AddWithValue("@ProcessName", procName);
-                    sqlCmd.Parameters.AddWithValue("@ProcessID", procID);
-                    sqlCmd.Parameters.AddWithValue("@ProcessHandle", procHandle);
-                    sqlCmd.ExecuteNonQuery();
-                }
-                catch { }
+                public static bool status = false;                              // Global Variable: "status" 
+                public static int count = 0;                                    // Global Variable: "count"
+                public static string logdir = Directory.GetCurrentDirectory();  // Global Variable: "logdirectory"
+                public static bool autokill = true;                             // Global Variable: "autokill"
+                public static string databaseSvr = "tpisql01.avcol.school.nz";  // Global Variable: "databaseSvr"
+                public static string database = "Anticheat";                    // Global Variable: "database"
+                public static string databaseTbl = "tblProcesses";              // Global Variable: "databaseTbl"
+                public static string sqluser = "";                              // Global Variable: "sqluser"
+                public static string sqlpass = "";                              // Global Variable: "sqlpass"
+                public static int authmethod = 0;                               // Global Variable: "authmethod" - 0 = Windows Authentication, 2 = SQL Authentication
+                public static string connectionStringWinAuth = @"Data Source = " + databaseSvr + "\\" + database + "; Initial Catalog = " + databaseTbl +
+        "; Integrated Security = True;";                                        // Global Variable: "connectionStringWinAuth"
+                public static string connectionStringSQLAuth = @"Data Source = " + databaseSvr + "\\" + database + "; Initial Catalog = " + databaseTbl +
+        "; User ID=(" + sqluser + "); Password=(" + sqlpass + ");";             // Global Variable: "connectionStringSQLAuth"
             }
-            else
+
+            /// <summary>
+            /// The main entry point for the application.
+            /// </summary>
+            [STAThread]
+            static void Main()
             {
+                SimpleLog.StartLogging();
+                Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
+                Debug.AutoFlush = true;
+
+                Thread guithread = new Thread(new ThreadStart(WindowGui));
+                Thread checkthread = new Thread(new ThreadStart(BGProc));
+
+                // Start thread processes that handle Main.cs GUI and the background handler
+                SimpleLog.Info("Starting threads: 'guithread' and 'checkthread'."); // Writes 'info' level message to log
+                bool exception = false;
                 try
                 {
-                    SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringWinAuth);
+                    guithread.Start();
+                    checkthread.Start();
 
-                    sqlCon.Open();
-                    SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
-                    sqlCmd.CommandType = CommandType.StoredProcedure;
-                    sqlCmd.Parameters.AddWithValue("@ProcessName", procName);
-                    sqlCmd.Parameters.AddWithValue("@ProcessID", procID);
-                    sqlCmd.Parameters.AddWithValue("@ProcessHandle", procHandle);
-                    sqlCmd.ExecuteNonQuery();
                 }
                 catch (Exception ex)
                 {
 
+                    exception = true;
                     SimpleLog.Log(ex); // Write exception with all inner exceptions to log
 
                 }
-            }
-
-            return true;
-        }
-
-        public static bool GetfromDB()
-        {
-            SqlConnection sqlCon = new SqlConnection(@"Data Source=(local)\sqle2012;Initial Catalog=;Integrated Security=True");
-            SqlDataAdapter sqlda = new SqlDataAdapter("", sqlCon); // Query 
-            DataTable dtbl = new DataTable();
-            sqlda.Fill(dtbl);
-            foreach (DataRow row in dtbl.Rows)
-            {
-
-            }
-            return true;
-        }
-    }
-
-    static class Program
-    {
-        public static class Globals
-        {
-            public static bool status = false;                              // Global Variable: "status" 
-            public static int count = 0;                                    // Global Variable: "count"
-            public static string logdir = Directory.GetCurrentDirectory();  // Global Variable: "logdirectory"
-            public static bool autokill = true;                             // Global Variable: "autokill"
-            public static string databaseSvr = "tpisql01.avcol.school.nz";  // Global Variable: "databaseSvr"
-            public static string database = "Anticheat";                    // Global Variable: "database"
-            public static string databaseTbl = "tblProcesses";              // Global Variable: "databaseTbl"
-            public static string sqluser = "";                              // Global Variable: "sqluser"
-            public static string sqlpass = "";                              // Global Variable: "sqlpass"
-            public static int authmethod = 0;                               // Global Variable: "authmethod" - 0 = Windows Authentication, 2 = SQL Authentication
-            public static string connectionStringWinAuth = @"Data Source = " + databaseSvr + "\\" + database + "; Initial Catalog = " + databaseTbl +
-    "; Integrated Security = True;";                                        // Global Variable: "connectionStringWinAuth"
-            public static string connectionStringSQLAuth = @"Data Source = " + databaseSvr + "\\" + database + "; Initial Catalog = " + databaseTbl +
-    "; User ID=(" + sqluser + "); Password=(" + sqlpass + ");";             // Global Variable: "connectionStringSQLAuth"
-        }
-
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
-            Debug.AutoFlush = true;
-
-            Thread guithread = new Thread(new ThreadStart(WindowGui));
-            Thread checkthread = new Thread(new ThreadStart(BGProc));
-
-            // Start thread processes that handle Main.cs GUI and the background handler
-            SimpleLog.Info("Starting threads: 'guithread' and 'checkthread'."); // Writes 'info' level message to log
-            bool exception = false;
-            try
-            {
-                guithread.Start();
-                checkthread.Start();
-
-            }
-            catch (Exception ex)
-            {
-
-                exception = true;
-                SimpleLog.Log(ex); // Write exception with all inner exceptions to log
-
-            }
-            if (!exception)
-            {
-                SimpleLog.Info("Succsessfully started threads: 'guithread' and 'checkthread'.");
-            }
-
-
-        }
-
-        public static void WindowGui()
-        {
-            Debug.WriteLine("Entering WindowGui"); // Debug Message
-            SimpleLog.Info("Entered 'Main graphical interface thread (WindowGui)'."); // Writes 'info' level message to log
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main());
-        }
-
-        public static void BGProc()
-        {
-            Debug.WriteLine("Entering BGProc"); // Debug Message 
-            SimpleLog.Info("Entered 'Background thread (BGProc)'."); // Writes 'info' level message to log
-
-            int[] baseline = Background.TakeCurrent();
-
-            var curDir = Directory.GetCurrentDirectory();
-            var txtFile = curDir + "\\proc.txt";
-            string[] proclines = File.ReadAllLines(txtFile);
-
-            try
-            {
-                while (true)
+                if (!exception)
                 {
-                    Thread.Sleep(2000);
-                    while (Globals.status)
+                    SimpleLog.Info("Succsessfully started threads: 'guithread' and 'checkthread'.");
+                }
+
+
+            }
+
+            public static void WindowGui()
+            {
+                Debug.WriteLine("Entering WindowGui"); // Debug Message
+                SimpleLog.Info("Entered 'Main graphical interface thread (WindowGui)'."); // Writes 'info' level message to log
+
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new Main());
+            }
+
+            public static void BGProc()
+            {
+                Debug.WriteLine("Entering BGProc"); // Debug Message 
+                SimpleLog.Info("Entered 'Background thread (BGProc)'."); // Writes 'info' level message to log
+
+                int[] baseline = Background.TakeCurrent();
+
+                var curDir = Directory.GetCurrentDirectory();
+                var txtFile = curDir + "\\proc.txt";
+                string[] proclines = File.ReadAllLines(txtFile);
+
+                try
+                {
+                    while (true)
                     {
-
-                        int[] current = Background.TakeCurrent();
-
-                        string[] differentProcesses = Background.Compareprocesses(baseline, current); // Finds IDs of processes that started after anticheat
-                        string[] differentProcessesID = Background.PIDlookup(differentProcesses);     // <---- need to use string array instead of lists
-
-                        Debug.WriteLine("Write to file:");                                            // Debug Message
-
-                        foreach (string s in differentProcessesID) { Debug.Write(s + "\n"); }         // Debug Message
-
-                        if (differentProcessesID.Length > 0)
-                        {
-                            try
-                            {
-                                using (TextWriter tw = new StreamWriter(curDir + "\\SavedList.txt"))
-                                {
-                                    foreach (string s in differentProcessesID) { tw.Write(s + " " + "\n"); }
-                                    tw.Close();
-
-                                }
-                            }
-                            catch { }
-                        }
-
-                        foreach (string line in proclines)
+                        Thread.Sleep(2000);
+                        while (Globals.status)
                         {
 
-                            if (Checkproc(line))
+                            int[] current = Background.TakeCurrent();
+
+                            string[] differentProcesses = Background.Compareprocesses(baseline, current); // Finds IDs of processes that started after anticheat
+                            string[] differentProcessesID = Background.PIDlookup(differentProcesses);     // <---- need to use string array instead of lists
+
+                            Debug.WriteLine("Write to file:");                                            // Debug Message
+
+                            foreach (string s in differentProcessesID) { Debug.Write(s + "\n"); }         // Debug Message
+
+                            if (differentProcessesID.Length > 0)
                             {
-                                MessageBox.Show("Process \"" + line + "\" was found.");
-                                if (Globals.autokill && Globals.status == true)
+                                try
                                 {
-                                    string a = ProcessValidation.ProcKill(line);
-                                    MessageBox.Show("Process \"" + line + "\" " + "\"" + a + "\"" + "  was killed.");
+                                    using (TextWriter tw = new StreamWriter(curDir + "\\SavedList.txt"))
+                                    {
+                                        foreach (string s in differentProcessesID) { tw.Write(s + " " + "\n"); }
+                                        tw.Close();
+
+                                    }
                                 }
+                                catch (Exception ex) { SimpleLog.Log(ex); }
                             }
 
-                            if (Checkapp(line))
+                            foreach (string line in proclines)
                             {
-                                MessageBox.Show("Application \"" + line + "\" was found.");
-                                if (Globals.autokill && Globals.status == true)
-                                {
-                                    string a = ProcessValidation.ProcKill(line);
-                                    MessageBox.Show("Process \"" + line + "\" " + "\"" + a + "\"" + "  was killed.");
-                                }
-                            }
 
+                                if (Checkproc(line))
+                                {
+                                    MessageBox.Show("Process \"" + line + "\" was found.");
+                                    if (Globals.autokill && Globals.status == true)
+                                    {
+                                        string a = ProcessValidation.ProcKill(line);
+                                        MessageBox.Show("Process \"" + line + "\" " + "\"" + a + "\"" + "  was killed.");
+                                    }
+                                }
+
+                                if (Checkapp(line))
+                                {
+                                    MessageBox.Show("Application \"" + line + "\" was found.");
+                                    if (Globals.autokill && Globals.status == true)
+                                    {
+                                        string a = ProcessValidation.ProcKill(line);
+                                        MessageBox.Show("Process \"" + line + "\" " + "\"" + a + "\"" + "  was killed.");
+                                    }
+                                }
+
+                            }
                         }
                     }
                 }
+                catch (Exception ex) { SimpleLog.Log(ex); }
             }
-            catch { }
-        }
 
-        public static bool Checkapp(string proc)
-        {
-            bool check = ProcessValidation.CheckForApplicationByName(proc.ToString());
-            return check;
-        }
-        public static bool Checkproc(string proc)
-        {
-            bool check = ProcessValidation.CheckForProcessByName(proc.ToString());
-            return check;
+            public static bool Checkapp(string proc)
+            {
+                bool check = ProcessValidation.CheckForApplicationByName(proc.ToString());
+                return check;
+            }
+            public static bool Checkproc(string proc)
+            {
+                bool check = ProcessValidation.CheckForProcessByName(proc.ToString());
+                return check;
+            }
         }
     }
-}
 
