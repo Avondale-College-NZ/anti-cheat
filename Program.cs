@@ -22,6 +22,22 @@ namespace anti_cheat
     /// p.Threads(gives access to the collection of threads in the process)
     /// </summary>
     /// 
+
+    public struct UniqueProc
+    {
+        public string Name{get;set;}
+        public string ProcessId{get;set;}
+        public string Handle{get;set;}
+    }
+    public static class Extensions
+    {
+        public static List<T> AddAlso<T>(this List<T> list, T item)
+        {
+            list.Add(item);
+            return list;
+        }
+    }
+
     static class Background
     {
         public static int[] TakeCurrent()
@@ -40,8 +56,8 @@ namespace anti_cheat
         }
 
         public static string[] Compareprocesses(int[] baseline, int[] current)
-        // Runs comparison on "baseline" vs "current" array arguments
         {
+            // Runs comparison on "baseline" vs "current" array arguments
             string[] adifferentProcesses = { };
             try
             {
@@ -59,9 +75,11 @@ namespace anti_cheat
             return adifferentProcesses;
         }
 
-        public static string[] PIDlookup(string[] PIDarray)
+        public static List<UniqueProc> PIDlookup(string[] PIDarray)
         {
-            List<string> PIDlist = new List<string>();
+
+            List<UniqueProc> uniqueProcs = new List<UniqueProc>();
+
             try
             {
                 
@@ -74,8 +92,9 @@ namespace anti_cheat
                         {
                             Debug.WriteLine("TEST:");
                             Debug.WriteLine(mo["Name"].ToString().Replace(".exe", ""), mo["ProcessId"].ToString(), mo["Handle"].ToString());
-                            bool status = LogtoDB(mo["Name"].ToString().Replace(".exe", ""), mo["ProcessId"].ToString(), mo["Handle"].ToString());
-                            PIDlist.Add(mo["Name"].ToString().Replace(".exe", "") + " " + mo["ProcessId"].ToString());
+
+                            uniqueProcs.Add(new UniqueProc { Name = mo["Name"].ToString().Replace(".exe", ""), ProcessId = mo["ProcessId"].ToString(), Handle = mo["Handle"].ToString() });
+
                         }
                     }
                     c++;
@@ -86,11 +105,8 @@ namespace anti_cheat
                 SimpleLog.Log(ex);
             }
 
-            Debug.WriteLine("PIDLookup:"); // Debug Messages
+            return uniqueProcs;
 
-            PIDlist.ForEach(s => Debug.Write(s + "\n"));
-
-            return PIDlist.ToArray();
             }
 
             public static bool LogtoDB(string procName, string procID, string procHandle)
@@ -152,7 +168,7 @@ namespace anti_cheat
             }
         }
 
-        static class Program
+    static class Program
         {
             public static class Globals
             {
@@ -228,6 +244,7 @@ namespace anti_cheat
 
                 var curDir = Directory.GetCurrentDirectory();
                 var txtFile = curDir + "\\proc.txt";
+
                 string[] proclines = File.ReadAllLines(txtFile);
 
                 try
@@ -241,25 +258,25 @@ namespace anti_cheat
                             int[] current = Background.TakeCurrent();
 
                             string[] differentProcesses = Background.Compareprocesses(baseline, current); // Finds IDs of processes that started after anticheat
-                            string[] differentProcessesID = Background.PIDlookup(differentProcesses);     // <---- need to use string array instead of lists
+                            List<UniqueProc> differentProcessesID = Background.PIDlookup(differentProcesses);     // <---- need to use string array instead of lists
 
                             Debug.WriteLine("Write to file:");                                            // Debug Message
 
-                            foreach (string s in differentProcessesID) { Debug.Write(s + "\n"); }         // Debug Message
+                            //foreach (string s in differentProcessesID) { Debug.Write(s + "\n"); }         // Debug Message
 
-                            if (differentProcessesID.Length > 0)
-                            {
-                                try
-                                {
-                                    using (TextWriter tw = new StreamWriter(curDir + "\\SavedList.txt"))
-                                    {
-                                        foreach (string s in differentProcessesID) { tw.Write(s + " " + "\n"); }
-                                        tw.Close();
+                            //if (differentProcessesID.Length > 0)
+                            //{
+                            //    try
+                            //    {
+                            //        using (TextWriter tw = new StreamWriter(curDir + "\\SavedList.txt"))
+                            //        {
+                            //            foreach (string s in differentProcessesID) { tw.Write(s + " " + "\n"); }
+                            //            tw.Close();
 
-                                    }
-                                }
-                                catch (Exception ex) { SimpleLog.Log(ex); }
-                            }
+                            //        }
+                            //    }
+                            //    catch (Exception ex) { SimpleLog.Log(ex); }
+                            //}
 
                             foreach (string line in proclines)
                             {
