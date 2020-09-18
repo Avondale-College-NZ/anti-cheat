@@ -90,11 +90,10 @@ namespace anti_cheat
                     {
                         if (mo["ProcessId"].ToString() == PIDarray[c])
                         {
-                            Debug.WriteLine("TEST:");
+                            
                             Debug.WriteLine(mo["Name"].ToString().Replace(".exe", ""), mo["ProcessId"].ToString(), mo["Handle"].ToString());
 
-                            uniqueProcs.Add(new UniqueProc { Name = mo["Name"].ToString().Replace(".exe", ""), ProcessId = mo["ProcessId"].ToString(), Handle = mo["Handle"].ToString() });
-
+                            uniqueProcs.Add(new UniqueProc { Name = mo["Name"].ToString().Replace(".exe", ""), ProcessId = mo["ProcessId"].ToString(), Handle = mo["Handle"].ToString()});
                         }
                     }
                     c++;
@@ -109,8 +108,10 @@ namespace anti_cheat
 
             }
 
-            public static bool LogtoDB(string procName, string procID, string procHandle)
+            public static void LogtoDB(string procName, string procID, string procHandle)
             {
+
+
 
                 Debug.Write(Program.Globals.connectionStringWinAuth);
                 if (Program.Globals.authmethod == 1)
@@ -151,7 +152,7 @@ namespace anti_cheat
                     }
                 }
 
-                return true;
+                //return true;
             }
 
             public static bool GetfromDB()
@@ -170,8 +171,10 @@ namespace anti_cheat
 
     static class Program
         {
+
             public static class Globals
             {
+                public static string[] uniqueids = { };                         // Global String array: "uniqueids"
                 public static bool status = false;                              // Global Variable: "status" 
                 public static int count = 0;                                    // Global Variable: "count"
                 public static string logdir = Directory.GetCurrentDirectory();  // Global Variable: "logdirectory"
@@ -182,9 +185,9 @@ namespace anti_cheat
                 public static string sqluser = "";                              // Global Variable: "sqluser"
                 public static string sqlpass = "";                              // Global Variable: "sqlpass"
                 public static int authmethod = 0;                               // Global Variable: "authmethod" - 0 = Windows Authentication, 2 = SQL Authentication
-                public static string connectionStringWinAuth = @"Data Source = " + databaseSvr + "\\" + database + "; Initial Catalog = " + databaseTbl +
+                public static string connectionStringWinAuth = @"Data Source = " + databaseSvr + "; Initial Catalog = " + database +
         "; Integrated Security = True;";                                        // Global Variable: "connectionStringWinAuth"
-                public static string connectionStringSQLAuth = @"Data Source = " + databaseSvr + "\\" + database + "; Initial Catalog = " + databaseTbl +
+                public static string connectionStringSQLAuth = @"Data Source = " + databaseSvr + "; Initial Catalog = " + database +
         "; User ID=(" + sqluser + "); Password=(" + sqlpass + ");";             // Global Variable: "connectionStringSQLAuth"
             }
 
@@ -247,6 +250,8 @@ namespace anti_cheat
 
                 string[] proclines = File.ReadAllLines(txtFile);
 
+                
+
                 try
                 {
                     while (true)
@@ -257,8 +262,21 @@ namespace anti_cheat
 
                             int[] current = Background.TakeCurrent();
 
-                            string[] differentProcesses = Background.Compareprocesses(baseline, current); // Finds IDs of processes that started after anticheat
-                            List<UniqueProc> differentProcessesID = Background.PIDlookup(differentProcesses);     // <---- need to use string array instead of lists
+                            Globals.uniqueids = Background.Compareprocesses(baseline, current);         // Finds IDs of processes that started after anticheat
+                            List<UniqueProc> differentProcessesID = Background.PIDlookup(Globals.uniqueids);     
+
+                        foreach (var p in differentProcessesID)
+                        {
+                            Debug.WriteLine("Id {0} Name {1}, Handle {2} ", p.Name, p.ProcessId, p.Handle);
+
+                            Thread dblog = new Thread(() => Background.LogtoDB(p.Name, p.ProcessId, p.Handle));
+                            dblog.Start();
+                            dblog.Join();
+
+                        }
+                            
+
+
 
                             Debug.WriteLine("Write to file:");                                            // Debug Message
 
@@ -308,7 +326,12 @@ namespace anti_cheat
                 catch (Exception ex) { SimpleLog.Log(ex); }
             }
 
-            public static bool Checkapp(string proc)
+        private static bool LogtoDB(string name, string processId, string handle)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool Checkapp(string proc)
             {
                 bool check = ProcessValidation.CheckForApplicationByName(proc.ToString());
                 return check;
