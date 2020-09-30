@@ -307,22 +307,6 @@ namespace anti_cheat
                             }
                         }
 
-                        //foreach (string s in differentProcessesID) { Debug.Write(s + "\n"); }         // Debug Message
-
-                        //if (differentProcessesID.Length > 0)
-                        //{
-                        //    try
-                        //    {
-                        //        using (TextWriter tw = new StreamWriter(curDir + "\\SavedList.txt"))
-                        //        {
-                        //            foreach (string s in differentProcessesID) { tw.Write(s + " " + "\n"); }
-                        //            tw.Close();
-
-                        //        }
-                        //    }
-                        //    catch (Exception ex) { SimpleLog.Log(ex); }
-                        //}
-
                         foreach (string line in proclines)
                         {
 
