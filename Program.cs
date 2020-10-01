@@ -8,6 +8,9 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Management;
+using System.Globalization;
+
 namespace anti_cheat
 {
 
@@ -43,14 +46,18 @@ namespace anti_cheat
         public static string[] PIDlookup(string[] PIDarray)
         {
             List<string> PIDlist = new List<string>();
-            //foreach (string s in PIDarray) 
-            for (int c = 0; c < PIDarray.Length;)
+            ManagementClass MgmtClass = new ManagementClass("Win32_Process");
+            for (int c = 0; c < PIDarray.Length -1;)
             {
-
-                //string a = ProcessValidation.Processlookup(PIDarray[c]);
-                int id = Int16.Parse(PIDarray[c]);
-                string a = (Process.GetProcessById(id).ProcessName + id);    // INDEX OUT OF RANGE ERROR
-                PIDlist.Add(a);
+                foreach (ManagementObject mo in MgmtClass.GetInstances())
+                {
+                    if (mo["ProcessId"].ToString() == PIDarray[c])
+                    {
+                        Debug.WriteLine("TEST:");
+                        Debug.WriteLine(mo["Name"].ToString(), mo["ProcessId"].ToString(), mo["Handle"].ToString());
+                        bool status = LogtoDB(mo["Name"].ToString(), mo["ProcessId"].ToString(), mo["Handle"].ToString());
+                    }
+                }
                 c++;
             }
 
@@ -61,17 +68,69 @@ namespace anti_cheat
             return PIDlist.ToArray();
         }
 
+        public static bool LogtoDB(string procName, string procID, string procHandle)
+        {
 
+            Debug.Write(Program.Globals.connectionStringWinAuth);
+            if (Program.Globals.authmethod == 1) {
+
+                SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringSQLAuth);
+
+                sqlCon.Open();
+                SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@ProcessName", procName);
+                sqlCmd.Parameters.AddWithValue("@ProcessID", procID);
+                sqlCmd.Parameters.AddWithValue("@ProcessHandle", procHandle);
+                sqlCmd.ExecuteNonQuery();
+            } else {
+
+                SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringWinAuth);
+
+                sqlCon.Open();
+                SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("@ProcessName", procName);
+                sqlCmd.Parameters.AddWithValue("@ProcessID", procID);
+                sqlCmd.Parameters.AddWithValue("@ProcessHandle", procHandle);
+                sqlCmd.ExecuteNonQuery();
+            }
+
+            return true;
+        }
+
+        public static bool GetfromDB()
+        {
+            SqlConnection sqlCon = new SqlConnection(@"Data Source=(local)\sqle2012;Initial Catalog=;Integrated Security=True");
+            SqlDataAdapter sqlda = new SqlDataAdapter("", sqlCon); // Query 
+            DataTable dtbl = new DataTable();
+            sqlda.Fill(dtbl);
+            foreach (DataRow row in dtbl.Rows)
+            {
+
+            }
+            return true;
+        }
     }
+
     static class Program
     {
         public static class Globals
         {
-            public static bool status = false;                              // Global Variable: "status"
+            public static bool status = false;                              // Global Variable: "status" 
             public static int count = 0;                                    // Global Variable: "count"
             public static string logdir = Directory.GetCurrentDirectory();  // Global Variable: "logdirectory"
             public static bool autokill = true;                             // Global Variable: "autokill"
-            public static string database = "";                             // Global Variable: "database"
+            public static string databaseSvr = "tpisql01.avcol.school.nz";  // Global Variable: "databaseSvr"
+            public static string database = "Anticheat";                    // Global Variable: "database"
+            public static string databaseTbl = "tblProcesses";              // Global Variable: "databaseTbl"
+            public static string sqluser = "";                              // Global Variable: "sqluser"
+            public static string sqlpass = "";                              // Global Variable: "sqlpass"
+            public static int authmethod = 0;                               // Global Variable: "authmethod" - 0 = Windows Authentication, 2 = SQL Authentication
+            public static string connectionStringWinAuth = @"Data Source = " + databaseSvr + "\\" + database + "; Initial Catalog = " + databaseTbl +
+    "; Integrated Security = True;";                                        // Global Variable: "connectionStringWinAuth"
+            public static string connectionStringSQLAuth = @"Data Source = " + databaseSvr + "\\" + database + "; Initial Catalog = " + databaseTbl +
+    "; User ID=(" + sqluser + "); Password=(" + sqlpass + ");";             // Global Variable: "connectionStringSQLAuth"
         }
 
         /// <summary>
@@ -87,6 +146,7 @@ namespace anti_cheat
             Thread checkthread = new Thread(new ThreadStart(BGProc));
 
             // Start thread processes that handle Main.cs GUI and the background handler
+            //Background.LogtoDB("a","1","2","12");
             guithread.Start();
             checkthread.Start();
         }
@@ -99,8 +159,6 @@ namespace anti_cheat
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Main());
         }
-
-
 
         public static void BGProc()
         {
@@ -135,14 +193,13 @@ namespace anti_cheat
                             {
                                 using (TextWriter tw = new StreamWriter(curDir + "\\SavedList.txt"))
                                 {
-                                    foreach (string s in differentProcessesID) { tw.Write(s + "\n"); }
+                                    foreach (string s in differentProcessesID) { tw.Write(s + " " + "\n"); }
                                     tw.Close();
 
                                 }
                             }
                             catch { }
                         }
-
 
                         foreach (string line in proclines)
                         {
