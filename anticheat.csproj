@@ -78,6 +78,7 @@
     <Compile Include="ProcessValidation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleLog.cs" />
     <EmbeddedResource Include="FolderSelect.resx">
       <DependentUpon>FolderSelect.cs</DependentUpon>
     </EmbeddedResource>
