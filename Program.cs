@@ -197,33 +197,37 @@ namespace anti_cheat
             [STAThread]
             static void Main()
             {
+
                 SimpleLog.StartLogging();
                 Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
                 Debug.AutoFlush = true;
 
                 Thread guithread = new Thread(new ThreadStart(WindowGui));
                 Thread checkthread = new Thread(new ThreadStart(BGProc));
+                guithread.IsBackground = true;
 
-                // Start thread processes that handle Main.cs GUI and the background handler
+            // Start thread processes that handle Main.cs GUI and the background handler
                 SimpleLog.Info("Starting threads: 'guithread' and 'checkthread'."); // Writes 'info' level message to log
                 bool exception = false;
-                try
-                {
-                    guithread.Start();
-                    checkthread.Start();
+            try
+            {
+                
 
-                }
-                catch (Exception ex)
-                {
+                guithread.Start();
+                checkthread.Start();
 
-                    exception = true;
-                    SimpleLog.Log(ex); // Write exception with all inner exceptions to log
+            }
+            catch (Exception ex)
+            {
 
-                }
-                if (!exception)
-                {
-                    SimpleLog.Info("Succsessfully started threads: 'guithread' and 'checkthread'.");
-                }
+                exception = true;
+                SimpleLog.Log(ex); // Write exception with all inner exceptions to log
+
+            }
+            if (!exception)
+            {
+                SimpleLog.Info("Succsessfully started threads: 'guithread' and 'checkthread'.");
+            }
 
 
             }
@@ -254,8 +258,9 @@ namespace anti_cheat
 
                 try
                 {
-                    while (true)
-                    {
+                
+
+                while (true) {
                         Thread.Sleep(2000);
                         while (Globals.status)
                         {
@@ -320,10 +325,19 @@ namespace anti_cheat
                                 }
 
                             }
+
+                        }
+                        Form fc = Application.OpenForms["Main"];
+                        if (fc == null)
+                        {
+                            break;
                         }
                     }
                 }
-                catch (Exception ex) { SimpleLog.Log(ex); }
+                catch (Exception ex) { SimpleLog.Log(ex); 
+                }
+
+                Environment.Exit(1);
             }
 
         private static bool LogtoDB(string name, string processId, string handle)
