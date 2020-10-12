@@ -11,7 +11,6 @@ using System.Management;
 using System.Threading;
 using System.Windows.Forms;
 
-
 namespace anti_cheat
 {
 
@@ -65,8 +64,6 @@ namespace anti_cheat
                 IEnumerable<int> differentProcesses = current.Except(baseline);
                 adifferentProcesses = differentProcesses.Select(x => x.ToString()).ToArray();
 
-                //Debug.WriteLine("Compareprocesses:");                                   // Debug Message
-                //foreach (string s in adifferentProcesses) { Debug.Write(s + "\n"); }    // Debug Message
             }
             catch (Exception ex)
             {
@@ -119,7 +116,7 @@ namespace anti_cheat
                     SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringSQLAuth);
 
 
-                    string query = "SELECT * FROM " + Program.Globals.databaseTbl + " WHERE ProcessName=@procname AND DateLogged < DATEADD(day, -1, GETDATE())";
+                    string query = "SELECT * FROM " + Program.Globals.databaseTbl + " WHERE ProcessName=@procname"; //AND DateLogged < DATEADD(day, -1, GETDATE())
 
                     SqlCommand checkCmd = new SqlCommand(query, sqlCon);
                     checkCmd.Parameters.AddWithValue("@procname", procName);
@@ -212,14 +209,14 @@ namespace anti_cheat
             public static bool autokill = true;                             // Global Variable: "autokill"
             public static string databaseSvr = "tpisql01.avcol.school.nz";  // Global Variable: "databaseSvr"
             public static string database = "Anticheat";                    // Global Variable: "database"
-            public static string databaseTbl = "tblProcess";              // Global Variable: "databaseTbl"
+            public static string databaseTbl = "tblProcess";                // Global Variable: "databaseTbl"
             public static string sqluser = "";                              // Global Variable: "sqluser"
             public static string sqlpass = "";                              // Global Variable: "sqlpass"
             public static int authmethod = 0;                               // Global Variable: "authmethod" - 0 = Windows Authentication, 2 = SQL Authentication
             public static string connectionStringWinAuth = @"Data Source=" + databaseSvr + ";Initial Catalog=" + database +
-    ";Integrated Security=True;";                                        // Global Variable: "connectionStringWinAuth"
+    ";Integrated Security=True;";                                           // Global Variable: "connectionStringWinAuth"
             public static string connectionStringSQLAuth = @"Data Source=" + databaseSvr + ";Initial Catalog=" + database +
-    ";User ID=(" + sqluser + ");Password=(" + sqlpass + ");";             // Global Variable: "connectionStringSQLAuth"
+    ";User ID=(" + sqluser + ");Password=(" + sqlpass + ");";               // Global Variable: "connectionStringSQLAuth"
         }
 
         /// <summary>
@@ -284,7 +281,6 @@ namespace anti_cheat
             var txtFile = curDir + "\\proc.txt";
 
             string[] proclines = File.ReadAllLines(txtFile);
-
 
 
             try
@@ -356,10 +352,6 @@ namespace anti_cheat
 
         }
 
-        private static bool LogtoDB(string name, string processId, string handle)
-        {
-            throw new NotImplementedException();
-        }
 
         public static bool Checkapp(string proc)
         {
