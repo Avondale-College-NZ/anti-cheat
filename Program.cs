@@ -127,7 +127,7 @@ namespace anti_cheat
                     SqlDataReader checkreader = checkCmd.ExecuteReader();
                     Debug.WriteLine(checkreader);
 
-                    if (!checkreader.HasRows) 
+                    if (!checkreader.HasRows)
                     {
                         sqlCon.Open();
                         SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
@@ -161,7 +161,7 @@ namespace anti_cheat
 
                     if (!checkreader.HasRows)
                     {
-                        
+
                         sqlCon.Open();
                         SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
                         sqlCmd.CommandType = CommandType.StoredProcedure;
@@ -173,7 +173,7 @@ namespace anti_cheat
                         sqlCon.Close();
                     }
                     else { Debug.Indent(); Debug.WriteLine("Dupe value"); Debug.Unindent(); }
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -222,27 +222,27 @@ namespace anti_cheat
     ";User ID=(" + sqluser + ");Password=(" + sqlpass + ");";             // Global Variable: "connectionStringSQLAuth"
         }
 
-            /// <summary>
-            /// The main entry point for the application.
-            /// </summary>
-            [STAThread]
-            static void Main()
-            {
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
 
-                SimpleLog.StartLogging();
-                Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
-                Debug.AutoFlush = true;
+            SimpleLog.StartLogging();
+            Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
+            Debug.AutoFlush = true;
 
-                Thread guithread = new Thread(new ThreadStart(WindowGui));
-                Thread checkthread = new Thread(new ThreadStart(BGProc));
-                guithread.IsBackground = true;
+            Thread guithread = new Thread(new ThreadStart(WindowGui));
+            Thread checkthread = new Thread(new ThreadStart(BGProc));
+            guithread.IsBackground = true;
 
             // Start thread processes that handle Main.cs GUI and the background handler
-                SimpleLog.Info("Starting threads: 'guithread' and 'checkthread'."); // Writes 'info' level message to log
-                bool exception = false;
+            SimpleLog.Info("Starting threads: 'guithread' and 'checkthread'."); // Writes 'info' level message to log
+            bool exception = false;
             try
             {
-                
+
 
                 guithread.Start();
                 checkthread.Start();
@@ -259,7 +259,7 @@ namespace anti_cheat
             {
                 SimpleLog.Info("Succsessfully started threads: 'guithread' and 'checkthread'.");
             }
-
+        }
         public static void WindowGui()
         {
             Debug.WriteLine("Entering WindowGui"); // Debug Message
@@ -276,14 +276,6 @@ namespace anti_cheat
             SimpleLog.Info("Entered 'Background thread (BGProc)'."); // Writes 'info' level message to log
 
 
-                try
-                {
-                
-
-                while (true) {
-                        Thread.Sleep(2000);
-                        while (Globals.status)
-                        {
 
             int[] baseline = Background.TakeCurrent();
 
@@ -308,7 +300,8 @@ namespace anti_cheat
                         Globals.uniqueids = Background.Compareprocesses(baseline, current);         // Finds IDs of processes that started after anticheat
                         List<UniqueProc> differentProcessesID = Background.PIDlookup(Globals.uniqueids);
 
-                        if (differentProcessesID.Count() > 0) {
+                        if (differentProcessesID.Count() > 0)
+                        {
                             foreach (var p in differentProcessesID)
                             {
                                 Debug.WriteLine("Id: {0} Name: {1}, Handle: {2} ", p.Name, p.ProcessId, p.Handle);
@@ -345,24 +338,22 @@ namespace anti_cheat
 
 
                         }
-                        Form fc = Application.OpenForms["Main"];
-                        if (fc == null)
-                        {
-                            break;
-                        }
+                    }
+
+                    Form fc = Application.OpenForms["Main"];
+                    if (fc == null)
+                    {
+                        break;
                     }
                 }
-                catch (Exception ex) { SimpleLog.Log(ex); 
-                }
-
-                Environment.Exit(1);
-
-                        }
-                    }
-                }
-
             }
-            catch (Exception ex) { SimpleLog.Log(ex); }
+            catch (Exception ex)
+            {
+                SimpleLog.Log(ex);
+            }
+
+            Environment.Exit(1);
+
         }
 
         private static bool LogtoDB(string name, string processId, string handle)

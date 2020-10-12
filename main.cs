@@ -1,6 +1,5 @@
-﻿using SimpleLogger;
+﻿using System;
 using System.Diagnostics;
-using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -30,7 +29,8 @@ namespace anti_cheat
                 e.Cancel = true;
                 notifyIcon.Visible = true;
                 Visible = false;
-            } else {notifyIcon.Dispose();}
+            }
+            else { notifyIcon.Dispose(); }
 
         }
 
@@ -111,7 +111,6 @@ namespace anti_cheat
         {
             if (Application.MessageLoop)
             {
-                // WinForms app
                 Application.Exit();
             }
         }
