@@ -1,4 +1,5 @@
 ﻿using SimpleLogger;
+using System.Diagnostics;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -10,7 +11,30 @@ namespace anti_cheat
         public Main()
         {
             InitializeComponent();
+            this.FormClosing += new FormClosingEventHandler(Main_FormClosing);
+            this.Resize += new EventHandler(Main_Resize);
         }
+        private void Main_Load(object sender, EventArgs e)
+        {
+            this.MaximizeBox = false;
+            notifyIcon.Visible = false;
+
+        }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                Debug.WriteLine(e);
+                e.Cancel = true;
+                notifyIcon.Visible = true;
+                Visible = false;
+            } else {notifyIcon.Dispose();}
+
+        }
+
+
 
         private void Main_Resize(object sender, EventArgs e)
         {
@@ -19,22 +43,24 @@ namespace anti_cheat
             //and show the system tray icon (represented by the NotifyIcon control)  
             if (this.WindowState == FormWindowState.Minimized)
             {
-                Hide();
+                this.ShowInTaskbar = false;
                 notifyIcon.Visible = true;
+                Visible = false;
+
             }
+        }
+
+        private void Open()
+        {
+            Visible = true;
+            ShowInTaskbar = true;
+            notifyIcon.Visible = false;
+            WindowState = FormWindowState.Normal;
         }
 
         private void NotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Show();
-            this.WindowState = FormWindowState.Normal;
-            notifyIcon.Visible = false;
-        }
-
-        private void Main_Load(object sender, EventArgs e)
-        {
-            this.ShowInTaskbar = true;
-
+            Open();
         }
 
         private void Controlbtn_Click(object sender, EventArgs e)
@@ -74,6 +100,20 @@ namespace anti_cheat
         {
             Cloud cld = new Cloud();
             cld.Show();
+        }
+
+        private void tskBarMenuOpen_Click(object sender, EventArgs e)
+        {
+            Open();
+        }
+
+        private void tskBarMenuExit_Click(object sender, EventArgs e)
+        {
+            if (Application.MessageLoop)
+            {
+                // WinForms app
+                Application.Exit();
+            }
         }
     }
 }
