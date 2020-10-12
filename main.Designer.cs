@@ -33,6 +33,9 @@
             this.lblstatustitle = new System.Windows.Forms.Label();
             this.lblstatus = new System.Windows.Forms.Label();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.tskBarMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tskBarMenuOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.tskBarMenuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.Controlbtn = new System.Windows.Forms.Button();
             this.ToolBar = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -42,6 +45,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolBarbtncld = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.tskBarMenu.SuspendLayout();
             this.ToolBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,10 +72,34 @@
             // 
             // notifyIcon
             // 
+            this.notifyIcon.ContextMenuStrip = this.tskBarMenu;
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
-            this.notifyIcon.Text = "notifyIcon";
+            this.notifyIcon.Text = "Anti-Cheat";
             this.notifyIcon.Visible = true;
             this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseDoubleClick);
+            // 
+            // tskBarMenu
+            // 
+            this.tskBarMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tskBarMenuOpen,
+            this.tskBarMenuExit});
+            this.tskBarMenu.Name = "taskBarMenu";
+            this.tskBarMenu.Size = new System.Drawing.Size(181, 70);
+            this.tskBarMenu.Text = " ";
+            // 
+            // tskBarMenuOpen
+            // 
+            this.tskBarMenuOpen.Name = "tskBarMenuOpen";
+            this.tskBarMenuOpen.Size = new System.Drawing.Size(180, 22);
+            this.tskBarMenuOpen.Text = "Open";
+            this.tskBarMenuOpen.Click += new System.EventHandler(this.tskBarMenuOpen_Click);
+            // 
+            // tskBarMenuExit
+            // 
+            this.tskBarMenuExit.Name = "tskBarMenuExit";
+            this.tskBarMenuExit.Size = new System.Drawing.Size(180, 22);
+            this.tskBarMenuExit.Text = "Exit";
+            this.tskBarMenuExit.Click += new System.EventHandler(this.tskBarMenuExit_Click);
             // 
             // Controlbtn
             // 
@@ -168,6 +196,7 @@
             this.Name = "Main";
             this.Text = "Anti-Cheat";
             this.Load += new System.EventHandler(this.Main_Load);
+            this.tskBarMenu.ResumeLayout(false);
             this.ToolBar.ResumeLayout(false);
             this.ToolBar.PerformLayout();
             this.ResumeLayout(false);
@@ -188,6 +217,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton ToolBarbtncld;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ContextMenuStrip tskBarMenu;
+        private System.Windows.Forms.ToolStripMenuItem tskBarMenuOpen;
+        private System.Windows.Forms.ToolStripMenuItem tskBarMenuExit;
     }
 }
 
