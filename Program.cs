@@ -204,6 +204,7 @@ namespace anti_cheat
         {
             public static string[] uniqueids = { };                         // Global String array: "uniqueids"
             public static bool status = false;                              // Global Variable: "status" 
+            public static Thread gblguithread = null;
             public static int count = 0;                                    // Global Variable: "count"
             public static string logdir = Directory.GetCurrentDirectory();  // Global Variable: "logdirectory"
             public static bool autokill = true;                             // Global Variable: "autokill"
@@ -228,18 +229,19 @@ namespace anti_cheat
 
             SimpleLog.StartLogging();
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
-            Debug.AutoFlush = true;
+            Debug.AutoFlush = false;
 
             Thread guithread = new Thread(new ThreadStart(WindowGui));
             Thread checkthread = new Thread(new ThreadStart(BGProc));
-            guithread.IsBackground = true;
+
+            Globals.gblguithread = guithread;
+            guithread.IsBackground = false;
 
             // Start thread processes that handle Main.cs GUI and the background handler
             SimpleLog.Info("Starting threads: 'guithread' and 'checkthread'."); // Writes 'info' level message to log
             bool exception = false;
             try
             {
-
 
                 guithread.Start();
                 checkthread.Start();
@@ -267,6 +269,7 @@ namespace anti_cheat
             Application.Run(new Main());
         }
 
+
         public static void BGProc()
         {
             Debug.WriteLine("Entering BGProc"); // Debug Message 
@@ -285,16 +288,16 @@ namespace anti_cheat
 
             try
             {
-                while (true)
+                while(true)
                 {
                     Thread.Sleep(2000);
-                    while (Globals.status)
+                    while (Program.Globals.status)
                     {
 
                         int[] current = Background.TakeCurrent();
 
-                        Globals.uniqueids = Background.Compareprocesses(baseline, current);         // Finds IDs of processes that started after anticheat
-                        List<UniqueProc> differentProcessesID = Background.PIDlookup(Globals.uniqueids);
+                        Program.Globals.uniqueids = Background.Compareprocesses(baseline, current);         // Finds IDs of processes that started after anticheat
+                        List<UniqueProc> differentProcessesID = Background.PIDlookup(Program.Globals.uniqueids);
 
                         if (differentProcessesID.Count() > 0)
                         {
@@ -304,7 +307,7 @@ namespace anti_cheat
 
                                 Thread dblog = new Thread(() => Background.LogtoDB(p.Name, p.ProcessId, p.Handle));
 
-                                dblog.Start();
+                                //dblog.Start();
 
                             }
                         }
@@ -315,7 +318,7 @@ namespace anti_cheat
                             if (Checkproc(line))
                             {
                                 MessageBox.Show("Process \"" + line + "\" was found.");
-                                if (Globals.autokill && Globals.status == true)
+                                if (Program.Globals.autokill && Program.Globals.status == true)
                                 {
                                     string a = ProcessValidation.ProcKill(line);
                                     MessageBox.Show("Process \"" + line + "\" " + "\"" + a + "\"" + "  was killed.");
@@ -325,21 +328,13 @@ namespace anti_cheat
                             if (Checkapp(line))
                             {
                                 MessageBox.Show("Application \"" + line + "\" was found.");
-                                if (Globals.autokill && Globals.status == true)
+                                if (Program.Globals.autokill && Program.Globals.status == true)
                                 {
                                     string a = ProcessValidation.ProcKill(line);
                                     MessageBox.Show("Process \"" + line + "\" " + "\"" + a + "\"" + "  was killed.");
                                 }
                             }
-
-
                         }
-                    }
-
-                    Form fc = Application.OpenForms["Main"];
-                    if (fc == null)
-                    {
-                        break;
                     }
                 }
             }
@@ -347,9 +342,6 @@ namespace anti_cheat
             {
                 SimpleLog.Log(ex);
             }
-
-            Environment.Exit(1);
-
         }
 
 
@@ -365,4 +357,5 @@ namespace anti_cheat
         }
     }
 }
+
 

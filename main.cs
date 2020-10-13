@@ -17,15 +17,14 @@ namespace anti_cheat
         {
             this.MaximizeBox = false;
             notifyIcon.Visible = false;
-
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            Debug.WriteLine(e.CloseReason.ToString());
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                Debug.WriteLine(e);
+                Debug.WriteLine(e.CloseReason.ToString());
                 e.Cancel = true;
                 notifyIcon.Visible = true;
                 Visible = false;
@@ -111,7 +110,7 @@ namespace anti_cheat
         {
             if (Application.MessageLoop)
             {
-                Application.Exit();
+                //Application.Exit();
             }
         }
     }
