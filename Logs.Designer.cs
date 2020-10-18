@@ -28,87 +28,90 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("a");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("b");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("c");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("d");
-            this.logsList = new System.Windows.Forms.ListView();
+            this.LogsList = new System.Windows.Forms.ListView();
             this.databaseID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.processName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.processID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.processHandle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.dateFound = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // logsList
+            // LogsList
             // 
-            this.logsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.LogsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.databaseID,
             this.processName,
             this.processID,
             this.processHandle,
             this.dateFound});
-            this.logsList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.logsList.HideSelection = false;
-            this.logsList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
-            this.logsList.Location = new System.Drawing.Point(0, 0);
-            this.logsList.Name = "logsList";
-            this.logsList.Size = new System.Drawing.Size(800, 450);
-            this.logsList.TabIndex = 1;
-            this.logsList.UseCompatibleStateImageBehavior = false;
-            this.logsList.View = System.Windows.Forms.View.Details;
+            this.LogsList.GridLines = true;
+            this.LogsList.HideSelection = false;
+            this.LogsList.Location = new System.Drawing.Point(0, 0);
+            this.LogsList.MultiSelect = false;
+            this.LogsList.Name = "LogsList";
+            this.LogsList.Size = new System.Drawing.Size(565, 402);
+            this.LogsList.TabIndex = 1;
+            this.LogsList.UseCompatibleStateImageBehavior = false;
+            this.LogsList.View = System.Windows.Forms.View.Details;
             // 
             // databaseID
             // 
             this.databaseID.Text = "Database ID";
-            this.databaseID.Width = 79;
+            this.databaseID.Width = 80;
             // 
             // processName
             // 
             this.processName.Text = "Process Name";
-            this.processName.Width = 157;
+            this.processName.Width = 200;
             // 
             // processID
             // 
-            this.processID.DisplayIndex = 4;
             this.processID.Text = "Process ID";
-            this.processID.Width = 116;
+            this.processID.Width = 80;
             // 
             // processHandle
             // 
-            this.processHandle.DisplayIndex = 2;
             this.processHandle.Text = "Process Handle";
-            this.processHandle.Width = 146;
+            this.processHandle.Width = 100;
             // 
             // dateFound
             // 
-            this.dateFound.DisplayIndex = 3;
             this.dateFound.Text = "Date Found";
-            this.dateFound.Width = 85;
+            this.dateFound.Width = 100;
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Location = new System.Drawing.Point(478, 408);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnRefresh.TabIndex = 2;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // Logs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.logsList);
+            this.ClientSize = new System.Drawing.Size(565, 443);
+            this.Controls.Add(this.btnRefresh);
+            this.Controls.Add(this.LogsList);
             this.Name = "Logs";
             this.Text = "Log File";
+            this.Load += new System.EventHandler(this.Logs_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ListView logsList;
+        private System.Windows.Forms.ListView LogsList;
         private System.Windows.Forms.ColumnHeader databaseID;
         private System.Windows.Forms.ColumnHeader processName;
         private System.Windows.Forms.ColumnHeader processHandle;
         private System.Windows.Forms.ColumnHeader processID;
         private System.Windows.Forms.ColumnHeader dateFound;
+        private System.Windows.Forms.Button btnRefresh;
     }
 }

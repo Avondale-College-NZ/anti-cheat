@@ -114,7 +114,7 @@ namespace anti_cheat
                 try
                 {
                     SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringSQLAuth);
-
+                    sqlCon.Open();
 
                     string query = "SELECT * FROM " + Program.Globals.databaseTbl + " WHERE ProcessName=@procname"; //AND DateLogged < DATEADD(day, -1, GETDATE())
 
@@ -180,19 +180,6 @@ namespace anti_cheat
             }
 
             //return true;
-        }
-
-        public static bool GetfromDB()
-        {
-            SqlConnection sqlCon = new SqlConnection(@"Data Source=(local)\sqle2012;Initial Catalog=;Integrated Security=True");
-            SqlDataAdapter sqlda = new SqlDataAdapter("", sqlCon); // Query 
-            DataTable dtbl = new DataTable();
-            sqlda.Fill(dtbl);
-            foreach (DataRow row in dtbl.Rows)
-            {
-
-            }
-            return true;
         }
     }
 

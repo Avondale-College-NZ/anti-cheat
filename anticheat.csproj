@@ -71,6 +71,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnticheatDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AnticheatDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="FolderSelect.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,6 +131,17 @@
     <EmbeddedResource Include="Settings.resx">
       <DependentUpon>Settings.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="AnticheatDataSet.xsc">
+      <DependentUpon>AnticheatDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="AnticheatDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AnticheatDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="AnticheatDataSet.xss">
+      <DependentUpon>AnticheatDataSet.xsd</DependentUpon>
+    </None>
     <None Include="ClassDiagram3.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
