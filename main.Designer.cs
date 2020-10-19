@@ -34,7 +34,11 @@
             this.lblstatus = new System.Windows.Forms.Label();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.tskBarMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tskBarMenuStart = new System.Windows.Forms.ToolStripMenuItem();
+            this.tskBarMenuStop = new System.Windows.Forms.ToolStripMenuItem();
             this.tskBarMenuOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.tskBarMenuSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.tskBarMenuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.Controlbtn = new System.Windows.Forms.Button();
             this.ToolBar = new System.Windows.Forms.ToolStrip();
@@ -81,23 +85,56 @@
             // tskBarMenu
             // 
             this.tskBarMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startToolStripMenuItem,
             this.tskBarMenuOpen,
+            this.tskBarMenuSettings,
             this.tskBarMenuExit});
             this.tskBarMenu.Name = "taskBarMenu";
-            this.tskBarMenu.Size = new System.Drawing.Size(181, 70);
+            this.tskBarMenu.Size = new System.Drawing.Size(117, 92);
             this.tskBarMenu.Text = " ";
+            // 
+            // startToolStripMenuItem
+            // 
+            this.startToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tskBarMenuStart,
+            this.tskBarMenuStop});
+            this.startToolStripMenuItem.Name = "startToolStripMenuItem";
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.startToolStripMenuItem.Text = "Status";
+            this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
+            // 
+            // tskBarMenuStart
+            // 
+            this.tskBarMenuStart.Name = "tskBarMenuStart";
+            this.tskBarMenuStart.Size = new System.Drawing.Size(180, 22);
+            this.tskBarMenuStart.Text = "Start";
+            this.tskBarMenuStart.Click += new System.EventHandler(this.tskBarMenuStart_Click);
+            // 
+            // tskBarMenuStop
+            // 
+            this.tskBarMenuStop.Name = "tskBarMenuStop";
+            this.tskBarMenuStop.Size = new System.Drawing.Size(180, 22);
+            this.tskBarMenuStop.Text = "Stop";
+            this.tskBarMenuStop.Click += new System.EventHandler(this.tskBarMenuStop_Click);
             // 
             // tskBarMenuOpen
             // 
             this.tskBarMenuOpen.Name = "tskBarMenuOpen";
-            this.tskBarMenuOpen.Size = new System.Drawing.Size(180, 22);
+            this.tskBarMenuOpen.Size = new System.Drawing.Size(116, 22);
             this.tskBarMenuOpen.Text = "Open";
             this.tskBarMenuOpen.Click += new System.EventHandler(this.tskBarMenuOpen_Click);
+            // 
+            // tskBarMenuSettings
+            // 
+            this.tskBarMenuSettings.Name = "tskBarMenuSettings";
+            this.tskBarMenuSettings.Size = new System.Drawing.Size(116, 22);
+            this.tskBarMenuSettings.Text = "Settings";
+            this.tskBarMenuSettings.Click += new System.EventHandler(this.tskBarMenuSettings_Click);
             // 
             // tskBarMenuExit
             // 
             this.tskBarMenuExit.Name = "tskBarMenuExit";
-            this.tskBarMenuExit.Size = new System.Drawing.Size(180, 22);
+            this.tskBarMenuExit.Size = new System.Drawing.Size(116, 22);
             this.tskBarMenuExit.Text = "Exit";
             this.tskBarMenuExit.Click += new System.EventHandler(this.tskBarMenuExit_Click);
             // 
@@ -220,6 +257,10 @@
         private System.Windows.Forms.ContextMenuStrip tskBarMenu;
         private System.Windows.Forms.ToolStripMenuItem tskBarMenuOpen;
         private System.Windows.Forms.ToolStripMenuItem tskBarMenuExit;
+        private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tskBarMenuStart;
+        private System.Windows.Forms.ToolStripMenuItem tskBarMenuStop;
+        private System.Windows.Forms.ToolStripMenuItem tskBarMenuSettings;
     }
 }
 

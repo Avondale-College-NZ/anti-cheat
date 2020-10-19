@@ -331,12 +331,19 @@ namespace anti_cheat
                             }
                         }
                     }
+
+                    int formcount = Int32.Parse(Application.OpenForms.Count.ToString());
+                    if (formcount == 0)
+                    {
+                        break;
+                    }
                 }
             }
             catch (Exception ex)
             {
                 SimpleLog.Log(ex);
             }
+            Application.Exit();
         }
 
 

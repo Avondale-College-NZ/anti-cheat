@@ -27,14 +27,9 @@ namespace anti_cheat
 
         }
 
-        public void OnTimedEvent()
-        {
-
-        }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            //LogsList.DataSource = null;
             LogsList.Items.Clear();
             populate_List();
         }
