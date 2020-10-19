@@ -116,15 +116,15 @@ namespace anti_cheat
                     SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringSQLAuth);
                     sqlCon.Open();
 
-                    string query = "SELECT * FROM " + Program.Globals.databaseTbl + " WHERE ProcessName=@procname"; //AND DateLogged < DATEADD(day, -1, GETDATE())
+                    string query = "SELECT * FROM " + Program.Globals.databaseTbl + " WHERE ProcessName=@procname"; // + " AND DateLogged < DATEADD(day, -1, GETDATE()";
 
                     SqlCommand checkCmd = new SqlCommand(query, sqlCon);
                     checkCmd.Parameters.AddWithValue("@procname", procName);
 
                     SqlDataReader checkreader = checkCmd.ExecuteReader();
-                    Debug.WriteLine(checkreader);
+                    Debug.WriteLine(checkreader.HasRows);
 
-                    if (!checkreader.HasRows)
+                    if (checkreader.HasRows)
                     {
                         sqlCon.Open();
                         SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
@@ -134,6 +134,8 @@ namespace anti_cheat
                         sqlCmd.Parameters.AddWithValue("@ProcessHandle", procHandle);
                         sqlCmd.ExecuteNonQuery();
                     }
+                    else { Debug.Indent(); Debug.WriteLine("Dupe value"); Debug.Unindent(); }
+                    
                 }
                 catch (Exception ex)
                 {
@@ -147,19 +149,18 @@ namespace anti_cheat
                 {
                     SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringWinAuth);
                     sqlCon.Open();
-                    string query = "SELECT * FROM " + Program.Globals.databaseTbl + " WHERE ProcessName=@procname "; //AND DateLogged < DATEADD(day, -1, GETDATE())";
+                    string query = "SELECT * FROM " + Program.Globals.databaseTbl + " WHERE ProcessName=@procname"; // + " AND DateLogged < DATEADD(day, -1, GETDATE()";
 
                     SqlCommand checkCmd = new SqlCommand(query, sqlCon);
                     checkCmd.Parameters.AddWithValue("@procname", procName);
                     SqlDataReader checkreader = checkCmd.ExecuteReader();
-                    sqlCon.Close();
-
+ 
                     bool reader = checkreader.HasRows;
+                    checkreader.Close();
 
-                    if (!checkreader.HasRows)
+                    if (reader == false)
                     {
 
-                        sqlCon.Open();
                         SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
                         sqlCmd.CommandType = CommandType.StoredProcedure;
                         sqlCmd.Parameters.AddWithValue("@ProcessName", procName);
@@ -168,8 +169,14 @@ namespace anti_cheat
                         sqlCmd.ExecuteNonQuery();
                         checkreader.Close();
                         sqlCon.Close();
+                        SimpleLog.Log("Logged " + procName + "To the database");
                     }
-                    else { Debug.Indent(); Debug.WriteLine("Dupe value"); Debug.Unindent(); }
+                    else 
+                    { 
+                        Debug.Indent(); Debug.WriteLine("Dupe value"); Debug.Unindent();
+                        checkreader.Close();
+                        sqlCon.Close();
+                    }
 
                 }
                 catch (Exception ex)
@@ -290,14 +297,15 @@ namespace anti_cheat
                         {
                             foreach (var p in differentProcessesID)
                             {
-                                Debug.WriteLine("Id: {0} Name: {1}, Handle: {2} ", p.Name, p.ProcessId, p.Handle);
+                               // Debug.WriteLine("Id: {0} Name: {1}, Handle: {2} ", p.Name, p.ProcessId, p.Handle);
 
                                 Thread dblog = new Thread(() => Background.LogtoDB(p.Name, p.ProcessId, p.Handle));
-
-                                //dblog.Start();
+                                dblog.IsBackground = true;
+                                dblog.Start();
 
                             }
                         }
+                        
 
                         foreach (string line in proclines)
                         {

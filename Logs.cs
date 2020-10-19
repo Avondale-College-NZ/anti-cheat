@@ -3,6 +3,7 @@ using SimpleLogger;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -22,12 +23,22 @@ namespace anti_cheat
         private void Logs_Load(object sender, EventArgs e)
         {
             populate_List();
+
+
+        }
+
+        public void OnTimedEvent()
+        {
+
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
+            //LogsList.DataSource = null;
+            LogsList.Items.Clear();
             populate_List();
         }
+
 
         public void populate_List()
         {
@@ -38,8 +49,24 @@ namespace anti_cheat
                 {
                     SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringSQLAuth);
 
+                    string query = "SELECT * FROM " + Program.Globals.databaseTbl;
 
-                    
+                    SqlDataAdapter sqlda = new SqlDataAdapter(query, sqlCon); // Query 
+                    DataTable dtbl = new DataTable();
+                    sqlda.Fill(dtbl);
+                    LogsList.View = View.Details;
+
+
+                    for (int i = 0; i < dtbl.Rows.Count; i++)
+                    {
+                        DataRow dr = dtbl.Rows[i];
+                        ListViewItem listitem = new ListViewItem(dr["DatabaseID"].ToString());
+                        listitem.SubItems.Add(dr["Processname"].ToString());
+                        listitem.SubItems.Add(dr["ProcessID"].ToString());
+                        listitem.SubItems.Add(dr["ProcessHandle"].ToString());
+                        listitem.SubItems.Add(dr["DateLogged"].ToString());
+                        LogsList.Items.Add(listitem);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -53,34 +80,31 @@ namespace anti_cheat
                 {
                     SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringWinAuth);
 
+                    string query = "SELECT * FROM " + Program.Globals.databaseTbl;
+
+                    SqlDataAdapter sqlda = new SqlDataAdapter(query, sqlCon); // Query 
+                    DataTable dtbl = new DataTable();
+                    sqlda.Fill(dtbl);
+                    LogsList.View = View.Details;
+
+
+
+                    for (int i = 0; i < dtbl.Rows.Count; i++)
+                    {
+                        DataRow dr = dtbl.Rows[i];
+                        ListViewItem listitem = new ListViewItem(dr["DatabaseID"].ToString());
+                        listitem.SubItems.Add(dr["Processname"].ToString());
+                        listitem.SubItems.Add(dr["ProcessID"].ToString());
+                        listitem.SubItems.Add(dr["ProcessHandle"].ToString());
+                        listitem.SubItems.Add(dr["DateLogged"].ToString());
+                        LogsList.Items.Add(listitem);
+                    }
                 }
                 catch (Exception ex)
                 {
                     SimpleLog.Log(ex); // Write exception with all inner exceptions to log
 
                 }
-            }
-
-
-
-
-
-
-
-
-            using (AnticheatDataSet db = new AnticheatDataSet())
-            {
-                List<AnticheatDataSet.tblProcessRow> list = db.tblProcess.ToList();
-                foreach(AnticheatDataSet.tblProcessRow r in list)
-                {
-                    ListViewItem item = new ListViewItem(r.DatabaseID.ToString());
-                    item.SubItems.Add(r.DatabaseID.ToString());
-                    item.SubItems.Add(r.DatabaseID.ToString());
-                    item.SubItems.Add(r.DatabaseID.ToString());
-                    LogsList.Items.Add(item);
-                }
-
-
             }    
         }
 
