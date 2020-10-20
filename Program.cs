@@ -346,7 +346,6 @@ namespace anti_cheat
             Application.Exit();
         }
 
-
         public static bool Checkapp(string proc)
         {
             bool check = ProcessValidation.CheckForApplicationByName(proc.ToString());

@@ -23,8 +23,6 @@ namespace anti_cheat
         private void Logs_Load(object sender, EventArgs e)
         {
             populate_List();
-
-
         }
 
 
@@ -33,6 +31,8 @@ namespace anti_cheat
             LogsList.Items.Clear();
             populate_List();
         }
+
+
 
 
         public void populate_List()

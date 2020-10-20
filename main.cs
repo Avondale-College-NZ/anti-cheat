@@ -18,8 +18,18 @@ namespace anti_cheat
         {
             this.MaximizeBox = false;
             notifyIcon.Visible = true;
-
-
+        }
+        private void setClosed(object sender, FormClosedEventArgs e)
+        {
+            globals.set = null;
+        }
+        private void logClosed(object sender, FormClosedEventArgs e)
+        {
+            globals.log = null;
+        }
+        private void cldClosed(object sender, FormClosedEventArgs e)
+        {
+            globals.cld = null;
         }
 
         private void ToggleState()
@@ -53,15 +63,13 @@ namespace anti_cheat
                 e.Cancel = true;
                 notifyIcon.Visible = true;
                 Visible = false;
-                globals.log.Close();
-                globals.cld.Close();
-                globals.set.Close();
+                globals.log.Visible = false;
+                globals.cld.Visible = false;
+                globals.set.Visible = false;
             }
             else { notifyIcon.Dispose(); }
 
         }
-
-
 
         private void Main_Resize(object sender, EventArgs e)
         {
@@ -74,9 +82,9 @@ namespace anti_cheat
                 notifyIcon.Visible = true;
                 Visible = true;
 
-                globals.log.Close();
-                globals.cld.Close();
-                globals.set.Close();
+                globals.log.Visible = false;
+                globals.cld.Visible = false;
+                globals.set.Visible = false; // this.close(); disposes the form so when calling this.show(); it cannot be called as handler is disposed
             }
         }
 
@@ -99,19 +107,32 @@ namespace anti_cheat
 
         private void Toolbarbtnset_Click(object sender, EventArgs e)
         {
+            if (globals.set == null)
+            {
+                globals.set = new Settings();
+                globals.set.FormClosed += setClosed;
+            }
 
             globals.set.Show();
         }
 
         private void Toolbarbtnlog_Click(object sender, EventArgs e)
         {
-
+            if (globals.log == null)
+            {
+                globals.log = new Logs();
+                globals.log.FormClosed += logClosed;
+            }
             globals.log.Show();
         }
 
         private void ToolBarbtncld_Click(object sender, EventArgs e)
         {
-
+            if (globals.cld == null)
+            {
+                globals.cld = new Cloud();
+                globals.cld.FormClosed += logClosed;
+            }
             globals.cld.Show();
         }
 
@@ -130,12 +151,12 @@ namespace anti_cheat
 
         private void tskBarMenuStart_Click(object sender, EventArgs e)
         {
-            
-            if (Program.Globals.status == false) 
+
+            if (Program.Globals.status == false)
             {
                 ToggleState();
-            } 
-            else 
+            }
+            else
             {
                 notifyIcon.ShowBalloonTip(100, "Anticheat Start Failed", "Failed to start Anticheat as it is already Running.", ToolTipIcon.Warning);
             }
@@ -147,7 +168,7 @@ namespace anti_cheat
             {
                 ToggleState();
             }
-            else 
+            else
             {
                 notifyIcon.ShowBalloonTip(100, "Anticheat Stop Failed", "Failed to stop Anticheat as it is already Stopped.", ToolTipIcon.Warning);
             }
@@ -160,11 +181,11 @@ namespace anti_cheat
 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Program.Globals.status) 
+            if (Program.Globals.status)
             {
                 notifyIcon.ShowBalloonTip(50, "Anticheat is currently Running", "The Anticheat Process is currently Running", ToolTipIcon.Info);
-            } 
-            else 
+            }
+            else
             {
                 notifyIcon.ShowBalloonTip(50, "Anticheat is currently Stopped", "The Anticheat Process is currently Stopped", ToolTipIcon.Warning);
             }
@@ -172,9 +193,8 @@ namespace anti_cheat
     }
     public static class globals
     {
-        public static Logs log = new Logs();
-        public static Cloud cld = new Cloud();
-        public static Settings set = new Settings();
-
+        public static Settings set;
+        public static Logs log;
+        public static Cloud cld;
     }
 }
