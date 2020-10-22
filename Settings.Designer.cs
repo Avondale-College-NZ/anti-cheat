@@ -46,6 +46,7 @@
             this.txtsqlserver = new System.Windows.Forms.TextBox();
             this.lblsqldatabase = new System.Windows.Forms.Label();
             this.lblsqlserver = new System.Windows.Forms.Label();
+            this.btnReset = new System.Windows.Forms.Button();
             this.pnlsettings.SuspendLayout();
             this.pnlsql.SuspendLayout();
             this.SuspendLayout();
@@ -214,11 +215,22 @@
             this.lblsqlserver.TabIndex = 21;
             this.lblsqlserver.Text = "SQL Server:";
             // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(419, 365);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(75, 23);
+            this.btnReset.TabIndex = 22;
+            this.btnReset.Text = "Reset Settings";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(608, 540);
+            this.Controls.Add(this.btnReset);
             this.Controls.Add(this.pnlsql);
             this.Controls.Add(this.pnlsettings);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -251,5 +263,6 @@
         private System.Windows.Forms.Label lblsqlserver;
         private System.Windows.Forms.TextBox txtsqldatabase;
         private System.Windows.Forms.TextBox txtsqlserver;
+        private System.Windows.Forms.Button btnReset;
     }
 }

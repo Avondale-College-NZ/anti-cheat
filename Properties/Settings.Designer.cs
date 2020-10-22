@@ -23,14 +23,97 @@ namespace anti_cheat.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=tpisql01.avcol.school.nz;Initial Catalog=Anticheat;Integrated Securit" +
-            "y=True")]
-        public string AnticheatConnectionString {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string logdir {
             get {
-                return ((string)(this["AnticheatConnectionString"]));
+                return ((string)(this["logdir"]));
+            }
+            set {
+                this["logdir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public bool autokill {
+            get {
+                return ((bool)(this["autokill"]));
+            }
+            set {
+                this["autokill"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string databaseSvr {
+            get {
+                return ((string)(this["databaseSvr"]));
+            }
+            set {
+                this["databaseSvr"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string database {
+            get {
+                return ((string)(this["database"]));
+            }
+            set {
+                this["database"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string databaseTbl {
+            get {
+                return ((string)(this["databaseTbl"]));
+            }
+            set {
+                this["databaseTbl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string sqluser {
+            get {
+                return ((string)(this["sqluser"]));
+            }
+            set {
+                this["sqluser"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string sqlpass {
+            get {
+                return ((string)(this["sqlpass"]));
+            }
+            set {
+                this["sqlpass"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public int authmethod {
+            get {
+                return ((int)(this["authmethod"]));
+            }
+            set {
+                this["authmethod"] = value;
             }
         }
     }

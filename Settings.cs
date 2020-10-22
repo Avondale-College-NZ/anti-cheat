@@ -28,7 +28,6 @@ namespace anti_cheat
             txtsqldatabase.Text = Program.Globals.database;
             txtsqluser.Text = Program.Globals.sqluser;
             txtsqlpass.Text = Program.Globals.sqlpass;
-
         }
 
         private void Btnfiledir_Click(object sender, EventArgs e)
@@ -41,7 +40,8 @@ namespace anti_cheat
                 {
                     DirectoryInfo info = dlg.info;
                     TxtLogfiledir.Text = dlg.fullPath;
-                    Program.Globals.logdir = dlg.fullPath;
+                    Properties.Settings.Default.logdir = dlg.fullPath;
+                    Properties.Settings.Default.Save();
 
                     // extract the directory info.
                     string[] strArray = new string[4];
@@ -75,6 +75,18 @@ namespace anti_cheat
                 txtsqluser.Visible = false;
                 txtsqlpass.Visible = false;
             }
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+
+            DialogResult dr = MessageBox.Show("Are you sure you would like to Reset settings to their default values?", "Reset Settings", MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+
+            if (dr == DialogResult.Yes)
+            {
+                Program.resetSettings();
+            }
+
         }
     }
 }

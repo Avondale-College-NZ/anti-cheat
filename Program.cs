@@ -196,23 +196,80 @@ namespace anti_cheat
 
         public static class Globals
         {
+            // Anticheat  Globals:
             public static string[] uniqueids = { };                         // Global String array: "uniqueids"
             public static bool status = false;                              // Global Variable: "status" 
             public static Thread gblguithread = null;
             public static int count = 0;                                    // Global Variable: "count"
-            public static string logdir = Directory.GetCurrentDirectory();  // Global Variable: "logdirectory"
+
+            // User Defined Globals:
+            public static string logdir;                                    // Global Variable: "logdirectory"
             public static bool autokill = true;                             // Global Variable: "autokill"
+
+            // SQL Server Location:
             public static string databaseSvr = "tpisql01.avcol.school.nz";  // Global Variable: "databaseSvr"
             public static string database = "Anticheat";                    // Global Variable: "database"
             public static string databaseTbl = "tblProcess";                // Global Variable: "databaseTbl"
+
+            // SQL Server Authentication:
+            public static int authmethod = 0;                               // Global Variable: "authmethod" - 0 = Windows Authentication, 2 = SQL Authentication
             public static string sqluser = "";                              // Global Variable: "sqluser"
             public static string sqlpass = "";                              // Global Variable: "sqlpass"
-            public static int authmethod = 0;                               // Global Variable: "authmethod" - 0 = Windows Authentication, 2 = SQL Authentication
-            public static string connectionStringWinAuth = @"Data Source=" + databaseSvr + ";Initial Catalog=" + database +
-    ";Integrated Security=True;";                                           // Global Variable: "connectionStringWinAuth"
-            public static string connectionStringSQLAuth = @"Data Source=" + databaseSvr + ";Initial Catalog=" + database +
-    ";User ID=(" + sqluser + ");Password=(" + sqlpass + ");";               // Global Variable: "connectionStringSQLAuth"
+
+            // SQL Server Connection Strings:
+            public static string connectionStringWinAuth = @"Data Source=" + databaseSvr + ";Initial Catalog=" + database + ";Integrated Security=True;"; // Global Variable: "connectionStringWinAuth"
+            public static string connectionStringSQLAuth = @"Data Source=" + databaseSvr + ";Initial Catalog=" + database + ";User ID=(" + sqluser + ");Password=(" + sqlpass + ");";   // Global Variable: "connectionStringSQLAuth"
         }
+
+        public static void initSettings() 
+        {
+            // User Defined Globals:
+            if (Properties.Settings.Default.logdir == null)
+            {
+                Globals.logdir = Directory.GetCurrentDirectory();
+            } else { Globals.logdir = Properties.Settings.Default.logdir; }
+
+            Globals.autokill = Properties.Settings.Default.autokill;
+
+            // SQL Server Location:
+            Globals.databaseSvr = Properties.Settings.Default.databaseSvr;
+            Globals.database = Properties.Settings.Default.database;
+            Globals.databaseTbl = Properties.Settings.Default.databaseTbl;
+
+            // SQL Server Authentication:
+            Globals.authmethod = Properties.Settings.Default.authmethod;
+            Globals.sqluser = Properties.Settings.Default.sqluser;
+            Globals.sqlpass = Properties.Settings.Default.sqlpass;
+
+
+        }
+
+        public static void resetSettings()
+        {
+            // User Defined Settings:
+            Properties.Settings.Default.logdir = null;
+
+            Globals.autokill = true;
+            Properties.Settings.Default.autokill = Globals.autokill;
+
+            // Database Location Settings:
+            Globals.databaseSvr = "tpisql01.avcol.school.nz";
+            Properties.Settings.Default.databaseSvr = Globals.databaseSvr;
+            Globals.database = "Anticheat";
+            Properties.Settings.Default.database = Globals.database;
+            Globals.databaseTbl = "tblProcess";
+            Properties.Settings.Default.databaseTbl = Globals.databaseTbl;
+
+            // SQL Server Authentication Settings:
+            Globals.authmethod = 0;
+            Properties.Settings.Default.authmethod = Globals.authmethod;
+            Globals.sqluser = "";
+            Properties.Settings.Default.sqluser = Globals.sqluser;
+            Globals.sqlpass = "";
+            Properties.Settings.Default.sqlpass = Globals.sqlpass;
+
+        }
+
 
         /// <summary>
         /// The main entry point for the application.

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using SimpleLogger;
+using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace anti_cheat
@@ -63,9 +65,37 @@ namespace anti_cheat
                 e.Cancel = true;
                 notifyIcon.Visible = true;
                 Visible = false;
-                globals.log.Visible = false;
-                globals.cld.Visible = false;
-                globals.set.Visible = false;
+
+                // globals.set.Visible = false;
+                // globals.log.Visible = false;
+                // globals.cld.Visible = false;
+
+                // Creates a list of open forms and then closes all open forms.
+                FormCollection fc = Application.OpenForms;
+                try {
+                    foreach (Form form in fc.Cast<Form>().ToList())
+                    {
+                        //iterate through
+                        if (form.Name == "Settings")
+                        {
+                            globals.set.Close();
+                        }
+                        else if (form.Name == "Logs")
+                        {
+                            globals.log.Close();
+
+                        }
+                        else if (form.Name == "Cloud")
+                        {
+                            globals.cld.Close();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    SimpleLog.Log(ex);
+                }
+
             }
             else { notifyIcon.Dispose(); }
 
@@ -82,9 +112,32 @@ namespace anti_cheat
                 notifyIcon.Visible = true;
                 Visible = true;
 
-                globals.log.Visible = false;
-                globals.cld.Visible = false;
-                globals.set.Visible = false; // this.close(); disposes the form so when calling this.show(); it cannot be called as handler is disposed
+                // Creates a list of open forms and then minimizes all open forms.
+                FormCollection fc = Application.OpenForms;
+                try
+                {
+                    foreach (Form form in fc.Cast<Form>().ToList())
+                    {
+                        //iterate through
+                        if (form.Name == "Settings")
+                        {
+                            globals.set.WindowState = FormWindowState.Minimized;
+                        }
+                        else if (form.Name == "Logs")
+                        {
+                            globals.log.WindowState = FormWindowState.Minimized;
+
+                        }
+                        else if (form.Name == "Cloud")
+                        {
+                            globals.cld.WindowState = FormWindowState.Minimized;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    SimpleLog.Log(ex);
+                }
             }
         }
 
@@ -131,7 +184,7 @@ namespace anti_cheat
             if (globals.cld == null)
             {
                 globals.cld = new Cloud();
-                globals.cld.FormClosed += logClosed;
+                globals.cld.FormClosed += cldClosed;
             }
             globals.cld.Show();
         }
