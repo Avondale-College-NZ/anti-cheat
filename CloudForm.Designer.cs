@@ -1,6 +1,6 @@
 ﻿namespace anti_cheat
 {
-    partial class Cloud
+    partial class CloudForm
     {
         /// <summary>
         /// Required designer variable.

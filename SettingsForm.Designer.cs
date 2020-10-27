@@ -1,6 +1,6 @@
 ﻿namespace anti_cheat
 {
-    partial class Settings
+    partial class SettingsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Settings));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.Chkautokill = new System.Windows.Forms.CheckBox();
             this.lbllogfiledir = new System.Windows.Forms.Label();
             this.lblautokill = new System.Windows.Forms.Label();

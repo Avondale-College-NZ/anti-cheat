@@ -148,6 +148,9 @@ namespace anti_cheat
                 try
                 {
                     SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringWinAuth);
+
+                    SimpleLog.Info(Program.Globals.connectionStringWinAuth);
+
                     sqlCon.Open();
                     string query = "SELECT * FROM " + Program.Globals.databaseTbl + " WHERE ProcessName=@procname"; // + " AND DateLogged < DATEADD(day, -1, GETDATE()";
 
@@ -179,14 +182,18 @@ namespace anti_cheat
                     }
 
                 }
+                catch (System.Data.SqlClient.SqlException exception)
+                {
+                    // Output exception information to log.
+                    SimpleLog.Log(exception);
+                }
                 catch (Exception ex)
                 {
-                    SimpleLog.Log(ex); // Write exception with all inner exceptions to log
+                    SimpleLog.Log(ex); // Write any exception to Log file.
 
                 }
-            }
 
-            //return true;
+            }
         }
     }
 
@@ -197,76 +204,132 @@ namespace anti_cheat
         public static class Globals
         {
             // Anticheat  Globals:
-            public static string[] uniqueids = { };                         // Global String array: "uniqueids"
-            public static bool status = false;                              // Global Variable: "status" 
-            public static Thread gblguithread = null;
-            public static int count = 0;                                    // Global Variable: "count"
+            public static string[] uniqueids = { };                   // Global String array: "uniqueids"
+            public static bool status = false;                        // Global Variable: "status" 
+            public static Thread guithread = null;                    // Global Thread: "guithread"
+            public static int count = 0;                              // Global Variable: "count"
 
             // User Defined Globals:
-            public static string logdir;                                    // Global Variable: "logdirectory"
-            public static bool autokill = true;                             // Global Variable: "autokill"
+            public static string logdir;                              // Global Variable: "logdirectory"
+            public static bool autokill;                              // Global Variable: "autokill"
 
             // SQL Server Location:
-            public static string databaseSvr = "tpisql01.avcol.school.nz";  // Global Variable: "databaseSvr"
-            public static string database = "Anticheat";                    // Global Variable: "database"
-            public static string databaseTbl = "tblProcess";                // Global Variable: "databaseTbl"
+            public static string databaseSvr;                         // Global Variable: "databaseSvr"
+            public static string database;                            // Global Variable: "database"
+            public static string databaseTbl;                         // Global Variable: "databaseTbl"
 
             // SQL Server Authentication:
-            public static int authmethod = 0;                               // Global Variable: "authmethod" - 0 = Windows Authentication, 2 = SQL Authentication
-            public static string sqluser = "";                              // Global Variable: "sqluser"
-            public static string sqlpass = "";                              // Global Variable: "sqlpass"
+            public static int authmethod;                             // Global Variable: "authmethod" - 0 = Windows Authentication, 2 = SQL Authentication
+            public static string sqluser;                             // Global Variable: "sqluser"
+            public static string sqlpass;                             // Global Variable: "sqlpass"
 
             // SQL Server Connection Strings:
-            public static string connectionStringWinAuth = @"Data Source=" + databaseSvr + ";Initial Catalog=" + database + ";Integrated Security=True;"; // Global Variable: "connectionStringWinAuth"
-            public static string connectionStringSQLAuth = @"Data Source=" + databaseSvr + ";Initial Catalog=" + database + ";User ID=(" + sqluser + ");Password=(" + sqlpass + ");";   // Global Variable: "connectionStringSQLAuth"
+            public static string connectionStringWinAuth;            // Global Variable: "connectionStringWinAuth"
+            public static string connectionStringSQLAuth;            // Global Variable: "connectionStringSQLAuth"
         }
 
-        public static void initSettings() 
+        public static void InitSettings() 
         {
-            // User Defined Globals:
-            if (Properties.Settings.Default.logdir == null)
+            try
             {
-                Globals.logdir = Directory.GetCurrentDirectory();
-            } else { Globals.logdir = Properties.Settings.Default.logdir; }
+                // User Defined Globals:
+                if (Properties.Settings.Default.logdir == null)
+                {
+                    Globals.logdir = Directory.GetCurrentDirectory();
+                }
+                else { Globals.logdir = Properties.Settings.Default.logdir; }
 
-            Globals.autokill = Properties.Settings.Default.autokill;
+                if (Properties.Settings.Default.autokill.ToString() != "")
+                {
+                    Globals.autokill = Properties.Settings.Default.autokill;
+                }
+                // SQL Server Location:
+                if (Properties.Settings.Default.databaseSvr != null)
+                {
+                    Globals.databaseSvr = Properties.Settings.Default.databaseSvr;
+                }
+                if (Properties.Settings.Default.database != null)
+                {
+                    Globals.database = Properties.Settings.Default.database;
+                }
+                if (Properties.Settings.Default.databaseTbl != null)
+                {
+                    Globals.databaseTbl = Properties.Settings.Default.databaseTbl;
+                }
 
-            // SQL Server Location:
-            Globals.databaseSvr = Properties.Settings.Default.databaseSvr;
-            Globals.database = Properties.Settings.Default.database;
-            Globals.databaseTbl = Properties.Settings.Default.databaseTbl;
+                // SQL Server Authentication:
+                if (Properties.Settings.Default.authmethod.ToString() != "") 
+                {
+                    Globals.authmethod = Properties.Settings.Default.authmethod;
+                }
+                        
+                Globals.sqluser = Properties.Settings.Default.sqluser;
+                Globals.sqlpass = Properties.Settings.Default.sqlpass;
 
-            // SQL Server Authentication:
-            Globals.authmethod = Properties.Settings.Default.authmethod;
-            Globals.sqluser = Properties.Settings.Default.sqluser;
-            Globals.sqlpass = Properties.Settings.Default.sqlpass;
+                Globals.connectionStringWinAuth = @"Data Source=" + Globals.databaseSvr + ";Initial Catalog=" + Globals.database + ";Integrated Security=True;"; 
+                Globals.connectionStringSQLAuth = @"Data Source=" + Globals.databaseSvr + ";Initial Catalog=" + Globals.database + ";User ID=(" + Globals.sqluser + ");Password=(" + Globals.sqlpass + ");";
 
+
+        Debug.WriteLine("List of current Globals: \n" + Globals.logdir + "\n" +
+               Globals.autokill + "\n" +
+               Globals.databaseSvr + "\n" +
+               Globals.database + "\n" +
+               Globals.databaseTbl + "\n" +
+               Globals.authmethod + "\n"
+    );
+
+            }
+            catch (Exception ex)
+            {
+                SimpleLog.Log(ex); // Write any exception to Log file.
+
+            }
+            SimpleLog.Info("List of current Globals: \n" + Globals.logdir + "\n" +
+               Globals.autokill + "\n" +
+               Globals.databaseSvr + "\n" +
+               Globals.database + "\n" +
+               Globals.databaseTbl + "\n" +
+               Globals.authmethod + "\n"
+    );
 
         }
 
-        public static void resetSettings()
+        public static void ResetSettings()
         {
-            // User Defined Settings:
-            Properties.Settings.Default.logdir = null;
+            try
+            {
+                // User Defined Settings:
+                Properties.Settings.Default.logdir = null;
 
-            Globals.autokill = true;
-            Properties.Settings.Default.autokill = Globals.autokill;
+                Globals.autokill = true;
+                Properties.Settings.Default.autokill = Globals.autokill;
 
-            // Database Location Settings:
-            Globals.databaseSvr = "tpisql01.avcol.school.nz";
-            Properties.Settings.Default.databaseSvr = Globals.databaseSvr;
-            Globals.database = "Anticheat";
-            Properties.Settings.Default.database = Globals.database;
-            Globals.databaseTbl = "tblProcess";
-            Properties.Settings.Default.databaseTbl = Globals.databaseTbl;
+                // Database Location Settings:
+                Globals.databaseSvr = "tpisql01.avcol.school.nz";
+                Properties.Settings.Default.databaseSvr = Globals.databaseSvr;
+                Globals.database = "Anticheat";
+                Properties.Settings.Default.database = Globals.database;
+                Globals.databaseTbl = "tblProcess";
+                Properties.Settings.Default.databaseTbl = Globals.databaseTbl;
 
-            // SQL Server Authentication Settings:
-            Globals.authmethod = 0;
-            Properties.Settings.Default.authmethod = Globals.authmethod;
-            Globals.sqluser = "";
-            Properties.Settings.Default.sqluser = Globals.sqluser;
-            Globals.sqlpass = "";
-            Properties.Settings.Default.sqlpass = Globals.sqlpass;
+                // SQL Server Authentication Settings:
+                Globals.authmethod = 0;
+                Properties.Settings.Default.authmethod = Globals.authmethod;
+                Globals.sqluser = "";
+                Properties.Settings.Default.sqluser = Globals.sqluser;
+                Globals.sqlpass = "";
+                Properties.Settings.Default.sqlpass = Globals.sqlpass;
+
+                Properties.Settings.Default.Save();
+
+                Globals.connectionStringWinAuth = @"Data Source=" + Globals.databaseSvr + ";Initial Catalog=" + Globals.database + ";Integrated Security=True;";
+                Globals.connectionStringSQLAuth = @"Data Source=" + Globals.databaseSvr + ";Initial Catalog=" + Globals.database + ";User ID=(" + Globals.sqluser + ");Password=(" + Globals.sqlpass + ");";
+            }
+            catch (Exception ex)
+            {
+                SimpleLog.Log(ex); // Write any exception to Log file.
+
+            }
 
         }
 
@@ -277,15 +340,21 @@ namespace anti_cheat
         [STAThread]
         static void Main()
         {
-
+            // Starts SimpleLog & Debug Console output.
             SimpleLog.StartLogging();
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
             Debug.AutoFlush = false;
 
+            // Takes all Persistant settings from Settings.settings and sets them to Global Variables
+            //ResetSettings();
+            InitSettings();
+
+
+            // Initializes Threads for GUI & Background process.
             Thread guithread = new Thread(new ThreadStart(WindowGui));
             Thread checkthread = new Thread(new ThreadStart(BGProc));
 
-            Globals.gblguithread = guithread;
+            Globals.guithread = guithread;
             guithread.IsBackground = false;
 
             // Start thread processes that handle Main.cs GUI and the background handler
@@ -415,5 +484,3 @@ namespace anti_cheat
         }
     }
 }
-
-

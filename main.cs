@@ -162,7 +162,7 @@ namespace anti_cheat
         {
             if (globals.set == null)
             {
-                globals.set = new Settings();
+                globals.set = new SettingsForm();
                 globals.set.FormClosed += setClosed;
             }
 
@@ -173,7 +173,7 @@ namespace anti_cheat
         {
             if (globals.log == null)
             {
-                globals.log = new Logs();
+                globals.log = new LogsForm();
                 globals.log.FormClosed += logClosed;
             }
             globals.log.Show();
@@ -183,7 +183,7 @@ namespace anti_cheat
         {
             if (globals.cld == null)
             {
-                globals.cld = new Cloud();
+                globals.cld = new CloudForm();
                 globals.cld.FormClosed += cldClosed;
             }
             globals.cld.Show();
@@ -246,8 +246,8 @@ namespace anti_cheat
     }
     public static class globals
     {
-        public static Settings set;
-        public static Logs log;
-        public static Cloud cld;
+        public static SettingsForm set;
+        public static LogsForm log;
+        public static CloudForm cld;
     }
 }

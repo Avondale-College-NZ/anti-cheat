@@ -13,9 +13,9 @@ using System.Data.SqlClient;
 
 namespace anti_cheat
 {
-    public partial class Logs : Form
+    public partial class LogsForm : Form
     {
-        public Logs()
+        public LogsForm()
         {
             InitializeComponent();
         }
@@ -42,9 +42,10 @@ namespace anti_cheat
             {
                 try
                 {
+                    Debug.WriteLine(Program.Globals.connectionStringSQLAuth);
                     SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringSQLAuth);
 
-                    string query = "SELECT * FROM " + Program.Globals.databaseTbl;
+                string query = "SELECT * FROM " + Program.Globals.databaseTbl;
 
                     SqlDataAdapter sqlda = new SqlDataAdapter(query, sqlCon); // Query 
                     DataTable dtbl = new DataTable();
@@ -65,7 +66,18 @@ namespace anti_cheat
                 }
                 catch (Exception ex)
                 {
-                    SimpleLog.Log(ex); // Write exception with all inner exceptions to log
+                    if (ex is SqlException)
+                    {
+                        Debug.WriteLine(ex);
+
+                       
+                        return;
+                    }
+
+                    
+                
+                    //SimpleLog.Log(ex); // Write exception with all inner exceptions to log
+                    throw;
                 }
 
             }
@@ -73,6 +85,7 @@ namespace anti_cheat
             {
                 try
                 {
+                    Debug.WriteLine(Program.Globals.connectionStringWinAuth);
                     SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringWinAuth);
 
                     string query = "SELECT * FROM " + Program.Globals.databaseTbl;
@@ -97,8 +110,15 @@ namespace anti_cheat
                 }
                 catch (Exception ex)
                 {
-                    SimpleLog.Log(ex); // Write exception with all inner exceptions to log
+                    if (ex is SqlException)
+                    {
+                        Debug.WriteLine(ex);
 
+                        return;
+                    }
+
+                    //SimpleLog.Log(ex); // Write exception with all inner exceptions to log
+                    throw;
                 }
             }    
         }
