@@ -1,6 +1,6 @@
 ﻿namespace anti_cheat
 {
-    partial class Settings
+    partial class SettingsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Settings));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.Chkautokill = new System.Windows.Forms.CheckBox();
             this.lbllogfiledir = new System.Windows.Forms.Label();
             this.lblautokill = new System.Windows.Forms.Label();
@@ -46,6 +46,8 @@
             this.txtsqlserver = new System.Windows.Forms.TextBox();
             this.lblsqldatabase = new System.Windows.Forms.Label();
             this.lblsqlserver = new System.Windows.Forms.Label();
+            this.btnReset = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.pnlsettings.SuspendLayout();
             this.pnlsql.SuspendLayout();
             this.SuspendLayout();
@@ -84,7 +86,7 @@
             this.pnlsettings.Controls.Add(this.lblautokill);
             this.pnlsettings.Controls.Add(this.lbllogfiledir);
             this.pnlsettings.Controls.Add(this.Chkautokill);
-            this.pnlsettings.Location = new System.Drawing.Point(166, 54);
+            this.pnlsettings.Location = new System.Drawing.Point(12, 10);
             this.pnlsettings.Name = "pnlsettings";
             this.pnlsettings.Size = new System.Drawing.Size(430, 53);
             this.pnlsettings.TabIndex = 12;
@@ -177,7 +179,7 @@
             this.pnlsql.Controls.Add(this.txtsqluser);
             this.pnlsql.Controls.Add(this.txtsqlpass);
             this.pnlsql.Controls.Add(this.lblsqlpass);
-            this.pnlsql.Location = new System.Drawing.Point(166, 129);
+            this.pnlsql.Location = new System.Drawing.Point(12, 85);
             this.pnlsql.Name = "pnlsql";
             this.pnlsql.Size = new System.Drawing.Size(430, 166);
             this.pnlsql.TabIndex = 21;
@@ -214,15 +216,37 @@
             this.lblsqlserver.TabIndex = 21;
             this.lblsqlserver.Text = "SQL Server:";
             // 
-            // Settings
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(367, 276);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(75, 23);
+            this.btnReset.TabIndex = 22;
+            this.btnReset.Text = "Reset Settings";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(286, 276);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 23;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(608, 540);
+            this.ClientSize = new System.Drawing.Size(459, 309);
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.btnReset);
             this.Controls.Add(this.pnlsql);
             this.Controls.Add(this.pnlsettings);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Settings";
+            this.Name = "SettingsForm";
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.Settings_Load);
             this.pnlsettings.ResumeLayout(false);
@@ -251,5 +275,7 @@
         private System.Windows.Forms.Label lblsqlserver;
         private System.Windows.Forms.TextBox txtsqldatabase;
         private System.Windows.Forms.TextBox txtsqlserver;
+        private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Button btnSave;
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace anti_cheat
 {
-    partial class Logs
+    partial class LogsForm
     {
         /// <summary>
         /// Required designer variable.

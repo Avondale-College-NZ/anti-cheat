@@ -1,38 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="anti_cheat.Cloud" Collapsed="true">
+  <Class Name="anti_cheat.CloudForm" Collapsed="true">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Cloud.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="anti_cheat.Logs" Collapsed="true">
-    <Position X="4" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAAAAAAAAAAAIAAAAA=</HashCode>
-      <FileName>Logs.cs</FileName>
+      <FileName>CloudForm.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="anti_cheat.Main" Collapsed="true">
     <Position X="0.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAACID0AACAAAAAAAAiACAACBAAAIBUgAAGAAAAAAAA=</HashCode>
+      <HashCode>QAFCID8gCiAAIEAIAAiQDgBCBAAAKJUgAAGAgBAAAAA=</HashCode>
       <FileName>Main.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="anti_cheat.Program" Collapsed="true">
     <Position X="4" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAACBAAAACAAAAAAAAAAAAAAAAAACAABAAEAAA=</HashCode>
+      <HashCode>AAAAIAAgABIAAACAAAAAAAAAAAAAAAAAAAAABAAEAAA=</HashCode>
       <FileName>Program.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="anti_cheat.Settings" Collapsed="true">
-    <Position X="2.25" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AgAAAAgAACAAABAAAACAAAACAAAAAAAAhABAAQAACAA=</HashCode>
-      <FileName>Settings.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="folderSelect.FolderSelect" Collapsed="true">
@@ -45,7 +31,7 @@
   <Class Name="ProcessCheck.ProcessValidation" Collapsed="true">
     <Position X="2.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgABAABAACAAAAAAAAAAAAAAAAAAAAAABgBAiAAAAAA=</HashCode>
+      <HashCode>AgABAABAACAAAAAAAAAAAAAAAAAAAAAADgBAiAAAAAA=</HashCode>
       <FileName>ProcessValidation.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -58,7 +44,22 @@
   <Class Name="anti_cheat.Properties.Settings" Collapsed="true">
     <Position X="4" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAEAAAAAEAABEEAAAIAAAEABhAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Settings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="anti_cheat.SettingsForm" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BiAAAAgBAWAAAFAAAACAARECCABgAAAghABAAIAAGAA=</HashCode>
+      <FileName>SettingsForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="anti_cheat.LogsForm" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAADAACCAQCAAAAACAAAQSAAAAAAAAwAAAAAAAAAA=</HashCode>
+      <FileName>LogsForm.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

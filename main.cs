@@ -1,6 +1,8 @@
-﻿using System;
+﻿using SimpleLogger;
+using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace anti_cheat
@@ -11,6 +13,8 @@ namespace anti_cheat
         public Main()
         {
             InitializeComponent();
+
+            // Event Handlers for Form Events.
             this.FormClosing += new FormClosingEventHandler(Main_FormClosing);
             this.Resize += new EventHandler(Main_Resize);
         }
@@ -34,6 +38,7 @@ namespace anti_cheat
 
         private void ToggleState()
         {
+            Program.InitSettings();
             Program.Globals.count++;
             int count = Program.Globals.count % 2;
             if (count != 0)
@@ -63,9 +68,33 @@ namespace anti_cheat
                 e.Cancel = true;
                 notifyIcon.Visible = true;
                 Visible = false;
-                globals.log.Visible = false;
-                globals.cld.Visible = false;
-                globals.set.Visible = false;
+
+                // Creates a list of open forms and then closes all open forms.
+                FormCollection fc = Application.OpenForms;
+                try {
+                    foreach (Form form in fc.Cast<Form>().ToList())
+                    {
+                        //iterate through
+                        if (form.Name == "Settings")
+                        {
+                            globals.set.Close();
+                        }
+                        else if (form.Name == "Logs")
+                        {
+                            globals.log.Close();
+
+                        }
+                        else if (form.Name == "Cloud")
+                        {
+                            globals.cld.Close();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    SimpleLog.Log(ex);
+                }
+
             }
             else { notifyIcon.Dispose(); }
 
@@ -82,9 +111,32 @@ namespace anti_cheat
                 notifyIcon.Visible = true;
                 Visible = true;
 
-                globals.log.Visible = false;
-                globals.cld.Visible = false;
-                globals.set.Visible = false; // this.close(); disposes the form so when calling this.show(); it cannot be called as handler is disposed
+                // Creates a list of open forms and then minimizes all open forms.
+                FormCollection fc = Application.OpenForms;
+                try
+                {
+                    foreach (Form form in fc.Cast<Form>().ToList())
+                    {
+                        //iterate through
+                        if (form.Name == "Settings")
+                        {
+                            globals.set.WindowState = FormWindowState.Minimized;
+                        }
+                        else if (form.Name == "Logs")
+                        {
+                            globals.log.WindowState = FormWindowState.Minimized;
+
+                        }
+                        else if (form.Name == "Cloud")
+                        {
+                            globals.cld.WindowState = FormWindowState.Minimized;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    SimpleLog.Log(ex);
+                }
             }
         }
 
@@ -109,7 +161,7 @@ namespace anti_cheat
         {
             if (globals.set == null)
             {
-                globals.set = new Settings();
+                globals.set = new SettingsForm();
                 globals.set.FormClosed += setClosed;
             }
 
@@ -120,7 +172,7 @@ namespace anti_cheat
         {
             if (globals.log == null)
             {
-                globals.log = new Logs();
+                globals.log = new LogsForm();
                 globals.log.FormClosed += logClosed;
             }
             globals.log.Show();
@@ -130,8 +182,8 @@ namespace anti_cheat
         {
             if (globals.cld == null)
             {
-                globals.cld = new Cloud();
-                globals.cld.FormClosed += logClosed;
+                globals.cld = new CloudForm();
+                globals.cld.FormClosed += cldClosed;
             }
             globals.cld.Show();
         }
@@ -193,8 +245,8 @@ namespace anti_cheat
     }
     public static class globals
     {
-        public static Settings set;
-        public static Logs log;
-        public static Cloud cld;
+        public static SettingsForm set;
+        public static LogsForm log;
+        public static CloudForm cld;
     }
 }

@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace anti_cheat
 {
-    public partial class Cloud : Form
+    public partial class CloudForm : Form
     {
-        public Cloud()
+        public CloudForm()
         {
             InitializeComponent();
         }

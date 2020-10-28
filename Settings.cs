@@ -1,80 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
-using folderSelect;
-using System.Diagnostics;
-
-namespace anti_cheat
-{
-    public partial class Settings : Form
-    {
-        public Settings()
-        {
-            InitializeComponent();
+﻿namespace anti_cheat.Properties {
+    
+    
+    // This class allows you to handle specific events on the settings class:
+    //  The SettingChanging event is raised before a setting's value is changed.
+    //  The PropertyChanged event is raised after a setting's value is changed.
+    //  The SettingsLoaded event is raised after the setting values are loaded.
+    //  The SettingsSaving event is raised before the setting values are saved.
+    public sealed partial class Settings {
+        
+        public Settings() {
+            // // To add event handlers for saving and changing settings, uncomment the lines below:
+            //
+            // this.SettingChanging += this.SettingChangingEventHandler;
+            //
+            // this.SettingsSaving += this.SettingsSavingEventHandler;
+            //
         }
-
-        private void Settings_Load(object sender, EventArgs e)
-        {
-            TxtLogfiledir.Text = Program.Globals.logdir;
-            Cmbsqlauth.SelectedIndex = 0;
-            txtsqlserver.Text = Program.Globals.databaseSvr;
-            txtsqldatabase.Text = Program.Globals.database;
-            txtsqluser.Text = Program.Globals.sqluser;
-            txtsqlpass.Text = Program.Globals.sqlpass;
-
+        
+        private void SettingChangingEventHandler(object sender, System.Configuration.SettingChangingEventArgs e) {
+            // Add code to handle the SettingChangingEvent event here.
         }
-
-        private void Btnfiledir_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                FolderSelect dlg = new FolderSelect();
-
-                if (dlg.ShowDialog() == DialogResult.OK)
-                {
-                    DirectoryInfo info = dlg.info;
-                    TxtLogfiledir.Text = dlg.fullPath;
-                    Program.Globals.logdir = dlg.fullPath;
-
-                    // extract the directory info.
-                    string[] strArray = new string[4];
-                    try
-                    {
-                        strArray[0] = "Creation Time : " + info.CreationTime.ToString();
-                        strArray[1] = "Full Name     : " + info.FullName;
-                        strArray[2] = "Last Access Time : " + info.LastAccessTime.ToString();
-                        strArray[3] = "Last Write Time  : " + info.LastWriteTime.ToString();
-                    } catch { }
-                    //textBox3.Lines = strArray;
-                }
-            }
-            catch (Exception err)
-            {
-                Debug.WriteLine(err.Message);
-            }
-        }
-
-        private void Cmbsqlauth_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Program.Globals.authmethod = Cmbsqlauth.SelectedIndex;
-            if (Cmbsqlauth.Text == "SQL Authentication") {
-                lblsqluser.Visible = true;
-                lblsqlpass.Visible = true;
-                txtsqluser.Visible = true;
-                txtsqlpass.Visible = true;
-            } else {
-                lblsqluser.Visible = false;
-                lblsqlpass.Visible = false;
-                txtsqluser.Visible = false;
-                txtsqlpass.Visible = false;
-            }
+        
+        private void SettingsSavingEventHandler(object sender, System.ComponentModel.CancelEventArgs e) {
+            // Add code to handle the SettingsSaving event here.
         }
     }
 }
