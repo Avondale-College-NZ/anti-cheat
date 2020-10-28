@@ -17,6 +17,9 @@ namespace anti_cheat
     {
         public LogsForm()
         {
+            //
+            // Required for Windows Form Designer support
+            //
             InitializeComponent();
         }
 

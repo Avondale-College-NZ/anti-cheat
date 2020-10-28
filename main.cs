@@ -13,6 +13,8 @@ namespace anti_cheat
         public Main()
         {
             InitializeComponent();
+
+            // Event Handlers for Form Events.
             this.FormClosing += new FormClosingEventHandler(Main_FormClosing);
             this.Resize += new EventHandler(Main_Resize);
         }
@@ -36,6 +38,7 @@ namespace anti_cheat
 
         private void ToggleState()
         {
+            Program.InitSettings();
             Program.Globals.count++;
             int count = Program.Globals.count % 2;
             if (count != 0)
@@ -65,10 +68,6 @@ namespace anti_cheat
                 e.Cancel = true;
                 notifyIcon.Visible = true;
                 Visible = false;
-
-                // globals.set.Visible = false;
-                // globals.log.Visible = false;
-                // globals.cld.Visible = false;
 
                 // Creates a list of open forms and then closes all open forms.
                 FormCollection fc = Application.OpenForms;

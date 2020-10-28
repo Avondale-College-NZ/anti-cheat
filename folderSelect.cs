@@ -16,6 +16,8 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.IO;
 
+using SimpleLogger;
+
 namespace folderSelect
 {
 	/// <summary> class FolderSelect 
@@ -85,7 +87,7 @@ namespace folderSelect
 				}
 				catch( Exception doh)
 				{
-					Console.WriteLine(doh.Message);
+					SimpleLog.Log(doh.Message);
 				}
 			}
 		}
@@ -137,7 +139,7 @@ namespace folderSelect
 			}
 			catch( Exception doh )
 			{
-				Console.WriteLine(doh.Message);
+				SimpleLog.Log(doh.Message);
 			}
 		}
 
@@ -162,7 +164,7 @@ namespace folderSelect
 			}
 			catch( Exception doh )
 			{
-				Console.WriteLine(doh.Message);
+				SimpleLog.Log(doh.Message);
 			}
 			return sRet;
 		}

@@ -139,7 +139,7 @@ namespace anti_cheat
                 }
                 catch (Exception ex)
                 {
-                    SimpleLog.Log(ex); // Write exception with all inner exceptions to log
+                    //SimpleLog.E(ex); // Write exception with all inner exceptions to log
                 }
 
             }
@@ -176,7 +176,7 @@ namespace anti_cheat
                     }
                     else 
                     { 
-                        Debug.Indent(); Debug.WriteLine("Dupe value"); Debug.Unindent();
+                        Debug.Indent(); Debug.WriteLine("Duplicate value"); Debug.Unindent();
                         checkreader.Close();
                         sqlCon.Close();
                     }
@@ -189,7 +189,7 @@ namespace anti_cheat
                 }
                 catch (Exception ex)
                 {
-                    SimpleLog.Log(ex); // Write any exception to Log file.
+                    //SimpleLog.Log(ex); // Write any exception to Log file.
 
                 }
 
@@ -221,6 +221,8 @@ namespace anti_cheat
             // SQL Server Authentication:
             public static int authmethod;                             // Global Variable: "authmethod" - 0 = Windows Authentication, 2 = SQL Authentication
             public static string sqluser;                             // Global Variable: "sqluser"
+
+            /* --- INSECURE STORAGE OF PASSWORD ---- */
             public static string sqlpass;                             // Global Variable: "sqlpass"
 
             // SQL Server Connection Strings:
@@ -233,11 +235,10 @@ namespace anti_cheat
             try
             {
                 // User Defined Globals:
-                if (Properties.Settings.Default.logdir == null)
+                if (Properties.Settings.Default.logdir != null)
                 {
-                    Globals.logdir = Directory.GetCurrentDirectory();
+                    Globals.logdir = Properties.Settings.Default.logdir;
                 }
-                else { Globals.logdir = Properties.Settings.Default.logdir; }
 
                 if (Properties.Settings.Default.autokill.ToString() != "")
                 {
@@ -299,9 +300,9 @@ namespace anti_cheat
             try
             {
                 // User Defined Settings:
-                Properties.Settings.Default.logdir = null;
+                Properties.Settings.Default.logdir = Directory.GetCurrentDirectory().ToString(); 
 
-                Globals.autokill = true;
+                Globals.autokill = false;
                 Properties.Settings.Default.autokill = Globals.autokill;
 
                 // Database Location Settings:
@@ -328,7 +329,6 @@ namespace anti_cheat
             catch (Exception ex)
             {
                 SimpleLog.Log(ex); // Write any exception to Log file.
-
             }
 
         }
@@ -386,6 +386,7 @@ namespace anti_cheat
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             Application.Run(new Main());
         }
 

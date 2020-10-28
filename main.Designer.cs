@@ -106,14 +106,14 @@
             // tskBarMenuStart
             // 
             this.tskBarMenuStart.Name = "tskBarMenuStart";
-            this.tskBarMenuStart.Size = new System.Drawing.Size(180, 22);
+            this.tskBarMenuStart.Size = new System.Drawing.Size(98, 22);
             this.tskBarMenuStart.Text = "Start";
             this.tskBarMenuStart.Click += new System.EventHandler(this.tskBarMenuStart_Click);
             // 
             // tskBarMenuStop
             // 
             this.tskBarMenuStop.Name = "tskBarMenuStop";
-            this.tskBarMenuStop.Size = new System.Drawing.Size(180, 22);
+            this.tskBarMenuStop.Size = new System.Drawing.Size(98, 22);
             this.tskBarMenuStop.Text = "Stop";
             this.tskBarMenuStop.Click += new System.EventHandler(this.tskBarMenuStop_Click);
             // 
@@ -201,6 +201,7 @@
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator3.Visible = false;
             // 
             // ToolBarbtncld
             // 
@@ -211,6 +212,7 @@
             this.ToolBarbtncld.Size = new System.Drawing.Size(23, 22);
             this.ToolBarbtncld.Text = "Cloud Integration";
             this.ToolBarbtncld.ToolTipText = "Cloud Integration";
+            this.ToolBarbtncld.Visible = false;
             this.ToolBarbtncld.Click += new System.EventHandler(this.ToolBarbtncld_Click);
             // 
             // toolStripSeparator4
@@ -244,7 +246,6 @@
         #endregion
         private System.Windows.Forms.Label lblstatustitle;
         private System.Windows.Forms.Label lblstatus;
-        private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.Button Controlbtn;
         private System.Windows.Forms.ToolStrip ToolBar;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -261,6 +262,7 @@
         private System.Windows.Forms.ToolStripMenuItem tskBarMenuStart;
         private System.Windows.Forms.ToolStripMenuItem tskBarMenuStop;
         private System.Windows.Forms.ToolStripMenuItem tskBarMenuSettings;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
     }
 }
 
