@@ -49,8 +49,17 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolBarbtncld = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.lblProcname = new System.Windows.Forms.Label();
+            this.txtProc = new System.Windows.Forms.TextBox();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.procName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.procID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tskBarMenu.SuspendLayout();
             this.ToolBar.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblstatustitle
@@ -140,7 +149,7 @@
             // 
             // Controlbtn
             // 
-            this.Controlbtn.Location = new System.Drawing.Point(17, 94);
+            this.Controlbtn.Location = new System.Drawing.Point(227, 46);
             this.Controlbtn.Name = "Controlbtn";
             this.Controlbtn.Size = new System.Drawing.Size(75, 23);
             this.Controlbtn.TabIndex = 5;
@@ -220,16 +229,82 @@
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
+            // lblProcname
+            // 
+            this.lblProcname.AutoSize = true;
+            this.lblProcname.Location = new System.Drawing.Point(12, 118);
+            this.lblProcname.Name = "lblProcname";
+            this.lblProcname.Size = new System.Drawing.Size(79, 13);
+            this.lblProcname.TabIndex = 7;
+            this.lblProcname.Text = "Process Name:";
+            // 
+            // txtProc
+            // 
+            this.txtProc.Location = new System.Drawing.Point(97, 115);
+            this.txtProc.Name = "txtProc";
+            this.txtProc.Size = new System.Drawing.Size(100, 20);
+            this.txtProc.TabIndex = 8;
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(203, 113);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(75, 23);
+            this.btnSearch.TabIndex = 9;
+            this.btnSearch.Text = "Search";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            // 
+            // listView1
+            // 
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.procName,
+            this.procID,
+            this.columnHeader1});
+            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView1.GridLines = true;
+            this.listView1.HideSelection = false;
+            this.listView1.Location = new System.Drawing.Point(0, 0);
+            this.listView1.MultiSelect = false;
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(403, 113);
+            this.listView1.TabIndex = 10;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.listView1);
+            this.panel1.Location = new System.Drawing.Point(15, 142);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(403, 113);
+            this.panel1.TabIndex = 11;
+            // 
+            // procName
+            // 
+            this.procName.Text = "Process Name";
+            // 
+            // procID
+            // 
+            this.procID.Text = "Process ID";
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Width = 104;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(430, 267);
+            this.Controls.Add(this.btnSearch);
+            this.Controls.Add(this.txtProc);
+            this.Controls.Add(this.lblProcname);
             this.Controls.Add(this.ToolBar);
             this.Controls.Add(this.Controlbtn);
             this.Controls.Add(this.lblstatus);
             this.Controls.Add(this.lblstatustitle);
+            this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Main";
@@ -238,6 +313,7 @@
             this.tskBarMenu.ResumeLayout(false);
             this.ToolBar.ResumeLayout(false);
             this.ToolBar.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -263,6 +339,14 @@
         private System.Windows.Forms.ToolStripMenuItem tskBarMenuStop;
         private System.Windows.Forms.ToolStripMenuItem tskBarMenuSettings;
         private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.Label lblProcname;
+        private System.Windows.Forms.TextBox txtProc;
+        private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ColumnHeader procName;
+        private System.Windows.Forms.ColumnHeader procID;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }
 
