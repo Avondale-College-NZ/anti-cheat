@@ -118,5 +118,29 @@ namespace anti_cheat.Properties {
                 this["authmethod"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string blacklist {
+            get {
+                return ((string)(this["blacklist"]));
+            }
+            set {
+                this["blacklist"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool stealthmode {
+            get {
+                return ((bool)(this["stealthmode"]));
+            }
+            set {
+                this["stealthmode"] = value;
+            }
+        }
     }
 }

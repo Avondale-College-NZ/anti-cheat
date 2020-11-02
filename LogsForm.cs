@@ -31,15 +31,17 @@ namespace anti_cheat
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            LogsList.Items.Clear();
+
             populate_List();
         }
 
 
 
 
+
         public void populate_List()
         {
+            LogsList.Items.Clear();
 
             if (Program.Globals.authmethod == 1)
             {
@@ -77,8 +79,6 @@ namespace anti_cheat
                         return;
                     }
 
-                    
-                
                     //SimpleLog.Log(ex); // Write exception with all inner exceptions to log
                     throw;
                 }
@@ -126,5 +126,36 @@ namespace anti_cheat
             }    
         }
 
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("Are you sure you would like to Clear the Database?", "Clear Database", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (dr == DialogResult.Yes)
+            {
+                try
+                {
+
+                    SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringWinAuth);
+
+                    string query = "TRUNCATE TABLE " + Program.Globals.databaseTbl;
+
+
+                    using (SqlConnection connection = new SqlConnection(Program.Globals.connectionStringWinAuth))
+                    {
+                        SqlCommand command = new SqlCommand(query, connection);
+                        command.Connection.Open();
+                        command.ExecuteNonQuery();
+                        command.Connection.Close();
+                    }
+
+                    SimpleLog.Info("Cleared Database.");
+
+                } catch (Exception ex)
+                {
+                    SimpleLog.Log(ex);
+                }
+
+            }
+        }
     }
 }

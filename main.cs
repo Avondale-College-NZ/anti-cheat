@@ -36,8 +36,9 @@ namespace anti_cheat
             globals.cld = null;
         }
 
-        private void ToggleState()
+        public void ToggleState()
         {
+
             Program.InitSettings();
             Program.Globals.count++;
             int count = Program.Globals.count % 2;
@@ -61,7 +62,7 @@ namespace anti_cheat
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Debug.WriteLine(e.CloseReason.ToString());
+
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 Debug.WriteLine(e.CloseReason.ToString());
@@ -94,7 +95,7 @@ namespace anti_cheat
                 {
                     SimpleLog.Log(ex);
                 }
-
+                notifyIcon.ShowBalloonTip(10, "Minimized to Taskbar", "Anticheat has been minimized to Taskbar.", ToolTipIcon.Info);
             }
             else { notifyIcon.Dispose(); }
 

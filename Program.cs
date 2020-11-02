@@ -106,7 +106,7 @@ namespace anti_cheat
 
         }
 
-        public static void LogtoDB(string procName, string procID, string procHandle)
+        public static int LogtoDB(string procName, string procID, string procHandle)
         {
 
             if (Program.Globals.authmethod == 1)
@@ -139,8 +139,11 @@ namespace anti_cheat
                 }
                 catch (Exception ex)
                 {
-                    //SimpleLog.E(ex); // Write exception with all inner exceptions to log
+
+                    SimpleLog.Log(ex); // Write exception with all inner exceptions to log
+                    return 5;
                 }
+
 
             }
             else
@@ -157,7 +160,7 @@ namespace anti_cheat
                     SqlCommand checkCmd = new SqlCommand(query, sqlCon);
                     checkCmd.Parameters.AddWithValue("@procname", procName);
                     SqlDataReader checkreader = checkCmd.ExecuteReader();
- 
+
                     bool reader = checkreader.HasRows;
                     checkreader.Close();
 
@@ -174,26 +177,36 @@ namespace anti_cheat
                         sqlCon.Close();
                         SimpleLog.Log("Logged " + procName + "To the database");
                     }
-                    else 
-                    { 
+                    else
+                    {
                         Debug.Indent(); Debug.WriteLine("Duplicate value"); Debug.Unindent();
                         checkreader.Close();
                         sqlCon.Close();
                     }
 
                 }
-                catch (System.Data.SqlClient.SqlException exception)
+                catch (SqlException sex)
                 {
-                    // Output exception information to log.
-                    SimpleLog.Log(exception);
-                }
-                catch (Exception ex)
+                        switch (sex.Number)
+                        {
+                            case 53:
+                            if (System.Windows.Forms.Application.OpenForms["Main"] != null)
+                            {
+                                (System.Windows.Forms.Application.OpenForms["Main"] as Main).ToggleState();
+                            }
+
+                            break;
+                            
+                            default:
+                                return 66;
+                                throw;
+                        } 
+                } catch (Exception ex)
                 {
-                    //SimpleLog.Log(ex); // Write any exception to Log file.
-
+                    SimpleLog.Log(ex); // Write any exception to Log file.
                 }
-
             }
+            return 0;
         }
     }
 
@@ -205,13 +218,16 @@ namespace anti_cheat
         {
             // Anticheat  Globals:
             public static string[] uniqueids = { };                   // Global String array: "uniqueids"
+            public static string[] proclines = { };                   // Global String array: "proclines"
             public static bool status = false;                        // Global Variable: "status" 
             public static Thread guithread = null;                    // Global Thread: "guithread"
             public static int count = 0;                              // Global Variable: "count"
 
             // User Defined Globals:
             public static string logdir;                              // Global Variable: "logdirectory"
+            public static string blacklist;                           // Global Variable: "blacklist"
             public static bool autokill;                              // Global Variable: "autokill"
+            public static bool stealthmode;                           // Global Variable: "stealthmode"
 
             // SQL Server Location:
             public static string databaseSvr;                         // Global Variable: "databaseSvr"
@@ -235,10 +251,19 @@ namespace anti_cheat
             try
             {
                 // User Defined Globals:
-                if (Properties.Settings.Default.logdir != null)
+                if (Properties.Settings.Default.logdir != "")
                 {
                     Globals.logdir = Properties.Settings.Default.logdir;
                 }
+                else
+                {
+                    Properties.Settings.Default.logdir = Directory.GetCurrentDirectory().ToString();
+                    Globals.logdir = Properties.Settings.Default.logdir;
+                }
+
+                Globals.blacklist = Properties.Settings.Default.blacklist;
+                Globals.stealthmode = Properties.Settings.Default.stealthmode;
+
 
                 if (Properties.Settings.Default.autokill.ToString() != "")
                 {
@@ -300,10 +325,15 @@ namespace anti_cheat
             try
             {
                 // User Defined Settings:
-                Properties.Settings.Default.logdir = Directory.GetCurrentDirectory().ToString(); 
+                Properties.Settings.Default.logdir = Directory.GetCurrentDirectory().ToString();
+
+                Properties.Settings.Default.blacklist = "";
 
                 Globals.autokill = false;
                 Properties.Settings.Default.autokill = Globals.autokill;
+
+                Globals.stealthmode = false;
+                Properties.Settings.Default.stealthmode = Globals.stealthmode;
 
                 // Database Location Settings:
                 Globals.databaseSvr = "tpisql01.avcol.school.nz";
@@ -400,13 +430,6 @@ namespace anti_cheat
 
             int[] baseline = Background.TakeCurrent();
 
-
-            var curDir = Directory.GetCurrentDirectory();
-            var txtFile = curDir + "\\proc.txt";
-
-            string[] proclines = File.ReadAllLines(txtFile);
-
-
             try
             {
                 while(true)
@@ -424,36 +447,49 @@ namespace anti_cheat
                         {
                             foreach (var p in differentProcessesID)
                             {
-                               // Debug.WriteLine("Id: {0} Name: {1}, Handle: {2} ", p.Name, p.ProcessId, p.Handle);
-
-                                Thread dblog = new Thread(() => Background.LogtoDB(p.Name, p.ProcessId, p.Handle));
+                                int r;
+                                Thread dblog = new Thread(() => { r = Background.LogtoDB(p.Name, p.ProcessId, p.Handle); });
+                                
                                 dblog.IsBackground = true;
                                 dblog.Start();
-
+                                
                             }
                         }
-                        
 
-                        foreach (string line in proclines)
+                        var txtFile = Globals.blacklist;
+                        if (txtFile != "" && File.Exists(txtFile))
                         {
+                            string[] Globalsproclines = File.ReadAllLines(txtFile);
+                        }
 
-                            if (Checkproc(line))
+
+                        if (Globals.proclines.Length > 0) { 
+                            foreach (string line in Globals.proclines)
                             {
-                                MessageBox.Show("Process \"" + line + "\" was found.");
-                                if (Program.Globals.autokill && Program.Globals.status == true)
+
+                                if (Checkproc(line))
                                 {
-                                    string a = ProcessValidation.ProcKill(line);
-                                    MessageBox.Show("Process \"" + line + "\" " + "\"" + a + "\"" + "  was killed.");
+                                    MessageBox.Show("Process \"" + line + "\" was found.");
+                                    if (Program.Globals.autokill && Program.Globals.status == true)
+                                    {
+                                        string ProcName = ProcessValidation.ProcKill(line);
+                                        if (Program.Globals.stealthmode == false)
+                                        {
+                                            MessageBox.Show("Process \"" + line + "\" " + "\"" + ProcName + "\"" + "  was killed.");
+                                        }
+                                    }
                                 }
-                            }
 
-                            if (Checkapp(line))
-                            {
-                                MessageBox.Show("Application \"" + line + "\" was found.");
-                                if (Program.Globals.autokill && Program.Globals.status == true)
+                                if (Checkapp(line))
                                 {
-                                    string a = ProcessValidation.ProcKill(line);
-                                    MessageBox.Show("Process \"" + line + "\" " + "\"" + a + "\"" + "  was killed.");
+                                    MessageBox.Show("Application \"" + line + "\" was found.");
+                                    if (Program.Globals.autokill && Program.Globals.status == true)
+                                    {
+                                        string ProcName = ProcessValidation.ProcKill(line);
+                                        if (Program.Globals.stealthmode == false) {
+                                            MessageBox.Show("Process \"" + line + "\" " + "\"" + ProcName + "\"" + "  was killed.");
+                                        }
+                                    }
                                 }
                             }
                         }

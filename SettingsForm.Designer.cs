@@ -48,14 +48,21 @@
             this.lblsqlserver = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lblBlacklist = new System.Windows.Forms.Label();
+            this.txtBlacklist = new System.Windows.Forms.TextBox();
+            this.BtnFileBlist = new System.Windows.Forms.Button();
+            this.lblstealth = new System.Windows.Forms.Label();
+            this.Chkstealth = new System.Windows.Forms.CheckBox();
             this.pnlsettings.SuspendLayout();
             this.pnlsql.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // Chkautokill
             // 
             this.Chkautokill.AutoSize = true;
-            this.Chkautokill.Location = new System.Drawing.Point(106, 29);
+            this.Chkautokill.Location = new System.Drawing.Point(106, 38);
             this.Chkautokill.Name = "Chkautokill";
             this.Chkautokill.Size = new System.Drawing.Size(15, 14);
             this.Chkautokill.TabIndex = 6;
@@ -64,7 +71,7 @@
             // lbllogfiledir
             // 
             this.lbllogfiledir.AutoSize = true;
-            this.lbllogfiledir.Location = new System.Drawing.Point(9, 8);
+            this.lbllogfiledir.Location = new System.Drawing.Point(8, 11);
             this.lbllogfiledir.Name = "lbllogfiledir";
             this.lbllogfiledir.Size = new System.Drawing.Size(95, 13);
             this.lbllogfiledir.TabIndex = 10;
@@ -73,7 +80,7 @@
             // lblautokill
             // 
             this.lblautokill.AutoSize = true;
-            this.lblautokill.Location = new System.Drawing.Point(56, 30);
+            this.lblautokill.Location = new System.Drawing.Point(56, 39);
             this.lblautokill.Name = "lblautokill";
             this.lblautokill.Size = new System.Drawing.Size(44, 13);
             this.lblautokill.TabIndex = 11;
@@ -83,17 +90,15 @@
             // 
             this.pnlsettings.Controls.Add(this.Btnfiledir);
             this.pnlsettings.Controls.Add(this.TxtLogfiledir);
-            this.pnlsettings.Controls.Add(this.lblautokill);
             this.pnlsettings.Controls.Add(this.lbllogfiledir);
-            this.pnlsettings.Controls.Add(this.Chkautokill);
-            this.pnlsettings.Location = new System.Drawing.Point(12, 10);
+            this.pnlsettings.Location = new System.Drawing.Point(12, 149);
             this.pnlsettings.Name = "pnlsettings";
-            this.pnlsettings.Size = new System.Drawing.Size(430, 53);
+            this.pnlsettings.Size = new System.Drawing.Size(435, 34);
             this.pnlsettings.TabIndex = 12;
             // 
             // Btnfiledir
             // 
-            this.Btnfiledir.Location = new System.Drawing.Point(323, 3);
+            this.Btnfiledir.Location = new System.Drawing.Point(352, 6);
             this.Btnfiledir.Name = "Btnfiledir";
             this.Btnfiledir.Size = new System.Drawing.Size(75, 23);
             this.Btnfiledir.TabIndex = 13;
@@ -103,7 +108,7 @@
             // 
             // TxtLogfiledir
             // 
-            this.TxtLogfiledir.Location = new System.Drawing.Point(106, 5);
+            this.TxtLogfiledir.Location = new System.Drawing.Point(106, 8);
             this.TxtLogfiledir.Name = "TxtLogfiledir";
             this.TxtLogfiledir.Size = new System.Drawing.Size(211, 20);
             this.TxtLogfiledir.TabIndex = 12;
@@ -179,9 +184,9 @@
             this.pnlsql.Controls.Add(this.txtsqluser);
             this.pnlsql.Controls.Add(this.txtsqlpass);
             this.pnlsql.Controls.Add(this.lblsqlpass);
-            this.pnlsql.Location = new System.Drawing.Point(12, 85);
+            this.pnlsql.Location = new System.Drawing.Point(12, 189);
             this.pnlsql.Name = "pnlsql";
-            this.pnlsql.Size = new System.Drawing.Size(430, 166);
+            this.pnlsql.Size = new System.Drawing.Size(435, 166);
             this.pnlsql.TabIndex = 21;
             // 
             // txtsqldatabase
@@ -218,7 +223,7 @@
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(367, 276);
+            this.btnReset.Location = new System.Drawing.Point(367, 361);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(75, 23);
             this.btnReset.TabIndex = 22;
@@ -228,7 +233,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(286, 276);
+            this.btnSave.Location = new System.Drawing.Point(286, 361);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 23;
@@ -236,11 +241,69 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.Chkstealth);
+            this.panel1.Controls.Add(this.lblstealth);
+            this.panel1.Controls.Add(this.BtnFileBlist);
+            this.panel1.Controls.Add(this.txtBlacklist);
+            this.panel1.Controls.Add(this.lblBlacklist);
+            this.panel1.Controls.Add(this.lblautokill);
+            this.panel1.Controls.Add(this.Chkautokill);
+            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(435, 131);
+            this.panel1.TabIndex = 24;
+            // 
+            // lblBlacklist
+            // 
+            this.lblBlacklist.AutoSize = true;
+            this.lblBlacklist.Location = new System.Drawing.Point(44, 16);
+            this.lblBlacklist.Name = "lblBlacklist";
+            this.lblBlacklist.Size = new System.Drawing.Size(56, 13);
+            this.lblBlacklist.TabIndex = 12;
+            this.lblBlacklist.Text = "Black List:";
+            // 
+            // txtBlacklist
+            // 
+            this.txtBlacklist.Location = new System.Drawing.Point(106, 13);
+            this.txtBlacklist.Name = "txtBlacklist";
+            this.txtBlacklist.Size = new System.Drawing.Size(211, 20);
+            this.txtBlacklist.TabIndex = 13;
+            // 
+            // BtnFileBlist
+            // 
+            this.BtnFileBlist.Location = new System.Drawing.Point(352, 11);
+            this.BtnFileBlist.Name = "BtnFileBlist";
+            this.BtnFileBlist.Size = new System.Drawing.Size(75, 23);
+            this.BtnFileBlist.TabIndex = 14;
+            this.BtnFileBlist.Text = "Browse";
+            this.BtnFileBlist.UseVisualStyleBackColor = true;
+            // 
+            // lblstealth
+            // 
+            this.lblstealth.AutoSize = true;
+            this.lblstealth.Location = new System.Drawing.Point(27, 58);
+            this.lblstealth.Name = "lblstealth";
+            this.lblstealth.Size = new System.Drawing.Size(73, 13);
+            this.lblstealth.TabIndex = 15;
+            this.lblstealth.Text = "Stealth Mode:";
+            // 
+            // Chkstealth
+            // 
+            this.Chkstealth.AutoSize = true;
+            this.Chkstealth.Location = new System.Drawing.Point(106, 58);
+            this.Chkstealth.Name = "Chkstealth";
+            this.Chkstealth.Size = new System.Drawing.Size(15, 14);
+            this.Chkstealth.TabIndex = 16;
+            this.Chkstealth.UseVisualStyleBackColor = true;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(459, 309);
+            this.ClientSize = new System.Drawing.Size(459, 396);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.pnlsql);
@@ -253,6 +316,8 @@
             this.pnlsettings.PerformLayout();
             this.pnlsql.ResumeLayout(false);
             this.pnlsql.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -277,5 +342,11 @@
         private System.Windows.Forms.TextBox txtsqlserver;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lblBlacklist;
+        private System.Windows.Forms.TextBox txtBlacklist;
+        private System.Windows.Forms.Button BtnFileBlist;
+        private System.Windows.Forms.CheckBox Chkstealth;
+        private System.Windows.Forms.Label lblstealth;
     }
 }
