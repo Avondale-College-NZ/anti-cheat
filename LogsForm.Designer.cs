@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.LogsList = new System.Windows.Forms.ListView();
+            this.logsList = new System.Windows.Forms.ListView();
             this.databaseID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.processName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.processID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -40,24 +40,24 @@
             this.pnlLogs.SuspendLayout();
             this.SuspendLayout();
             // 
-            // LogsList
+            // logsList
             // 
-            this.LogsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.logsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.databaseID,
             this.processName,
             this.processID,
             this.processHandle,
             this.dateFound});
-            this.LogsList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LogsList.GridLines = true;
-            this.LogsList.HideSelection = false;
-            this.LogsList.Location = new System.Drawing.Point(0, 0);
-            this.LogsList.MultiSelect = false;
-            this.LogsList.Name = "LogsList";
-            this.LogsList.Size = new System.Drawing.Size(646, 396);
-            this.LogsList.TabIndex = 1;
-            this.LogsList.UseCompatibleStateImageBehavior = false;
-            this.LogsList.View = System.Windows.Forms.View.Details;
+            this.logsList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.logsList.GridLines = true;
+            this.logsList.HideSelection = false;
+            this.logsList.Location = new System.Drawing.Point(0, 0);
+            this.logsList.MultiSelect = false;
+            this.logsList.Name = "logsList";
+            this.logsList.Size = new System.Drawing.Size(646, 396);
+            this.logsList.TabIndex = 1;
+            this.logsList.UseCompatibleStateImageBehavior = false;
+            this.logsList.View = System.Windows.Forms.View.Details;
             // 
             // databaseID
             // 
@@ -96,7 +96,7 @@
             // 
             // pnlLogs
             // 
-            this.pnlLogs.Controls.Add(this.LogsList);
+            this.pnlLogs.Controls.Add(this.logsList);
             this.pnlLogs.Location = new System.Drawing.Point(12, 12);
             this.pnlLogs.Name = "pnlLogs";
             this.pnlLogs.Size = new System.Drawing.Size(646, 396);
@@ -132,7 +132,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ListView LogsList;
+        private System.Windows.Forms.ListView logsList;
         private System.Windows.Forms.ColumnHeader databaseID;
         private System.Windows.Forms.ColumnHeader processName;
         private System.Windows.Forms.ColumnHeader processHandle;

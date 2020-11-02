@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            this.lblstatustitle = new System.Windows.Forms.Label();
-            this.lblstatus = new System.Windows.Forms.Label();
+            this.lblStatusTitle = new System.Windows.Forms.Label();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.tskBarMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,7 +40,7 @@
             this.tskBarMenuOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.tskBarMenuSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.tskBarMenuExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.Controlbtn = new System.Windows.Forms.Button();
+            this.btnStart = new System.Windows.Forms.Button();
             this.ToolBar = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Toolbarbtnset = new System.Windows.Forms.ToolStripButton();
@@ -53,26 +53,26 @@
             this.ToolBar.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lblstatustitle
+            // lblStatusTitle
             // 
-            this.lblstatustitle.AutoSize = true;
-            this.lblstatustitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblstatustitle.Location = new System.Drawing.Point(12, 42);
-            this.lblstatustitle.Name = "lblstatustitle";
-            this.lblstatustitle.Size = new System.Drawing.Size(85, 29);
-            this.lblstatustitle.TabIndex = 2;
-            this.lblstatustitle.Text = "Status:";
+            this.lblStatusTitle.AutoSize = true;
+            this.lblStatusTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatusTitle.Location = new System.Drawing.Point(12, 42);
+            this.lblStatusTitle.Name = "lblStatusTitle";
+            this.lblStatusTitle.Size = new System.Drawing.Size(85, 29);
+            this.lblStatusTitle.TabIndex = 2;
+            this.lblStatusTitle.Text = "Status:";
             // 
-            // lblstatus
+            // lblStatus
             // 
-            this.lblstatus.AutoSize = true;
-            this.lblstatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblstatus.ForeColor = System.Drawing.Color.Red;
-            this.lblstatus.Location = new System.Drawing.Point(90, 38);
-            this.lblstatus.Name = "lblstatus";
-            this.lblstatus.Size = new System.Drawing.Size(131, 31);
-            this.lblstatus.TabIndex = 3;
-            this.lblstatus.Text = "Stopped.";
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.ForeColor = System.Drawing.Color.Red;
+            this.lblStatus.Location = new System.Drawing.Point(90, 38);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(131, 31);
+            this.lblStatus.TabIndex = 3;
+            this.lblStatus.Text = "Stopped.";
             // 
             // notifyIcon
             // 
@@ -138,15 +138,15 @@
             this.tskBarMenuExit.Text = "Exit";
             this.tskBarMenuExit.Click += new System.EventHandler(this.tskBarMenuExit_Click);
             // 
-            // Controlbtn
+            // btnStart
             // 
-            this.Controlbtn.Location = new System.Drawing.Point(17, 94);
-            this.Controlbtn.Name = "Controlbtn";
-            this.Controlbtn.Size = new System.Drawing.Size(75, 23);
-            this.Controlbtn.TabIndex = 5;
-            this.Controlbtn.Text = "Start";
-            this.Controlbtn.UseVisualStyleBackColor = true;
-            this.Controlbtn.Click += new System.EventHandler(this.Controlbtn_Click);
+            this.btnStart.Location = new System.Drawing.Point(17, 94);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(75, 23);
+            this.btnStart.TabIndex = 5;
+            this.btnStart.Text = "Start";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.Controlbtn_Click);
             // 
             // ToolBar
             // 
@@ -227,9 +227,9 @@
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(430, 267);
             this.Controls.Add(this.ToolBar);
-            this.Controls.Add(this.Controlbtn);
-            this.Controls.Add(this.lblstatus);
-            this.Controls.Add(this.lblstatustitle);
+            this.Controls.Add(this.btnStart);
+            this.Controls.Add(this.lblStatus);
+            this.Controls.Add(this.lblStatusTitle);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Main";
@@ -244,9 +244,9 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label lblstatustitle;
-        private System.Windows.Forms.Label lblstatus;
-        private System.Windows.Forms.Button Controlbtn;
+        private System.Windows.Forms.Label lblStatusTitle;
+        private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.ToolStrip ToolBar;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton Toolbarbtnset;

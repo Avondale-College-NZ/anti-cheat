@@ -45,18 +45,18 @@ namespace anti_cheat
             if (count != 0)
             {
                 Program.Globals.status = true;
-                lblstatus.Text = "Running...";
+                lblStatus.Text = "Running...";
                 notifyIcon.ShowBalloonTip(50, "Anticheat has been Started", "Successfully Started Anticheat process.", ToolTipIcon.Info);
-                lblstatus.ForeColor = Color.Lime;
-                Controlbtn.Text = "Stop";
+                lblStatus.ForeColor = Color.Lime;
+                btnStart.Text = "Stop";
             }
             else
             {
                 Program.Globals.status = false;
-                lblstatus.Text = "Stopped.";
+                lblStatus.Text = "Stopped.";
                 notifyIcon.ShowBalloonTip(50, "Anticheat has been Stopped", "Successfully Stopped Anticheat process.", ToolTipIcon.Info);
-                lblstatus.ForeColor = Color.Red;
-                Controlbtn.Text = "Start";
+                lblStatus.ForeColor = Color.Red;
+                btnStart.Text = "Start";
             }
         }
 

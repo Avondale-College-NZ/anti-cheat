@@ -2,10 +2,10 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="anti_cheat.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="logdir" Type="System.String" Scope="User">
+    <Setting Name="logDir" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="autokill" Type="System.Boolean" Scope="User">
+    <Setting Name="autoKill" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="databaseSvr" Type="System.String" Scope="User">
@@ -17,19 +17,19 @@
     <Setting Name="databaseTbl" Type="System.String" Scope="User">
       <Value Profile="(Default)">tblProcess</Value>
     </Setting>
-    <Setting Name="sqluser" Type="System.String" Scope="User">
+    <Setting Name="sqlUser" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="sqlpass" Type="System.String" Scope="User">
+    <Setting Name="sqlPass" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="authmethod" Type="System.Int32" Scope="User">
+    <Setting Name="authMethod" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="blacklist" Type="System.String" Scope="User">
+    <Setting Name="blackList" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="stealthmode" Type="System.Boolean" Scope="User">
+    <Setting Name="stealthMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
