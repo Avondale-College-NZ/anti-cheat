@@ -41,15 +41,21 @@ namespace anti_cheat
         protected bool ControlsChanged() 
         {
             bool changed = false;
-            if (TxtLogfiledir.Text != "") {
-                if (Properties.Settings.Default.logdir != TxtLogfiledir.Text) { changed = true; }
+
+            if (txtBlacklist.Text != "")
+            {
+                if (Properties.Settings.Default.blackList != txtBlacklist.Text) { changed = true; }
             }
-            if (Properties.Settings.Default.autokill != Chkautokill.Checked) { changed = true; }
-            if (Properties.Settings.Default.databaseSvr != txtsqlserver.Text) { changed = true; }
-            if (Properties.Settings.Default.database != txtsqldatabase.Text) { changed = true; }
-            if (Properties.Settings.Default.authmethod != Cmbsqlauth.SelectedIndex) { changed = true; }
-            if (Properties.Settings.Default.sqluser != txtsqluser.Text) { changed = true; }
-            if (Properties.Settings.Default.sqlpass != txtsqlpass.Text) { changed = true; }
+            if (Properties.Settings.Default.autoKill != chkAutoKill.Checked) { changed = true; }
+            if (Properties.Settings.Default.stealthMode != chkStealth.Checked) { changed = true; }
+            if (txtLogFileDir.Text != "") {
+                if (Properties.Settings.Default.logDir != txtLogFileDir.Text) { changed = true; }
+            }
+            if (Properties.Settings.Default.databaseSvr != txtSqlServer.Text) { changed = true; }
+            if (Properties.Settings.Default.database != txtSqlDatabase.Text) { changed = true; }
+            if (Properties.Settings.Default.authMethod != cmbSqlAuth.SelectedIndex) { changed = true; }
+            if (Properties.Settings.Default.sqlUser != txtSqlUser.Text) { changed = true; }
+            if (Properties.Settings.Default.sqlPass != txtSqlPass.Text) { changed = true; }
 
             return changed;
         }
@@ -63,7 +69,7 @@ namespace anti_cheat
                 Debug.WriteLine("Is it changed?" + changed);
                 if (ControlsChanged())
                 {
-                    DialogResult dr = MessageBox.Show("Would you like to Save Curent Settings?", "Save Settings", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult dr = MessageBox.Show("Would you like to Save Curent Settings before Exit?", "Save Settings", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (dr == DialogResult.Yes)
                     {
@@ -77,55 +83,73 @@ namespace anti_cheat
         {
             try
             {
-                // Log Directory TextBox
-                if (Properties.Settings.Default.logdir != null)
+
+                // Blacklist TextBox
+                if (Properties.Settings.Default.blackList != null)
                 {
-                    TxtLogfiledir.Text = Properties.Settings.Default.logdir;
+                    txtBlacklist.Text = Properties.Settings.Default.blackList;
                 }
-                else { TxtLogfiledir.Text = Program.Globals.logdir; }
+                else { txtBlacklist.Text = Program.Globals.blackList; }
 
                 // Autokill Checkbox
-                if (Properties.Settings.Default.autokill.ToString() != "")
+                if (Properties.Settings.Default.autoKill.ToString() != "")
                 {
-                    if (Properties.Settings.Default.autokill)
+                    if (Properties.Settings.Default.autoKill)
                     {
-                        Chkautokill.Checked = true;
+                        chkAutoKill.Checked = true;
                     }
-                    else { Chkautokill.Checked = false; }
+                    else { chkAutoKill.Checked = false; }
                 }
+
+                // Stealthmode Checkbox
+                if (Properties.Settings.Default.stealthMode.ToString() != "")
+                {
+                    if (Properties.Settings.Default.stealthMode)
+                    {
+                        chkStealth.Checked = true;
+                    }
+                    else { chkStealth.Checked = false; }
+                }
+
+                // Log Directory TextBox
+                if (Properties.Settings.Default.logDir != null)
+                {
+                    txtLogFileDir.Text = Properties.Settings.Default.logDir;
+                }
+                else { txtLogFileDir.Text = Program.Globals.logDir; }
 
                 // SQL Server Location TextBox
                 if (Properties.Settings.Default.databaseSvr != null)
                 {
-                    txtsqlserver.Text = Properties.Settings.Default.databaseSvr;
+                    txtSqlServer.Text = Properties.Settings.Default.databaseSvr;
                 }
-                else { txtsqlserver.Text = Program.Globals.databaseSvr; }
+                else { txtSqlServer.Text = Program.Globals.databaseSvr; }
 
                 // SQL Database TextBox
                 if (Properties.Settings.Default.database != null)
                 {
-                    txtsqldatabase.Text = Properties.Settings.Default.database;
+                    txtSqlDatabase.Text = Properties.Settings.Default.database;
                 }
-                else { txtsqldatabase.Text = Program.Globals.database; }
+                else { txtSqlDatabase.Text = Program.Globals.database; }
 
                 // Selected SQL Authentication Method
-                if (Properties.Settings.Default.authmethod == 1)
+                if (Properties.Settings.Default.authMethod == 1)
                 {
-                    Cmbsqlauth.SelectedIndex = 1;
+                    cmbSqlAuth.SelectedIndex = 1;
                 }
-                else { Cmbsqlauth.SelectedIndex = 0; }
+                else { cmbSqlAuth.SelectedIndex = 0; }
 
                 // SQL User TextBox
-                if (Properties.Settings.Default.sqluser != null)
+                if (Properties.Settings.Default.sqlUser != null)
                 {
-                    txtsqluser.Text = Properties.Settings.Default.sqluser;
+                    txtSqlUser.Text = Properties.Settings.Default.sqlUser;
                 }
-                else { txtsqluser.Text = Program.Globals.sqluser; }
+                else { txtSqlUser.Text = Program.Globals.sqlUser; }
 
                 // SQL Password Text box
-                if (Properties.Settings.Default.sqlpass != "") 
+                if (Properties.Settings.Default.sqlPass != "") 
                 {
-                    txtsqlpass.Text = "aaaaaa";
+                    txtSqlPass.Text = "aaaaaa"; // Full the field with dummy data if a SQL password is saved.
                 }
 
             }
@@ -140,27 +164,52 @@ namespace anti_cheat
         {
             try
             {
-                // Log Directory
-                if (TxtLogfiledir.Text != "")
+
+                // Blacklist
+                if (txtBlacklist.Text != "")
                 {
-                    Properties.Settings.Default.logdir = (TxtLogfiledir.Text);
+                    Properties.Settings.Default.blackList = (txtBlacklist.Text);
                 }
                 else
                 {
-                    Properties.Settings.Default.logdir = Directory.GetCurrentDirectory().ToString();
+                    Properties.Settings.Default.blackList = "";
                 }
 
                 // Autokill
-                if (Chkautokill.Checked == true)
+                if (chkAutoKill.Checked == true)
                 {
-                    Properties.Settings.Default.autokill = true;
+                    Properties.Settings.Default.autoKill = true;
                 }
-                else { Properties.Settings.Default.autokill = false; }
+                else { Properties.Settings.Default.autoKill = false; }
+
+                // Stealthmode
+                if (chkStealth.Checked == true)
+                {
+                    Properties.Settings.Default.stealthMode = true;
+                }
+                else { Properties.Settings.Default.stealthMode = false; }
+
+                // Log Directory
+                if (txtLogFileDir.Text != "")
+                {
+                    Properties.Settings.Default.logDir = (txtLogFileDir.Text);
+                }
+                else
+                {
+                    Properties.Settings.Default.logDir = Directory.GetCurrentDirectory().ToString();
+                }
+
+                // Autokill
+                if (chkAutoKill.Checked == true)
+                {
+                    Properties.Settings.Default.autoKill = true;
+                }
+                else { Properties.Settings.Default.autoKill = false; }
 
                 // SQL Server
-                if (txtsqlserver.Text != "")
+                if (txtSqlServer.Text != "")
                 {
-                    Properties.Settings.Default.databaseSvr = (txtsqlserver.Text);
+                    Properties.Settings.Default.databaseSvr = (txtSqlServer.Text);
                 }
                 else
                 {
@@ -168,9 +217,9 @@ namespace anti_cheat
                 }
 
                 // Database
-                if (txtsqldatabase.Text != "")
+                if (txtSqlDatabase.Text != "")
                 {
-                    Properties.Settings.Default.database = (txtsqldatabase.Text);
+                    Properties.Settings.Default.database = (txtSqlDatabase.Text);
                 }
                 else
                 {
@@ -178,24 +227,29 @@ namespace anti_cheat
                 }
 
                 // SQL Authentication
-                if (Cmbsqlauth.SelectedIndex == 1 && txtsqluser.Text != "") // Checks which Auth method is selected and if there is a SQL username.
+                if (cmbSqlAuth.SelectedIndex == 1 && txtSqlUser.Text != "") // Checks which Auth method is selected and if there is a SQL username.
                 {
                     // Authmethod 1 is SQL Authentication
-                    Properties.Settings.Default.authmethod = 1;
+                    Properties.Settings.Default.authMethod = 1;
 
                 }
-                else { Properties.Settings.Default.authmethod = 0; /* Auth method 0 is Windows Authentication */ }
+                else {
+                    if (cmbSqlAuth.SelectedIndex == 1)
+                    {
+                        MessageBox.Show("Please enter a SQL Username to use SQL Authentication.", "Empty SQL Username", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    Properties.Settings.Default.authMethod = 0; /* Auth method 0 is Windows Authentication */ }
 
                 // SQL User & Password
-                if (txtsqluser.Text != "")
+                if (txtSqlUser.Text != "")
                 {
-                    Properties.Settings.Default.sqluser = txtsqluser.Text;
-                    Properties.Settings.Default.sqlpass = txtsqlpass.Text; /* --- INSECURE STORAGE OF PASSWORD ---- */
+                    Properties.Settings.Default.sqlUser = txtSqlUser.Text;
+                    Properties.Settings.Default.sqlPass = txtSqlPass.Text; /* --- INSECURE STORAGE OF PASSWORD ---- */
                 }
                 else
                 {
-                    Properties.Settings.Default.sqluser = Program.Globals.sqluser;
-                    Properties.Settings.Default.sqlpass = Program.Globals.sqlpass; /* --- INSECURE STORAGE OF PASSWORD ---- */
+                    Properties.Settings.Default.sqlUser = Program.Globals.sqlUser;
+                    Properties.Settings.Default.sqlPass = Program.Globals.sqlPass; /* --- INSECURE STORAGE OF PASSWORD ---- */
                 }
 
                 Properties.Settings.Default.Save();
@@ -219,7 +273,7 @@ namespace anti_cheat
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     DirectoryInfo info = dlg.info;
-                    TxtLogfiledir.Text = dlg.fullPath;
+                    txtLogFileDir.Text = dlg.fullPath;
                 }
             }
             catch (Exception ex)
@@ -230,17 +284,17 @@ namespace anti_cheat
 
         private void Cmbsqlauth_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.Globals.authmethod = Cmbsqlauth.SelectedIndex;
-            if (Cmbsqlauth.Text == "SQL Authentication") {
-                lblsqluser.Visible = true;
-                lblsqlpass.Visible = true;
-                txtsqluser.Visible = true;
-                txtsqlpass.Visible = true;
+            Program.Globals.authMethod = cmbSqlAuth.SelectedIndex;
+            if (cmbSqlAuth.Text == "SQL Authentication") {
+                lblSqlUser.Visible = true;
+                lblSqlPass.Visible = true;
+                txtSqlUser.Visible = true;
+                txtSqlPass.Visible = true;
             } else {
-                lblsqluser.Visible = false;
-                lblsqlpass.Visible = false;
-                txtsqluser.Visible = false;
-                txtsqlpass.Visible = false;
+                lblSqlUser.Visible = false;
+                lblSqlPass.Visible = false;
+                txtSqlUser.Visible = false;
+                txtSqlPass.Visible = false;
             }
         }
 

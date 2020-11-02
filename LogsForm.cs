@@ -31,17 +31,19 @@ namespace anti_cheat
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            LogsList.Items.Clear();
+
             populate_List();
         }
 
 
 
 
+
         public void populate_List()
         {
+            logsList.Items.Clear();
 
-            if (Program.Globals.authmethod == 1)
+            if (Program.Globals.authMethod == 1)
             {
                 try
                 {
@@ -53,7 +55,7 @@ namespace anti_cheat
                     SqlDataAdapter sqlda = new SqlDataAdapter(query, sqlCon); // Query 
                     DataTable dtbl = new DataTable();
                     sqlda.Fill(dtbl);
-                    LogsList.View = View.Details;
+                    logsList.View = View.Details;
 
 
                     for (int i = 0; i < dtbl.Rows.Count; i++)
@@ -64,7 +66,7 @@ namespace anti_cheat
                         listitem.SubItems.Add(dr["ProcessID"].ToString());
                         listitem.SubItems.Add(dr["ProcessHandle"].ToString());
                         listitem.SubItems.Add(dr["DateLogged"].ToString());
-                        LogsList.Items.Add(listitem);
+                        logsList.Items.Add(listitem);
                     }
                 }
                 catch (Exception ex)
@@ -77,8 +79,6 @@ namespace anti_cheat
                         return;
                     }
 
-                    
-                
                     //SimpleLog.Log(ex); // Write exception with all inner exceptions to log
                     throw;
                 }
@@ -96,7 +96,7 @@ namespace anti_cheat
                     SqlDataAdapter sqlda = new SqlDataAdapter(query, sqlCon); // Query 
                     DataTable dtbl = new DataTable();
                     sqlda.Fill(dtbl);
-                    LogsList.View = View.Details;
+                    logsList.View = View.Details;
 
 
 
@@ -108,7 +108,7 @@ namespace anti_cheat
                         listitem.SubItems.Add(dr["ProcessID"].ToString());
                         listitem.SubItems.Add(dr["ProcessHandle"].ToString());
                         listitem.SubItems.Add(dr["DateLogged"].ToString());
-                        LogsList.Items.Add(listitem);
+                        logsList.Items.Add(listitem);
                     }
                 }
                 catch (Exception ex)
@@ -126,5 +126,36 @@ namespace anti_cheat
             }    
         }
 
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("Are you sure you would like to Clear the Database?", "Clear Database", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (dr == DialogResult.Yes)
+            {
+                try
+                {
+
+                    SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringWinAuth);
+
+                    string query = "TRUNCATE TABLE " + Program.Globals.databaseTbl;
+
+
+                    using (SqlConnection connection = new SqlConnection(Program.Globals.connectionStringWinAuth))
+                    {
+                        SqlCommand command = new SqlCommand(query, connection);
+                        command.Connection.Open();
+                        command.ExecuteNonQuery();
+                        command.Connection.Close();
+                    }
+
+                    SimpleLog.Info("Cleared Database.");
+
+                } catch (Exception ex)
+                {
+                    SimpleLog.Log(ex);
+                }
+
+            }
+        }
     }
 }

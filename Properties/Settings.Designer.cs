@@ -26,24 +26,24 @@ namespace anti_cheat.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string logdir {
+        public string logDir {
             get {
-                return ((string)(this["logdir"]));
+                return ((string)(this["logDir"]));
             }
             set {
-                this["logdir"] = value;
+                this["logDir"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool autokill {
+        public bool autoKill {
             get {
-                return ((bool)(this["autokill"]));
+                return ((bool)(this["autoKill"]));
             }
             set {
-                this["autokill"] = value;
+                this["autoKill"] = value;
             }
         }
         
@@ -86,36 +86,60 @@ namespace anti_cheat.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string sqluser {
+        public string sqlUser {
             get {
-                return ((string)(this["sqluser"]));
+                return ((string)(this["sqlUser"]));
             }
             set {
-                this["sqluser"] = value;
+                this["sqlUser"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string sqlpass {
+        public string sqlPass {
             get {
-                return ((string)(this["sqlpass"]));
+                return ((string)(this["sqlPass"]));
             }
             set {
-                this["sqlpass"] = value;
+                this["sqlPass"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int authmethod {
+        public int authMethod {
             get {
-                return ((int)(this["authmethod"]));
+                return ((int)(this["authMethod"]));
             }
             set {
-                this["authmethod"] = value;
+                this["authMethod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string blackList {
+            get {
+                return ((string)(this["blackList"]));
+            }
+            set {
+                this["blackList"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool stealthMode {
+            get {
+                return ((bool)(this["stealthMode"]));
+            }
+            set {
+                this["stealthMode"] = value;
             }
         }
     }

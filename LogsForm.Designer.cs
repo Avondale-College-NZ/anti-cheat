@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.LogsList = new System.Windows.Forms.ListView();
+            this.logsList = new System.Windows.Forms.ListView();
             this.databaseID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.processName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.processID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -36,27 +36,28 @@
             this.dateFound = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnRefresh = new System.Windows.Forms.Button();
             this.pnlLogs = new System.Windows.Forms.Panel();
+            this.btnClear = new System.Windows.Forms.Button();
             this.pnlLogs.SuspendLayout();
             this.SuspendLayout();
             // 
-            // LogsList
+            // logsList
             // 
-            this.LogsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.logsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.databaseID,
             this.processName,
             this.processID,
             this.processHandle,
             this.dateFound});
-            this.LogsList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LogsList.GridLines = true;
-            this.LogsList.HideSelection = false;
-            this.LogsList.Location = new System.Drawing.Point(0, 0);
-            this.LogsList.MultiSelect = false;
-            this.LogsList.Name = "LogsList";
-            this.LogsList.Size = new System.Drawing.Size(646, 396);
-            this.LogsList.TabIndex = 1;
-            this.LogsList.UseCompatibleStateImageBehavior = false;
-            this.LogsList.View = System.Windows.Forms.View.Details;
+            this.logsList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.logsList.GridLines = true;
+            this.logsList.HideSelection = false;
+            this.logsList.Location = new System.Drawing.Point(0, 0);
+            this.logsList.MultiSelect = false;
+            this.logsList.Name = "logsList";
+            this.logsList.Size = new System.Drawing.Size(646, 396);
+            this.logsList.TabIndex = 1;
+            this.logsList.UseCompatibleStateImageBehavior = false;
+            this.logsList.View = System.Windows.Forms.View.Details;
             // 
             // databaseID
             // 
@@ -95,20 +96,33 @@
             // 
             // pnlLogs
             // 
-            this.pnlLogs.Controls.Add(this.LogsList);
+            this.pnlLogs.Controls.Add(this.logsList);
             this.pnlLogs.Location = new System.Drawing.Point(12, 12);
             this.pnlLogs.Name = "pnlLogs";
             this.pnlLogs.Size = new System.Drawing.Size(646, 396);
             this.pnlLogs.TabIndex = 3;
             // 
-            // Logs
+            // btnClear
+            // 
+            this.btnClear.BackColor = System.Drawing.Color.Red;
+            this.btnClear.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnClear.Location = new System.Drawing.Point(12, 429);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(88, 23);
+            this.btnClear.TabIndex = 4;
+            this.btnClear.Text = "Clear Database";
+            this.btnClear.UseVisualStyleBackColor = false;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // LogsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(699, 464);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.pnlLogs);
             this.Controls.Add(this.btnRefresh);
-            this.Name = "Logs";
+            this.Name = "LogsForm";
             this.Text = "Log File";
             this.Load += new System.EventHandler(this.Logs_Load);
             this.pnlLogs.ResumeLayout(false);
@@ -118,7 +132,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ListView LogsList;
+        private System.Windows.Forms.ListView logsList;
         private System.Windows.Forms.ColumnHeader databaseID;
         private System.Windows.Forms.ColumnHeader processName;
         private System.Windows.Forms.ColumnHeader processHandle;
@@ -126,5 +140,6 @@
         private System.Windows.Forms.ColumnHeader dateFound;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Panel pnlLogs;
+        private System.Windows.Forms.Button btnClear;
     }
 }

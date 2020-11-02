@@ -36,32 +36,33 @@ namespace anti_cheat
             globals.cld = null;
         }
 
-        private void ToggleState()
+        public void ToggleState()
         {
+
             Program.InitSettings();
             Program.Globals.count++;
             int count = Program.Globals.count % 2;
             if (count != 0)
             {
                 Program.Globals.status = true;
-                lblstatus.Text = "Running...";
+                lblStatus.Text = "Running...";
                 notifyIcon.ShowBalloonTip(50, "Anticheat has been Started", "Successfully Started Anticheat process.", ToolTipIcon.Info);
-                lblstatus.ForeColor = Color.Lime;
-                Controlbtn.Text = "Stop";
+                lblStatus.ForeColor = Color.Lime;
+                btnStart.Text = "Stop";
             }
             else
             {
                 Program.Globals.status = false;
-                lblstatus.Text = "Stopped.";
+                lblStatus.Text = "Stopped.";
                 notifyIcon.ShowBalloonTip(50, "Anticheat has been Stopped", "Successfully Stopped Anticheat process.", ToolTipIcon.Info);
-                lblstatus.ForeColor = Color.Red;
-                Controlbtn.Text = "Start";
+                lblStatus.ForeColor = Color.Red;
+                btnStart.Text = "Start";
             }
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Debug.WriteLine(e.CloseReason.ToString());
+
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 Debug.WriteLine(e.CloseReason.ToString());
@@ -94,7 +95,7 @@ namespace anti_cheat
                 {
                     SimpleLog.Log(ex);
                 }
-
+                notifyIcon.ShowBalloonTip(10, "Minimized to Taskbar", "Anticheat has been minimized to Taskbar.", ToolTipIcon.Info);
             }
             else { notifyIcon.Dispose(); }
 
