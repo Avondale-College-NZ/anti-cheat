@@ -500,20 +500,34 @@ namespace anti_cheat
 
                                 if (Checkproc(line))
                                 {
-                                    MessageBox.Show("Process \"" + line + "\" was found.");
+                                    // Checks if Stealthmode is enabled and if it is then it wont alert the user.
+                                    if (Program.Globals.stealthMode == false)
+                                    {
+                                        // Alerts the user that a blacklisted process was found.
+                                        MessageBox.Show("Blacklisted Process: \"" + line + "\" was found.");
+                                    }
+
+                                    // If the autokill option is enabled and the status is active then the found process is killed.
                                     if (Program.Globals.autoKill && Program.Globals.status == true)
                                     {
+                                        // Supplies "ProcKill" with the name of the process to kill which is stored in the "line" variable.
                                         string ProcName = ProcessValidation.ProcKill(line);
+
                                         if (Program.Globals.stealthMode == false)
                                         {
-                                            MessageBox.Show("Process \"" + line + "\" " + "\"" + ProcName + "\"" + "  was killed.");
+                                            // Alerts the user that a blacklisted process was found and killed.
+                                            MessageBox.Show("Blacklisted Process: \"" + line + "\" " + "\"" + ProcName + "\"" + "  was killed.");
                                         }
                                     }
                                 }
 
                                 if (Checkapp(line))
                                 {
-                                    MessageBox.Show("Application \"" + line + "\" was found.");
+                                    if (Program.Globals.stealthMode == false)
+                                    {
+                                        MessageBox.Show("Application \"" + line + "\" was found.");
+                                    }
+
                                     if (Program.Globals.autoKill && Program.Globals.status == true)
                                     {
                                         string ProcName = ProcessValidation.ProcKill(line);

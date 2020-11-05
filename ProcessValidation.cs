@@ -141,13 +141,18 @@ namespace ProcessCheck
         /// <returns></returns>
         public static string ProcKill(string ProcName)
         {
-            ProcName = ProcName.Replace(".exe", "").ToLower();
-
+            // Removes ".exe", trailing whitespace and then sets the process name to lowercase.
+            ProcName = ProcName.Replace(".exe", "").Trim().ToLower();
+            /*
+             Checks the supplied process name against the name of all running processes
+             and if its found then "process.Kill()" is called on it
+            */
             foreach (Process process in Process.GetProcessesByName(ProcName))
             {
                 process.Kill();
             }
 
+            // Returns the process name back to be stored in a string.
             return ProcName;
         }
 
