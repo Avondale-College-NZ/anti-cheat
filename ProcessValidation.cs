@@ -200,21 +200,20 @@ namespace ProcessCheck
         /// <summary>
         /// Returns a string containing all running process IDs
         /// </summary>
-        /// <returns></returns>
+        /// <returns>An integer array of all currently running process IDs</returns>
         public static int[] ListAllProcessIds()
         {
 
             int[] pids = { };
 
-
-            // list out all processes and write them into a stringbuilder
+            // list out all Processes and write them into a String Builder.
             try
             {
                 ManagementClass MgmtClass = new ManagementClass("Win32_Process");
 
                 foreach (ManagementObject mo in MgmtClass.GetInstances())
                 {
-
+                    // Resizes "pids array" 
                     Array.Resize(ref pids, pids.Length + 1);
                     pids[pids.GetUpperBound(0)] = Convert.ToInt32(mo["ProcessId"]);
                 }
@@ -223,9 +222,9 @@ namespace ProcessCheck
             {
                 SimpleLog.Log(ex);
             }
-
             return pids;
         }
+
         /// <summary>
         /// Lookups supplied process ID; 
         /// if the ID is found, the method will return the process name and ID

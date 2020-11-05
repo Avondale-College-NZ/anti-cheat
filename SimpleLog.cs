@@ -683,6 +683,8 @@ namespace SimpleLogger
             var xElement = new XElement("Exception");
             xElement.Add(new XAttribute("Type", ex.GetType().FullName));
 
+            // THROWS ERROR VALUE = null when sql except is called.
+
             xElement.Add(new XAttribute("Source", ex.TargetSite == null || ex.TargetSite.DeclaringType == null ? ex.Source : string.Format("{0}.{1}", ex.TargetSite.DeclaringType.FullName, ex.TargetSite.Name)));
             xElement.Add(new XElement("Message", ex.Message));
 

@@ -58,19 +58,19 @@ namespace anti_cheat
         public static string[] Compareprocesses(int[] baseline, int[] current)
         {
             // Runs comparison on "baseline" vs "current" array arguments
-            string[] adifferentProcesses = { };
+            string[] aDifferentProcesses = { };
             try
             {
                 IEnumerable<int> differentProcesses = current.Except(baseline);
-                adifferentProcesses = differentProcesses.Select(x => x.ToString()).ToArray();
+                aDifferentProcesses = differentProcesses.Select(x => x.ToString()).ToArray();
 
             }
             catch (Exception ex)
             {
-                SimpleLog.Log(ex);
+                SimpleLog.Log(ex); // When caught writes exceptions including inner exceptions to log.
             }
 
-            return adifferentProcesses;
+            return aDifferentProcesses;
         }
 
         public static List<UniqueProc> PIDlookup(string[] PIDarray)
@@ -88,9 +88,6 @@ namespace anti_cheat
                     {
                         if (mo["ProcessId"].ToString() == PIDarray[c])
                         {
-
-                            Debug.WriteLine(mo["Name"].ToString().Replace(".exe", ""), mo["ProcessId"].ToString(), mo["Handle"].ToString());
-
                             uniqueProcs.Add(new UniqueProc { Name = mo["Name"].ToString().Replace(".exe", ""), ProcessId = mo["ProcessId"].ToString(), Handle = mo["Handle"].ToString() });
                         }
                     }
@@ -115,33 +112,63 @@ namespace anti_cheat
                 {
                     SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringSQLAuth);
                     sqlCon.Open();
-
-                    string query = "SELECT * FROM " + Program.Globals.databaseTbl + " WHERE ProcessName=@procname"; // + " AND DateLogged < DATEADD(day, -1, GETDATE()";
+                    // Selects all rows from the Database Table where the Processname is equal to the unique Processname and the ID As long as the row is less than a day old.
+                    string query = "SELECT * FROM " + Program.Globals.databaseTbl + " WHERE ProcessName=@procname AND ProcessID=@procid AND ([DateLogged] >= DATEADD(DD, -1, DATEADD(dd, 0, DATEDIFF(dd, 0, @logdate))))";
 
                     SqlCommand checkCmd = new SqlCommand(query, sqlCon);
+
+                    // Substatutes values into the query.
                     checkCmd.Parameters.AddWithValue("@procname", procName);
-
+                    checkCmd.Parameters.AddWithValue("@procid", procID);
+                    checkCmd.Parameters.AddWithValue("@logdate", DateTime.Now);
                     SqlDataReader checkreader = checkCmd.ExecuteReader();
-                    Debug.WriteLine(checkreader.HasRows);
 
-                    if (checkreader.HasRows)
+                    bool reader = checkreader.HasRows; // If the Data reader has rows then it means there is already a log with the same process name and ID. 
+                    checkreader.Close(); // Closes the Data Reader.
+
+                    if (reader == false)
                     {
-                        sqlCon.Open();
                         SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
-                        sqlCmd.CommandType = CommandType.StoredProcedure;
+                        sqlCmd.CommandType = CommandType.StoredProcedure; // Defines that a Stored procedure is being used.
+
+                        // Passes values to the Stored procedure on the Database.
                         sqlCmd.Parameters.AddWithValue("@ProcessName", procName);
                         sqlCmd.Parameters.AddWithValue("@ProcessID", procID);
                         sqlCmd.Parameters.AddWithValue("@ProcessHandle", procHandle);
-                        sqlCmd.ExecuteNonQuery();
-                    }
-                    else { Debug.Indent(); Debug.WriteLine("Dupe value"); Debug.Unindent(); }
-                    
-                }
-                catch (Exception ex)
-                {
 
-                    SimpleLog.Log(ex); // Write exception with all inner exceptions to log
-                    return 5;
+                        sqlCmd.ExecuteNonQuery();
+                        sqlCon.Close();
+
+                        SimpleLog.Info("Logged " + procName + "With the ID: " + procID + " To the database."); // Makes an Info log to the local LogFile.
+                    }
+                    else
+                    {
+                        Debug.Indent(); Debug.WriteLine("Duplicate value"); Debug.Unindent();
+                    }
+                }
+                catch (SqlException sex)    // sex - SQL Exception.
+                {
+                    switch (sex.Number) // Each numerical case represents a specific SQL error code. 
+                    {
+                        case 53: // Exception 53: The SQL Server was not found or was not accessible.
+
+                            if (Application.OpenForms["Main"] != null) // Checks if the main form is open.
+                            {
+
+                                (Application.OpenForms["Main"] as Main).ToggleState(); // Toggles the status of the backgroud process by calling the "ToggleState()" function in the Main form.
+
+                                SimpleLog.Log(sex); // When caught writes exceptions including inner exceptions to log.
+                            }
+
+                            break;
+                        default:
+                            SimpleLog.Log(sex); // When caught writes exceptions including inner exceptions to log.
+                            break;
+                    }
+                }
+                catch (Exception ex)    // ex - General Exception.
+                {
+                    SimpleLog.Log(ex); // When caught writes exceptions including inner exceptions to log.
                 }
 
 
@@ -152,58 +179,63 @@ namespace anti_cheat
                 {
                     SqlConnection sqlCon = new SqlConnection(Program.Globals.connectionStringWinAuth);
 
-                    SimpleLog.Info(Program.Globals.connectionStringWinAuth);
-
                     sqlCon.Open();
-                    string query = "SELECT * FROM " + Program.Globals.databaseTbl + " WHERE ProcessName=@procname"; // + " AND DateLogged < DATEADD(day, -1, GETDATE()";
+                    // Selects all rows from the Database Table where the Processname is equal to the unique Processname and the ID As long as the row is less than a day old.
+                    string query = "SELECT * FROM " + Program.Globals.databaseTbl + " WHERE ProcessName=@procname AND ProcessID=@procid AND ([DateLogged] >= DATEADD(DD, -1, DATEADD(dd, 0, DATEDIFF(dd, 0, @logdate))))";
 
                     SqlCommand checkCmd = new SqlCommand(query, sqlCon);
+
+                    // Substatutes values into the query.
                     checkCmd.Parameters.AddWithValue("@procname", procName);
+                    checkCmd.Parameters.AddWithValue("@procid", procID);
+                    checkCmd.Parameters.AddWithValue("@logdate", DateTime.Now);
                     SqlDataReader checkreader = checkCmd.ExecuteReader();
 
-                    bool reader = checkreader.HasRows;
-                    checkreader.Close();
+                    bool reader = checkreader.HasRows; // If the Data reader has rows then it means there is already a log with the same process name and ID. 
+                    checkreader.Close(); // Closes the Data Reader.
 
                     if (reader == false)
                     {
-
                         SqlCommand sqlCmd = new SqlCommand("LogProc", sqlCon);
-                        sqlCmd.CommandType = CommandType.StoredProcedure;
+                        sqlCmd.CommandType = CommandType.StoredProcedure; // Defines that a Stored Procedure is being used.
+
+                        // Passes values to the Stored procedure on the Database.
                         sqlCmd.Parameters.AddWithValue("@ProcessName", procName);
                         sqlCmd.Parameters.AddWithValue("@ProcessID", procID);
                         sqlCmd.Parameters.AddWithValue("@ProcessHandle", procHandle);
-                        sqlCmd.ExecuteNonQuery();
-                        checkreader.Close();
-                        sqlCon.Close();
-                        SimpleLog.Log("Logged " + procName + "To the database");
+
+                        sqlCmd.ExecuteNonQuery(); // Executes the Stored Procedure. 
+                        sqlCon.Close(); // Closes the SQL Connection.
+
+                        SimpleLog.Info("Logged " + procName + "With the ID: " + procID + " To the database."); // Makes an Info log to the local LogFile.
                     }
                     else
                     {
                         Debug.Indent(); Debug.WriteLine("Duplicate value"); Debug.Unindent();
-                        checkreader.Close();
-                        sqlCon.Close();
                     }
-
                 }
-                catch (SqlException sex)
+                catch (SqlException sex)    // sex - SQL Exception.
                 {
-                        switch (sex.Number)
+                        switch (sex.Number) // Each numerical case represents a specific SQL error code. 
                         {
-                            case 53:
-                            if (System.Windows.Forms.Application.OpenForms["Main"] != null)
-                            {
-                                (System.Windows.Forms.Application.OpenForms["Main"] as Main).ToggleState();
-                            }
+                            case 53: // Exception 53: The SQL Server was not found or was not accessible.
 
-                            break;
-                            
+                                if (Application.OpenForms["Main"] != null) // Checks if the main form is open.
+                                {
+
+                                  (Application.OpenForms["Main"] as Main).ToggleState(); // Toggles the status of the backgroud process by calling the "ToggleState()" function in the Main form.
+
+                                   SimpleLog.Log(sex); // When caught writes exceptions including inner exceptions to log.
+                                }
+
+                                break;
                             default:
-                                return 66;
-                                throw;
+                                SimpleLog.Log(sex); // When caught writes exceptions including inner exceptions to log.
+                                break;
                         } 
-                } catch (Exception ex)
+                } catch (Exception ex)    // ex - General Exception.
                 {
-                    SimpleLog.Log(ex); // Write any exception to Log file.
+                    SimpleLog.Log(ex); // When caught writes exceptions including inner exceptions to log.
                 }
             }
             return 0;
@@ -294,30 +326,12 @@ namespace anti_cheat
 
                 Globals.connectionStringWinAuth = @"Data Source=" + Globals.databaseSvr + ";Initial Catalog=" + Globals.database + ";Integrated Security=True;"; 
                 Globals.connectionStringSQLAuth = @"Data Source=" + Globals.databaseSvr + ";Initial Catalog=" + Globals.database + ";User ID=(" + Globals.sqlUser + ");Password=(" + Globals.sqlPass + ");";
-
-
-        Debug.WriteLine("List of current Globals: \n" + Globals.logDir + "\n" +
-               Globals.autoKill + "\n" +
-               Globals.databaseSvr + "\n" +
-               Globals.database + "\n" +
-               Globals.databaseTbl + "\n" +
-               Globals.authMethod + "\n"
-    );
-
             }
             catch (Exception ex)
             {
                 SimpleLog.Log(ex); // Write any exception to Log file.
 
             }
-            SimpleLog.Info("List of current Globals: \n" + Globals.logDir + "\n" +
-               Globals.autoKill + "\n" +
-               Globals.databaseSvr + "\n" +
-               Globals.database + "\n" +
-               Globals.databaseTbl + "\n" +
-               Globals.authMethod + "\n"
-    );
-
         }
 
         public static void ResetSettings()
@@ -371,7 +385,14 @@ namespace anti_cheat
         static void Main()
         {
             // Starts SimpleLog & Debug Console output.
+
+            if (Properties.Settings.Default.logDir == "") { Properties.Settings.Default.logDir = Directory.GetCurrentDirectory().ToString();
+                Properties.Settings.Default.Save();
+            }
+            SimpleLog.SetLogFile(Properties.Settings.Default.logDir + "\\Log", "Anti-cheat-Log_");
             SimpleLog.StartLogging();
+
+
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
             Debug.AutoFlush = false;
 
@@ -428,30 +449,40 @@ namespace anti_cheat
 
 
 
-            int[] baseline = Background.TakeCurrent();
+            int[] baseline = ProcessValidation.ListAllProcessIds();
+
 
             try
             {
                 while(true)
                 {
                     Thread.Sleep(2000);
+
                     while (Program.Globals.status)
                     {
 
-                        int[] current = Background.TakeCurrent();
+                        int[] current = ProcessValidation.ListAllProcessIds();
 
-                        Program.Globals.uniqueIds = Background.Compareprocesses(baseline, current);         // Finds IDs of processes that started after anticheat
+
+                        Program.Globals.uniqueIds = Background.Compareprocesses(baseline, current); // Finds IDs of processes that started after anticheat
+
+                        /*
+                            Defines "differentProcessesID" as a list of "UniqueProc" objects by passing "Globals.uniqueIds" into the "PIDlookup()" method 
+                            in the Background class 
+                        */
                         List<UniqueProc> differentProcessesID = Background.PIDlookup(Program.Globals.uniqueIds);
 
                         if (differentProcessesID.Count() > 0)
                         {
-                            foreach (var p in differentProcessesID)
+                            foreach (var p in differentProcessesID) // 
                             {
-                                int r;
-                                Thread dblog = new Thread(() => { r = Background.LogtoDB(p.Name, p.ProcessId, p.Handle); });
+                                int returnValue;
+
+                                // Defines the Database log thread and specifies what object information is supplied to the "dblog" thread's method.
+                                Thread dblog = new Thread(() => { returnValue = Background.LogtoDB(p.Name, p.ProcessId, p.Handle); }); 
                                 
                                 dblog.IsBackground = true;
-                                dblog.Start();
+                                dblog.Start(); // Logs the unique process to the Database.
                                 
                             }
                         }
@@ -494,7 +525,7 @@ namespace anti_cheat
                             }
                         }
                     }
-
+                    // Checks if the main form has been closed and then if so breaks the loop and preforms "Application.Exit();" which exits the application.
                     int formcount = Int32.Parse(Application.OpenForms.Count.ToString());
                     if (formcount == 0)
                     {
