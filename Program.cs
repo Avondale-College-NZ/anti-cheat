@@ -447,24 +447,25 @@ namespace anti_cheat
             Debug.WriteLine("Entering BGProc"); // Debug Message 
             SimpleLog.Info("Entered 'Background thread (BGProc)'."); // Writes 'info' level message to log
 
-
-
+            // Takes the baseline array of all process IDS running.
             int[] baseline = ProcessValidation.ListAllProcessIds();
 
 
             try
             {
-                while(true)
+                // Continuous loop till broken on "Main" form exit.
+                while (true)
                 {
+                    // Thread waits for 2 seconds.
                     Thread.Sleep(2000);
 
+                    // If the background "watchdog" status is true.
                     while (Program.Globals.status)
                     {
-
+                        // Takes the current array of all process IDS running.
                         int[] current = ProcessValidation.ListAllProcessIds();
 
-
-                        Program.Globals.uniqueIds = Background.Compareprocesses(baseline, current); // Finds IDs of processes that started after anticheat
+                        Program.Globals.uniqueIds = Background.Compareprocesses(baseline, current); // Finds IDs of processes that started after anticheat.
 
                         /*
                             Defines "differentProcessesID" as a list of "UniqueProc" objects by passing "Globals.uniqueIds" into the "PIDlookup()" method 
@@ -474,7 +475,7 @@ namespace anti_cheat
 
                         if (differentProcessesID.Count() > 0)
                         {
-                            foreach (var p in differentProcessesID) // 
+                            foreach (var p in differentProcessesID) // Logs all unique process to the backend database.
                             {
                                 int returnValue;
 

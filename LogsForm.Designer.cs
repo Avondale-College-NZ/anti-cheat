@@ -42,9 +42,9 @@
             this.tabLogs = new System.Windows.Forms.TabControl();
             this.tabSQL = new System.Windows.Forms.TabPage();
             this.tabApp = new System.Windows.Forms.TabPage();
-            this.lblAppLogTitle = new System.Windows.Forms.Label();
-            this.lblLogFileTitle = new System.Windows.Forms.Label();
             this.txtLogFile = new System.Windows.Forms.TextBox();
+            this.lblLogFileTitle = new System.Windows.Forms.Label();
+            this.lblAppLogTitle = new System.Windows.Forms.Label();
             this.pnlLogs.SuspendLayout();
             this.tabLogs.SuspendLayout();
             this.tabSQL.SuspendLayout();
@@ -127,7 +127,7 @@
             // 
             // btnSmpLogs
             // 
-            this.btnSmpLogs.Location = new System.Drawing.Point(172, 362);
+            this.btnSmpLogs.Location = new System.Drawing.Point(134, 48);
             this.btnSmpLogs.Name = "btnSmpLogs";
             this.btnSmpLogs.Size = new System.Drawing.Size(75, 23);
             this.btnSmpLogs.TabIndex = 5;
@@ -173,32 +173,32 @@
             this.tabApp.UseVisualStyleBackColor = true;
             this.tabApp.Click += new System.EventHandler(this.tabApp_Click);
             // 
-            // lblAppLogTitle
+            // txtLogFile
             // 
-            this.lblAppLogTitle.AutoSize = true;
-            this.lblAppLogTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAppLogTitle.Location = new System.Drawing.Point(54, 363);
-            this.lblAppLogTitle.Name = "lblAppLogTitle";
-            this.lblAppLogTitle.Size = new System.Drawing.Size(112, 18);
-            this.lblAppLogTitle.TabIndex = 8;
-            this.lblAppLogTitle.Text = "Application Log:";
+            this.txtLogFile.Location = new System.Drawing.Point(134, 22);
+            this.txtLogFile.Name = "txtLogFile";
+            this.txtLogFile.Size = new System.Drawing.Size(302, 20);
+            this.txtLogFile.TabIndex = 11;
             // 
             // lblLogFileTitle
             // 
             this.lblLogFileTitle.AutoSize = true;
             this.lblLogFileTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLogFileTitle.Location = new System.Drawing.Point(106, 335);
+            this.lblLogFileTitle.Location = new System.Drawing.Point(68, 21);
             this.lblLogFileTitle.Name = "lblLogFileTitle";
             this.lblLogFileTitle.Size = new System.Drawing.Size(60, 18);
             this.lblLogFileTitle.TabIndex = 10;
             this.lblLogFileTitle.Text = "LogFile:";
             // 
-            // txtLogFile
+            // lblAppLogTitle
             // 
-            this.txtLogFile.Location = new System.Drawing.Point(172, 336);
-            this.txtLogFile.Name = "txtLogFile";
-            this.txtLogFile.Size = new System.Drawing.Size(302, 20);
-            this.txtLogFile.TabIndex = 11;
+            this.lblAppLogTitle.AutoSize = true;
+            this.lblAppLogTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAppLogTitle.Location = new System.Drawing.Point(16, 49);
+            this.lblAppLogTitle.Name = "lblAppLogTitle";
+            this.lblAppLogTitle.Size = new System.Drawing.Size(112, 18);
+            this.lblAppLogTitle.TabIndex = 8;
+            this.lblAppLogTitle.Text = "Application Log:";
             // 
             // LogsForm
             // 

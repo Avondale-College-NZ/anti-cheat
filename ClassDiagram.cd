@@ -1,66 +1,77 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="anti_cheat.CloudForm" Collapsed="true">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Position X="7.5" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CloudForm.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="anti_cheat.Main" Collapsed="true">
-    <Position X="0.5" Y="1.5" Width="1.5" />
+    <Position X="0.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAFCID8gCiAAIEAIAAiQDgBCBAAAKJUgAAGAgBAAAAA=</HashCode>
+      <HashCode>QAFCID8gCiAAIEAIAAiQDgBCAAAAKIUgAAGQgBAAAEA=</HashCode>
       <FileName>Main.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="anti_cheat.Program" Collapsed="true">
-    <Position X="4" Y="1.5" Width="1.5" />
+  <Class Name="anti_cheat.Program">
+    <Position X="0.5" Y="4" Width="1.5" />
+    <NestedTypes>
+      <Class Name="anti_cheat.Program.Globals" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Program.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAAAIAAgABIAAACAAAAAAAAAAAAAAAAAAAAABAAEAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="folderSelect.FolderSelect" Collapsed="true">
-    <Position X="2.25" Y="0.5" Width="1.5" />
+    <Position X="2.25" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EgQEAAAAACBAABEIIACAEEASAAAEQAAAUAAQAQgAAAA=</HashCode>
       <FileName>FolderSelect.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ProcessCheck.ProcessValidation" Collapsed="true">
-    <Position X="2.25" Y="1.5" Width="1.5" />
+  <Class Name="ProcessCheck.ProcessValidation">
+    <Position X="2.5" Y="4" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AgABAABAACAAAAAAAAAAAAAAAAAAAAAADgBAiAAAAAA=</HashCode>
       <FileName>ProcessValidation.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="anti_cheat.Properties.Resources" Collapsed="true">
-    <Position X="0.5" Y="2.5" Width="1.5" />
+  <Class Name="anti_cheat.Properties.Resources">
+    <Position X="7" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="anti_cheat.Properties.Settings" Collapsed="true">
-    <Position X="4" Y="2.5" Width="1.5" />
+  <Class Name="anti_cheat.Properties.Settings">
+    <Position X="5.25" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAEAAAAAEAABEEAAAIAAAEABhAAAAAAAAAAAACAA=</HashCode>
+      <HashCode>AAAAAAQAAAAQAABEEAAAIEAAAABBABAYAAAAAAAACEA=</HashCode>
       <FileName>Settings.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="anti_cheat.SettingsForm" Collapsed="true">
-    <Position X="2.25" Y="2.5" Width="1.5" />
+    <Position X="4" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BiAAAAgBAWAAAFAAAACAARECCABgAAAghABAAIAAGAA=</HashCode>
+      <HashCode>RGAQAAgAASAAAcAiAACACRUCCIRgABBgBABIAAMAGBA=</HashCode>
       <FileName>SettingsForm.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="anti_cheat.LogsForm" Collapsed="true">
-    <Position X="4" Y="0.5" Width="1.5" />
+    <Position X="5.75" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAAAADAACCAQCAAAAACAAAQSAAAAAAAAwAAAAAAAAAA=</HashCode>
+      <HashCode>BAAAADAAGCAQCEAoAACAAAQSAAgBJAAAwIABAAAIAAA=</HashCode>
       <FileName>LogsForm.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="System.Windows.Forms.Form" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

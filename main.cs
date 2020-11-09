@@ -48,7 +48,7 @@ namespace anti_cheat
                 lblStatus.Text = "Running...";
                 notifyIcon.ShowBalloonTip(50, "Anticheat has been Started", "Successfully Started Anticheat process.", ToolTipIcon.Info);
                 lblStatus.ForeColor = Color.Lime;
-                btnStart.Text = "Stop";
+                btnToggleState.Text = "Stop";
             }
             else
             {
@@ -56,7 +56,7 @@ namespace anti_cheat
                 lblStatus.Text = "Stopped.";
                 notifyIcon.ShowBalloonTip(50, "Anticheat has been Stopped", "Successfully Stopped Anticheat process.", ToolTipIcon.Info);
                 lblStatus.ForeColor = Color.Red;
-                btnStart.Text = "Start";
+                btnToggleState.Text = "Start";
             }
         }
 
@@ -229,8 +229,15 @@ namespace anti_cheat
 
         private void tskBarMenuSettings_Click(object sender, EventArgs e)
         {
+            if (globals.set == null)
+            {
+                globals.set = new SettingsForm();
+                globals.set.FormClosed += setClosed;
+            }
+
             globals.set.Show();
         }
+    
 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {

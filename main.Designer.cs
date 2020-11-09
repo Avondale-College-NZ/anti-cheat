@@ -40,7 +40,7 @@
             this.tskBarMenuOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.tskBarMenuSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.tskBarMenuExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnStart = new System.Windows.Forms.Button();
+            this.btnToggleState = new System.Windows.Forms.Button();
             this.ToolBar = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Toolbarbtnset = new System.Windows.Forms.ToolStripButton();
@@ -138,15 +138,15 @@
             this.tskBarMenuExit.Text = "Exit";
             this.tskBarMenuExit.Click += new System.EventHandler(this.tskBarMenuExit_Click);
             // 
-            // btnStart
+            // btnToggleState
             // 
-            this.btnStart.Location = new System.Drawing.Point(17, 94);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(75, 23);
-            this.btnStart.TabIndex = 5;
-            this.btnStart.Text = "Start";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.Controlbtn_Click);
+            this.btnToggleState.Location = new System.Drawing.Point(17, 94);
+            this.btnToggleState.Name = "btnToggleState";
+            this.btnToggleState.Size = new System.Drawing.Size(75, 23);
+            this.btnToggleState.TabIndex = 5;
+            this.btnToggleState.Text = "Start";
+            this.btnToggleState.UseVisualStyleBackColor = true;
+            this.btnToggleState.Click += new System.EventHandler(this.Controlbtn_Click);
             // 
             // ToolBar
             // 
@@ -227,7 +227,7 @@
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(430, 267);
             this.Controls.Add(this.ToolBar);
-            this.Controls.Add(this.btnStart);
+            this.Controls.Add(this.btnToggleState);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.lblStatusTitle);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -246,7 +246,7 @@
         #endregion
         private System.Windows.Forms.Label lblStatusTitle;
         private System.Windows.Forms.Label lblStatus;
-        private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.Button btnToggleState;
         private System.Windows.Forms.ToolStrip ToolBar;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton Toolbarbtnset;
